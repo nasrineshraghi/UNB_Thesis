@@ -1,0 +1,112 @@
+\documentclass[12pt]{unbthesis}
+\usepackage[left=4cm, right=2.5cm, top=2.5cm, bottom=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage[subfigure]{tocloft} % no number for Vita in ToC
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{footmisc}
+\usepackage{algorithmic}
+\usepackage{listings}
+\usepackage{fancyvrb}
+\usepackage{caption}
+\usepackage[table]{xcolor}
+\usepackage{physics}
+\DeclareUnicodeCharacter{2212}{-}
+\usepackage{booktabs}
+\usepackage{apacite}
+\usepackage{xcolor} % for setting colors
+\usepackage{tabularx}
+\usepackage{subcaption}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[shortlabels]{enumitem}
+\usepackage[htt]{hyphenat}
+\usepackage{url}
+\usepackage{array}
+
+
+
+%indent
+\usepackage{listings}
+\usepackage{color}
+\usepackage{indentfirst}
+\setlength{\parindent}{2em}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage[ruled,vlined]{algorithm2e}
+\graphicspath{{images/}{../images/}}
+\usepackage{algorithm,algpseudocode}
+\title{ Data Stream Clustering Algorithm in Indoor Localization Applications }
+\author{Nasrin Eshraghi Ivari}
+\predegree{Master of Computer Science, Universiti Putra Malaysia, 2013}
+\degree{Master of Science in Engineering}
+\gau{Geodesy and Geomatics Engineering }
+\supervisor{Monica Wachowicz,PhD Geodesy and Geomatics Engineering}
+\examboard{name1, degree, department/field,
+Chair}
+\externalexam{name, degree,
+department/field, institution}
+\date{January, 2021}
+\copyrightyear{2021}
+\setlength\parindent{0pt}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{notation}{Notation}[section]
+\begin{document}
+\unbtitlepage
+\setcounter{secnumdepth}{3} \setcounter{tocdepth}{3}
+\pagenumbering{roman} \setcounter{page}{1}
+\include{abstract}
+\include{dedication}
+\include{acknowledgments}
+
+%%-----------Table of Contents------------------
+\renewcommand{\contentsname}{Table of Contents}
+\clearpage
+\addcontentsline{toc}{chapter}{Table of Contents}
+\tableofcontents{}
+%%------------List of Tables----------------------
+\clearpage
+\addcontentsline{toc}{chapter}{List of Tables}
+\listoftables{}
+%%------------List of Figures----------------------
+\clearpage
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoffigures{}
+\include{abbreviations}
+%%-------------change single space to double space--------
+\clearpage
+\doublespacing
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% \include{chapter1}
+% \include{chapter2}
+% \include{chapter3}
+% \include{chapter4}
+% \include{chapter5}
+% \include{chapter6}
+% \include{chapter7}
+
+\subfile{Chapters/chapter1}
+\subfile{Chapters/chapter2}
+\subfile{Chapters/chapter3}
+\subfile{Chapters/chapter4}
+\subfile{Chapters/chapter5}
+\subfile{Chapters/chapter6}
+\subfile{Chapters/chapter7}
+\include{bibliography}
+
+
+% changes default name Bibliography to References
+%\renewcommand{\bibname}{References}
+\bibliographystyle{apacite}
+% \bibliographystyle{amsplain}
+
+\bibliography{mybibliography}
+\addcontentsline{toc}{chapter}{Bibliography}
+%\include{appendices2}
+\include{glossary}
+\include{vita}
+\end{document}
