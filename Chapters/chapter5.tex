@@ -205,7 +205,7 @@ Cm_time = Cm_time[remain_centers==1]
 
 
 
-The next phase of the DSAP algorithm is the offline macro-cluster phase which generates final clusters by applying the AP algorithm one more time to all the micro-cluster centroids accumulated during the online phase (\texttt{AffinityPropagation().fit($Cm$)}). In the offline phase only the summary statistics represented by the micro-clusters centroids stored during the online phase is used and not the actual dataset itself. The number of micro-clusters is a lot smaller than the total number of points in the dataset that it represents. The number of macro-clusters obtained in this phase are less than the number of micro-clusters as they summarize the whole period of observation and not individual windows. The pseudo-code presented in Algorithm \ref{algSDAPi} shows the outline of the entire DSAP algorithm. 
+The next phase of the DSAP algorithm is the offline macro-cluster phase which generates final clusters by applying the AP algorithm one more time to all the micro-cluster centroids accumulated during the online phase (\texttt{AffinityPropagation().fit ($Cm$)}). In the offline phase only the summary statistics represented by the micro-clusters centroids stored during the online phase is used and not the actual dataset itself. The number of micro-clusters is a lot smaller than the total number of points in the dataset that it represents. The number of macro-clusters obtained in this phase are less than the number of micro-clusters as they summarize the whole period of observation and not individual windows. The pseudo-code presented in Algorithm \ref{algSDAPi} shows the outline of the entire DSAP algorithm. 
 
 \todo[inline]{ALGORITM HERE} 
 %%%%%%%%%%%%%%%%%%%%% DSAP  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -475,7 +475,85 @@ The next sections explain how the workflow phases discussed earlier are implemen
 
 
 \section{Case studies}
+\todo[list]{section from chpater 2 moved here}
 
+\section{Indoor Localization  and Occupancy Detection}
+
+Location-based services (LBS) have become extremely popular, and it is part of daily life. The location-based services and their applications require a high level of standard in positioning technology. The positioning technology has shifted from the outdoors to the indoor, and this is because of two reasons \cite{xia2017indoor}. People usually spend most of their time indoors. Besides, most mobile phones and data communications are performed indoors. Moreover, phone data show that the demand for indoor mobile communication is very powerful. 
+
+Indoor localization systems can hire a wide range of technologies such as infrared, RFID, sensors, WiFi, Bluetooth, etc. Using WiFi is one of the best approaches due to the availability of mobile devices on the user side. 
+
+\begin{table}[]
+\caption{Comparison between GPS and WiFi technologies.}
+\small
+\centering
+\label{tab:my-table}
+\begin{tabular}{@{}ccc@{}}
+\toprule
+\textbf{Technology} & \textbf{Accuracy level} & \textbf{Advantage}                                                                                    \\ \midrule
+GPS                 & High                    & \begin{tabular}[c]{@{}c@{}}*Good accuracy\\ *Not strong for indoor\end{tabular}                       \\ \midrule
+WiFi                & Medium                  & \begin{tabular}[c]{@{}c@{}}*Good accuracy for indoor\\ *Limited coverage\\  *Medium cost\end{tabular} \\ \bottomrule
+\end{tabular}
+\end{table}
+
+
+The most used method for estimating the location of indoor mobile objects or positioning with WiFi networks is fingerprinting method. The fingerprinting method works based on signal strength. 
+
+\subsection{Indoor Localization Using People-counter Sensors}
+The magnificent growth of indoor localization studies can lead to many real-world applications, including smart homes, smart campuses, and localize users to provide services. The purpose of indoor localization is to recognize a location within a multi-storied building with a smart device.  The GPS does not work in an indoor environment accurately as signal strength fluctuates weakly, leading to the user’s device not receiving location updates at fixed periods. 
+
+There are various applications for measuring the number of people and occupancy, and it can be a simple pen and paper to fully automated sensor solutions.
+Automated solutions use people counting technology to automatically count people as they enter and exit buildings. People counting is ideal for any kind of buildings that requires an intelligent system, especially for huge and crowded buildings such as malls, hospitals, stadiums, etc. People's movement is precious data for occupancy monitoring, smart building management, and social distancing management.  Using these systems can give users a better understanding of the workplace and room usage, reduce energy consumption or optimize building design and staff levels.
+
+This technology can be considered in terms of:
+\begin{itemize}
+    \item\textbf{Accuracy}: Sensors are designed to count a number of people at any place continuously.
+    \item\textbf{Historical data log}: comprehensive historical data and reports are available with the user requests. Some reports may show how occupancy changes over time, also, how well the building complied with occupancy limits.
+    \item\textbf{Cost}: The cost of these sensors may be higher at first for the sensor hardware. However, this is offset by zero or minimal ongoing costs.
+\end{itemize}
+
+The bidirectional people counter sensors are one of these types of sensors used for the dataset applied in this research work. The principle of these sensors is based on the interruption of the horizontal infrared beans, which are usually installed at the entrance or exit. However, other technologies such as thermal and stereo-vision can be used. When this infrared beam is interrupted, the receiver detects this movement, increasing the internal counter. The sensor data will find its way to the server through the gateway SNG. The overview of this scenario shows in Figure \ref{people}. Different types of these sensors are available below, which are produced by the International Road Dynamics company.
+
+\begin{figure}
+\centering
+\includegraphics[width = 12cm,height = 5cm]{image/pc.jpg}
+\caption{People counter infrastructure used for our experimental dataset. Modified Figure of \protect\cite{SensM}}
+\label{people}
+\end{figure}
+
+
+\begin{table}[!h]{}
+\small
+\centering
+\caption{List of people counter sensors of International Road Dynamics company}%\cite{people}.}
+\begin{tabular}{llll}
+\toprule
+\textbf{Features} & \textbf{Transmitter} & \textbf{Receiver}  & \textbf{Applications}     \\
+\midrule
+Display/Wireless/Bidirectional     &  PTx20-1 & PRx20WD1 & Entrance and daily counts\\ 
+Wireless/Bidirectional             &  PTx20-1 & PRx20W1  & Entrance and daily counts\\ 
+Display/Bidirectional              &  PTx20-1 & PRx20D1  & Entrance and daily counts\\ 
+USB/Bidirectional                  &  PTx20-1 & PRx20U2  & Entrance and daily counts\\ 
+Display/USB/Bidirectional          &  PTx20-1 & PRx20UD2 & Entrance and daily counts\\ 
+\bottomrule
+\label{sensor}
+\end{tabular}
+\end{table}
+
+
+
+
+\subsection{Indoor Localization Using WiFi}
+
+Automatic user localization calculates the position of the user by knowing latitude, longitude, and altitude. This can be calculated by having an electronic device such as a mobile phone. Indoor localization is still a challenging topic, and it is because of the loss of GPS signals in indoor environments.
+
+Wireless-based indoor localization is another way for measurements. Wireless waves can go through obstacles like walls or doors and provide ubiquitous coverage of a building. WLAN indoor localization uses received signals value (RSSI) to indicate the distance to points and get the current point's location.
+This architecture needs two things, the beacon station that emits the wireless signals and electronic devices such as cellphones. 
+Fingerprint means the characteristic or feature of signals which RSS can be one of them. The assumption underneath this fingerprint-based indoor localization is that for each position in the area, the signals' features are different. By relying on the variation of signals in a distinct position, the current location can be obtained.
+
+
+
+############################
 Two datasets that were obtained from short duration experiments lasting from a few days to a few months are analyzed in this thesis. The two experiments are the e-counter Indoor occupancy behavioural tests and the WiFi fingerprint Indoor Localization database. 
 % Two case studies have been selected to evaluate the performance of the novel DSAP algorithm in a real-world scenario. Both the datasets analyzed in this work were part of short duration experiments lasting from a few days to a few months. 
 
@@ -705,9 +783,10 @@ Finally, the feature selection task was performed to provide a target dataset re
 %main itemize
 
 \end{itemize}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
+% I think we can remove this subsection. I can explain in next chapter
 \subsubsection{Data Stream Clustering}
 The measurements from the e-counters were analyzed to find patterns in time and space. Clusters of similar measurements with respect to position and count were generated using the DSAP and streaming K-means algorithms. To initiate the clustering algorithms, the size of the landmark time window needs to be defined. Different windows sizes ranging from 1 hour to 30 hours were test with the DSAP algorithm. A reasonable compromise between speed and accuracy of clusters was obtained for a window size of 5 hours, hence this was chosen as the size of the landmark window.% and because the number of people using the stairs are usually not significant or after working hours there is not much commuting, we consider each window with the length of 4 hour.
 There are several hyper parameters that need to be set in order to use the DSAP and streaming K-means algorithms correctly. This values are a function of the dataset under study. 
@@ -715,7 +794,7 @@ There are several hyper parameters that need to be set in order to use the DSAP 
     \item The damping factor for AP algorithm is constant for all AP function called and is equal to 0.9
     \item The maximum iteration is the predefined value and it is 100.
     \item The preference hyperparameter is the median value of the similarity matrix.
-    \item The expiration value equal to forget older windows is the last 5 landmark window. 
+    \item The expiration value equal to forget older windows is the last 5 landmark window (If it was applied). 
     \item The landmark time frame is equal to every 5 hours.
 %    \item For the streaming k means algorithm the number of the macro clusters was obtained by the elbow method. This number is $k$ = 6 for the entire dataset.
 \end{itemize}

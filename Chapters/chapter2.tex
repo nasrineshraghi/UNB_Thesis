@@ -4,35 +4,51 @@
 \begin{document}
 \chapter{Background}
 
-As the number of connected devices and applications that generate huge amount of data at very high speed increases, the need for faster datamining techniques is enhanced. This research work proposes a data stream clustering algorithm that builds upon the Affinity Propagation clustering algorithm. The concept of time windows that partition the data into manageable chunks is introduced in order to apply these algorithms for data stream clustering.
+%As the number of connected devices and applications that generate huge amount of data at very high speed increases, the need for faster data mining techniques is enhanced. This research work proposes a data stream clustering algorithm that builds upon the Affinity Propagation clustering algorithm. The concept of time windows that partition the data into manageable chunks is introduced in order to apply these algorithms for data stream clustering.
 
-This Chapter presents an overview of the clustering and data stream algorithms by reviewing their concepts and underlying mathematics. Furthermore, all the time window models applicable for data stream clustering are introduced. K-means algorithm based clustering techniques are introduced to compare with the proposed model to evaluate it's performance. Real world indoor localization data that is discussed later in the chapter is used to test the model. 
+This Chapter presents an overview of clustering by reviewing the concepts, methods, and underlying steps of two traditional clustering algorithms known as the affinity propagation (AP) and k-means. Data stream clustering algorithms are also introduced with the current time window models being used for computing micro- and macro-clusters. Finally, indoor localization systems are described due to the potential wide range of services they can provide by leveraging Internet of Things (IoT) and ubiquitous connectivity. 
+
+
+%K-means algorithm based clustering techniques are introduced to compare with the proposed model to evaluate it's performance. Real world indoor localization data that is discussed later in the chapter is used to test the model. 
 
 
 \section{Cluster Analysis}
 
-Clustering refers to partitioning a set of observations or tuples into groups according to some desired criterion \cite{jain1999data}. The intra-cluster objects within a group are similar while the inter-cluster objects are dissimilar. Figure \ref{clus} illustrates the clustering process graphically for a set of points in 2D space that are clustered into three clusters. Each cluster is generally represented by its center or exemplar or centroid of the cluster.
+Clustering refers to partitioning a set of data points (also referred to as observations or tuples) into groups according to a proximity measure. Distance functions are predominantly used to determine a proximity measure of dissimilarity/similarity between clusters.  This proximity measure directly affects the formation of the resulting clusters. Almost all clustering algorithms are explicitly or implicitly connected to some definition of distance function \cite{zumel2014practical}. The most commonly used distance functions for quantitative features are summarized in Table \ref{tabdis}. 
+
+Figure \ref{clus} illustrates the results of a clustering process for a set of points in a 2D space, where different data points were partitioned into three clusters using the Euclidean distance. Each cluster is represented by its centroid or exemplar (red data points). In general, the intra-cluster data points are similar due to their proximity in the feature space, meanwhile the inter-cluster data points are dissimilar. 
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[width = 10 cm]{image/Chapters/Chapter2/Blank diagram (1).png}
-    \caption{Data clustering in 2D space. Each of these three clusters has centroid which is shown by the red circle. }
+    \includegraphics[width = 8 cm]{image/Chapters/Chapter2/Blank diagram (1).png}
+    \caption{Clustering in 2D space}
     \label{clus}
 \end{figure}
 
 
-Even though labeled data can be analyzed using clustering techniques, but the strength of this unsupervised approach (or exploratory learning) lies in detecting similarities within an unlabelled dataset. Cluster analysis is used in diverse fields with different goals and applications, such as: 
+Once a proximity measure is chosen, the construction of a clustering criterion function makes the partition of
+clusters an optimization problem, which is well defined
+mathematically, and has rich solutions in the literature \cite{jain1999data}. Clustering is ubiquitous, and a wealth of clustering algorithms has been developed to solve different problems in specific fields. However, there is no clustering algorithm that can be universally used to solve all problems. Some problem examples can be described as follows: 
 
-\begin{enumerate}
-    \item Group discovery, which is grouping similar objects into clusters, finding the data distribution, and defining a preliminary stage for discriminant analysis. 
-    \item Pattern recognition, is an automated way of finding patterns and regularities in the data by matching the information stored in the database with the incoming data. 
-    \item data compression, provides a summary of a dataset by representing its most representative object which can be a center of mass or an actual data point as a centroid.
-    \item Outlier detection is another method in which many applications employ anomaly detection, such as intrusion detection, fraud detection. Anomaly detection is achieved by identifying outliers. An outlier can be a data point very far from it's cluster centers or form small clusters that deviate from the prominent clusters.
-    \item Feature selection is used when the number of features in the dataset is larger than the number of data points, then dimension reduction or feature selection is necessary to be applied.
-\end{enumerate}
+\begin{itemize}
+    \item \textit{Group Discovery}: Clusters provide useful information for supporting a pre-processing step of discriminant analysis. 
+    \item \textit{Pattern Recognition}: Clusters can be used for supporting template matching by determining similarities between two entities of the same type (e.g., points, curves, or shapes), finding patterns and regularities in data.
+    
+   % the information stored in the database with the incoming data. 
+    \item \textit{Data Compression}: Clusters provide a summary of a data set by reducing the number of data points needed to represent a data set. This is achieved by using cluster centroids rather than the actual data points. 
+    
+   % its most representative object which can be a center of mass or an actual data point as a centroid.
+    \item \textit{Outlier detection}: Clustering has been successfully applied to find outliers in data. % is another method in which many applications employ anomaly detection, such as intrusion detection, fraud detection. Anomaly detection is achieved by identifying outliers. 
+    An outlier can be assigned to a data point very far from its cluster centroid or a cluster that deviates from the prominent clusters.
+    \item \textit{Feature Reduction}: Clusters can be used for dimension reduction when the number of features in a data set is larger than the number of data points.
+    \end{itemize}
 
 
-Distance (dissimilarity) and similarity between data points are the basis of clustering algorithms \cite{zumel2014practical}. The most commonly used distance functions for quantitative data features are summarized in Table \ref{tabdis}
+
+
+%Even though labeled data can be analyzed using clustering techniques, but the strength of this unsupervised approach (or exploratory learning) lies in detecting similarities within an unlabelled dataset. 
+
+
 
 % and these two words bring distances of each data point in the cluster which is closer to other data points than other data points in other clusters \cite{zumel2014practical}. 
 
@@ -48,11 +64,12 @@ Distance (dissimilarity) and similarity between data points are the basis of clu
 
 \begin{table}[!h]{}
 \centering
-\caption{Distance metrics for data clustering \protect\cite{xu2015comprehensive}.}
+\caption{Main distance functions used for computing proximity measures \protect%\cite{xu2015comprehensive}
+}
     \label{tabdis}
     \begin{tabular}{p{4cm} l p{5cm} l  p{6cm} }
     \hline
-    \textbf{Distance} & \textbf{Formula} & \textbf{Description} \\ \hline
+    \textbf{Distance} & \textbf{Function} & \textbf{Description} \\ \hline
     \midrule
     
     
@@ -64,19 +81,10 @@ Distance (dissimilarity) and similarity between data points are the basis of clu
      
   
      &  
-     Root square differences between co-ordinates of a pair of objects
+     The root square differences between co-ordinates of a pair of data points, most applied way of representing distance in clustering. Tend to form hyperspherical clusters.
      
      \\ \hline
-    Minkowski distance                &    
      
- $\left( \sum_{i=1}^n \abs{q_i - p_i}^n \right)^{\frac{1}{n}}$
-
-     
-     &  
-      1-Euclidean distance if n=2, 2-City-block distance if n=1, 3-Chebyshev distance if n $\leftarrow \infty$
-     
-     \\
-    \hline
     
      Manhattan distance                 &    
      
@@ -84,7 +92,18 @@ Distance (dissimilarity) and similarity between data points are the basis of clu
      
      
      &  
-     in n-dimensional space is the sum of the distances in each dimension
+    The sum of the distances in each dimension in a n-dimensional space
+     \\
+     \hline
+     Minkowski distance                &    
+     
+ $\left( \sum_{i=1}^n \abs{q_i - p_i}^n \right)^{\frac{1}{n}}$
+
+     
+     &  
+      %1-Euclidean distance if n=2, 2-City-block distance if n=1, 3-Chebyshev distance if n $\leftarrow \infty$
+      The generalization of the Euclidean distance and the Manhattan distance
+     
      \\
     \hline
     
@@ -94,8 +113,9 @@ Distance (dissimilarity) and similarity between data points are the basis of clu
    
     
     &  
-    1-Stays the same in the face of rotational change in data, 
-    2-The most commonly used distance in document area
+    % 1-Stays the same in the face of rotational change in data, 
+    % 2-The most commonly used distance in document area
+    A metric for measuring distance when the magnitude of the vectors does not matter, commonly used in text data
     \\
     \hline
     
@@ -105,8 +125,9 @@ Distance (dissimilarity) and similarity between data points are the basis of clu
     $\sqrt{(q_i - p_i)^T S^{-1} (q_i - p_i)}$
 
     &  
-    1- S is the co-variance matrix inside the cluster,  
-    2- High computation complexity
+    The distance between a data point and the mean, requiring high computational complexity
+    % 1- S is the co-variance matrix inside the cluster,  
+    % 2- High computation complexity
     \\
     \hline
     \bottomrule
@@ -114,104 +135,116 @@ Distance (dissimilarity) and similarity between data points are the basis of clu
 \end{tabular}
 \end{table}
 
+Therefore, selecting an algorithm is an important step, as certain algorithms might be best-suited for a particular type of data sets in order to reflect the true nature of the data \cite{berkhin2006survey, han2011data}. Traditionally, clustering algorithms can be distinguished into five main categories described as follows: 
 
-
-
-
-There are many data clustering algorithms available for different applications. Selecting an algorithm is important, as certain algorithms are better suited particular datasets and reflect the true nature of the data \cite{berkhin2006survey, han2011data}. Traditionally clustering algorithms are divided into five main types as listed below. The advantages and disadvantages of all these methods are listed next in \ref{methoda}.
+%The advantages and disadvantages of all these methods are listed next in \ref{methoda}.
 %In progress
 
 \begin{itemize}
 
-    \item\textbf{Partitioning methods:} Data is being split into $k$ number of clusters based on the similarities or distances to the cluster centroids. Each data point belongs to one cluster, and each cluster contains at least one data point. These algorithms usually threshold the distance of new data points to the existing micro-clusters, and maybe it comes(happen) a new cluster. These types of algorithms are finding clusters with spherical shapes, and the noise can influence the results. A very famous algorithm in this group is K-means.
+    \item\textit{Partitioning methods:} Data points are split into $k$ number of clusters. Each data point can only belong to one cluster, and each cluster must contain at least one data point. The algorithms usually require a distance threshold %the distance of new data points to the existing micro-clusters, and maybe it comes(happen) 
+    to generate new clusters, specially those with spherical shapes.   %. These types of algorithms are 
+    %finding clusters with spherical shapes. %, and the noise can influence the results. A very famous algorithm in this group is K-means.
+    K-means is the most recognized clustering algorithm in this category due to its robustness in finding clusters that have not been explicitly labeled in the data.
     
-    \item\textbf{Hierarchical methods:} seeks to build a tree based hierarchical structure from asset of unlabeled data \cite{swarndeep2016overview}. This grouping process is represented in the form of dendrogram. It can be analyzed with the help of statistical method. BIRCH is the algorithm related to this group.
+    \item\textit{Hierarchical methods:} The aim is to build a tree-like nested structure from a set of data points \cite{swarndeep2016overview}.  These methods are widely used to analyze social network data. The BIRCH algorithm is an example of a hierarchical method used to summarize large network data. missing here to explain CF/ HIERARCHICAL TREES 
+    
+    %The clusters are described in the form of dendrogram. %It can be analyzed with the help of statistical method. 
+    
+    %the algorithm related to this group.
     %elmi
-    \item\textbf{Density-based methods:} continue to grow the given cluster as long as the density in the neighborhood. This algorithm is suitable for handling noise in the data. DBSCAN and OPTICS are two famous algorithms in this group. 
-exceeds certain threshold
+    \item\textit{Density-based methods:} Clusters are separated from each other by contiguous regions of low density of data points. They are highly efficient to find arbitrary shaped clusters and clusters with noise.  DBSCAN and OPTICS are well-known algorithms in this group.
+    
+    %continue to grow the given cluster as long as the density in the neighborhood. 
+    
+% exceeds certain threshold
     %elmi
-    \item\textbf{Grid-based methods:} are a special category of density-based algorithms, where the regions consists of the grid cells. In particular, the data space is partitioned into a finite number of cells that form a grid structure on which clustering is performed. STING is one of the highly scalable algorithm in this group with the ability to decompose the data set into various levels of detail. 
+    \item\textit{Grid-based methods:} %are a special category of density-based algorithms, where the regions consists of the grid cells. In particular, 
+    The feature space is partitioned into a finite number of cells to form a grid structure and then find the clusters from the cells. These methods are efficient in mining large multidimensional data sets. STING is one of the highly scalable algorithms in this group with the ability to decompose a feature space into various levels of detail. 
+   
     %elmi
-    \item\textbf{Model-based methods:} try to fit a model to the data, assuming that data are generated from k probability distributions (typically Gaussian).
+    \item\textit{Model-based methods:} The main assumption is that the data points are generated by a model and the algorithm tries to recover the original model from the data. The model that we recover from the data then defines clusters and an assignment of data points to clusters. A commonly used criterion for estimating the model parameters is maximum likelihood.
+    
+    %try to fit a model to the data, assuming that data are generated from k probability distributions (typically Gaussian).
 \end{itemize}
 
-
+The main advantages and disadvantages of these different categories of clustering methods are summarized in Table \ref{methoda}. 
 
 
 \begin{table}[!h]\scriptsize
 % \centering
-\caption{ Advantages and disadvantages of clustering methods \protect\cite{mousavi2015data}.}
+\caption{ Comparison of clustering methods \protect\cite{mousavi2015data}.}
 \label{methoda}  
 \small
 \begin{tabularx}{\linewidth}{p{3cm} p{5.5cm} p{5.5cm}}
 \hline
- \multicolumn{1}{c}{\textit{\textbf{Methods}}} &
+ \multicolumn{1}{c}{\textit{\textbf{Categories}}} &
  \multicolumn{1}{c}{\textit{\textbf{Advantages}}}   &   
 \multicolumn{1}{c}{\textit{\textbf{Disadvantages}}} 
 \tabularnewline \hline
 \vfill 
- Partitioning    & 
+ \textbf{Partitioning Methods}    & 
  \begin{enumerate}[*,topsep=0pt,leftmargin=0.2cm]
  \item Easy to implement  
- \item iterative algorithms
+ \item Produce tighter clusters
 \end{enumerate}
 \tabitem
 &       
 \begin{itemize}[*,nosep,leftmargin=0.2cm]
     \setlength\itemsep{0em}
-     \item usually pre-defined value for number of clusters  
-     \item spherical shaped
+     %\item Require pre-defined value for number of clusters  THIS IS NOT CORRECT, SINCE AP DOES NOT REQUIRE THE NUMBER OF CLUSTERS
+     \item Best suited for finding spherical shaped clusters
 \end{itemize} 
 \tabularnewline \hline
 
 \vfill
-Hierarchical
+\textbf{Hierarchical Methods}
 & 
 \begin{itemize}[*,nosep,leftmargin=0.2cm]
-    \item Easy to handle any forms of distance   
+    \item Easy to handle any type of distance function   
 \end{itemize}
  &       
 \begin{itemize}[*,nosep,leftmargin=0.2cm]
-    \item Ambiguity of termination criteria 
-    \item High complexity
+   % \item High ambiguity of clustering criteria 
+    \item High computational complexity
 \end{itemize}
 \tabularnewline \hline
 \vfill
-Grid-based
+\textbf{Grid-based Methods}
 & 
 \begin{itemize}[*,nosep,leftmargin=0.2cm]
     \item Fast processing time 
-    \item Can handle noise
+    \item Easy to handle noisy data
 \end{itemize}
 &      
 
 \begin{itemize}[*,nosep,leftmargin=0.2cm]
-    \item Higher value for convex clusters like DBSCAN
-    \item Limits distance metric to Euclidean
+    %\item Higher value for convex clusters
+    \item Limited to the Euclidean distance function
 \end{itemize}
 \tabularnewline \hline
 \vfill
- \textbf{Density-Based}
+ \textbf{Density-Based Methods}
 & 
 \begin{itemize}[*,nosep,leftmargin=0.2cm]
     \item Fast to compute
-    \item Easy to interpret %as it gives higher value when clusters are dense
+    \item Easy to interpret clusters %as it gives higher value when clusters are dense
 \end{itemize}
  &       
 \begin{itemize}[*,nosep,leftmargin=0.2cm]
-    \item Higher value for convex clusters% compared with density based clusters
+    \item Higher value for convex clusters compared with density-based clusters
 \end{itemize}
 \tabularnewline \hline
 \vfill
- Model-Based
+ \textbf{Model-Based Methods}
 & 
 \begin{itemize}[*,nosep,leftmargin=0.2cm]
-    \item Specifying the number of clusters automatically based on standard statistics 
-    \item Can handle noises            
+    \item Number of clusters based on standard statistics 
+    \item Easy to handle noisy data            
 \end{itemize}
  &       
 \begin{itemize}[*,nosep,leftmargin=0.2cm]
-    \item Depending on the hypothesized model or structure
+    \item Highly dependent on the hypothesized model
 \end{itemize} 
 \tabularnewline \hline
 \vfill
@@ -222,68 +255,120 @@ Grid-based
 
 
 
-This work is built based on the two very famous partitioning algorithms, affinity propagation and K-means. The detail of these two algorithm are explained in detail.
+%This work is built based on the two very famous partitioning algorithms, affinity propagation and K-means. The detail of these two algorithm are explained in detail.
 
 
-\subsection{Affinity Propagation Clustering Algorithm}
+\subsection{Affinity Propagation Clustering}
 
 % $O(N^2logN)$ where N is the number of data points. It can be imagined that if the number of data points is very huge, then it is impossible to do clustering using AP
-Affinity propagation (AP) is a partitioning-based clustering algorithm that has been introduced by Frey and Dueck in 2007 \cite{frey2006mixture}. AP works based on the message passing method to find the best representative of clusters which calls centroid or exemplar \cite{jiang2019exemplar, frey2007clustering}. It means to find data points with the maximum similarity to others. The advantage of AP to compare with many clustering algorithms is that this Algorithm does not require the number of clusters as an input, and it makes it unique between many clustering algorithms.
+Affinity propagation (AP) is a partitioning-based clustering algorithm that has been introduced by Frey and Dueck in 2007 \cite{frey2006mixture}. AP is based on the concept of "message passing" between data points that plays an important role in finding the best candidate data point to become a cluster centroid \cite{jiang2019exemplar, frey2007clustering}. 
 
 
-AP considers all data points as a potential exemplar until a good set of clusters with centroids are found. Figure \ref{APPi} shows the gradually emerging of clusters and centroids, but the tenth iterations show the uncertainly of having clusters shows with the faded blue lines until the last and final iteration to find a good cluster solution.
+
+%It means to find data points with the maximum similarity to others. The advantage of AP to compare with many clustering algorithms is that this Algorithm does not require the number of clusters as an input, and it makes it unique between many clustering algorithms.
+
+
+Unlike clustering algorithms such as k-means, affinity propagation does not require the number of clusters to be determined or estimated before running the algorithm. It considers all data points as a potential centroids until an optimal set of clusters and their respective centroids are found through an iteration process as illustrated in Figure \ref{APPi}. 
+\todo[inline]{Please explain the contents of this figure}
+
+%illustrates the gradually emerging of clusters and centroids, but the tenth iterations show the uncertainly of having clusters shows with the faded blue lines until the last and final iteration to find a good cluster solution. NOT POSSIBLE TO UNDERSTAND THE MESSAGE OF THIS PARAGRAPH
 
 \begin{figure}
 \centering
 \includegraphics[width = 13 cm]{image/Chapters/Chapter2/APDurek.PNG}
-\caption{Affinity propagation: clustering data by passing messages \protect\cite{dueck2009affinity}. It shows the iteration to reach the clusters emerging.}
+\caption{Iteration process of affinity propagation (Source: \protect\cite{dueck2009affinity})}
 \label{APPi}
 \end{figure}
 
 
-The AP algorithm consists of four matrices: similarity matrix, responsibility matrix, availability matrix, and Criterion matrix.
+The AP algorithm supports similarities that are not symmetric, and it is not dependent on initialization found on other clustering algorithms \cite{refianti2017time}.However, it has a significant speed problem, particularly for clustering large-scale data sets. Affinity Propagation needs $O(N^2T)$ time to update the message where N and T represent the number of data points and the number of iterations \cite{frey2007clustering}. Finally, applying AP for any data set requires to meet two conditions: no missing or null data in the inputs and the data should be numeric, not categorical.
+
+
+The AP algorithm consists of four matrices: similarity matrix, responsibility matrix, availability matrix, and criterion matrix. They can are described as follows:
 
 \begin{itemize}
 
-  \item\textbf{Similarity matrix:}
-  The similarity matrix $s(i,j)$, gives information about any inputs. It shows data points with index \textit{k} is how appropriate to be the cluster-head for data point \textit{i}. Every cell has values that correspond to how similar two objects are. It is a diffident method to calculate the values for diagonal values and non-diagonal values.  The diagonal values,  Cells are filled with the lowest number among all the cells. The non-diagonal values are the negation of the sum of the squares of the differences between participants.
-  \item\textbf{Responsibility matrix:} Cells contain values that correspond to how responsible one object is for another. It is better to say how responsible it is to be a part of another object or related to another object. This is calculated with the following equation as shown below:
+  \item\textit{Similarity Matrix:}
+  Every cell value in the similarity matrix $s(i,j)$ corresponds to an element \textit{k} representing how similar/dissimilar two data points are in a feature space. This element \textit{k} is defined as the negative of the Euclidean distance between the two data points. The greater the distance between any two data points, smaller is the \textit{k} between them. The \textit{k} values of the off-diagonal cells will dictate the number of clusters formed, in such a way that the smaller the index value (value	$\leq$0), fewer number of clusters is obtained.
+  %gives information about any inputs. It shows data points with is how appropriate to be the cluster-head for data point \textit{i}. 
+  %Every cell has values that correspond to how similar two objects are. It is a diffident method to calculate the values for diagonal values and non-diagonal values.  The diagonal values,  Cells are filled with the lowest number among all the cells. The non-diagonal values are the negation of the sum of the squares of the differences between participants.
+  \item\textit{Responsibility Matrix:} The matrix $r(i , k)$ quantifies how well-suited element $k$ is, to be a cluster centroid for element $i$, taking into account the nearest contender $k’$ to be a cluster centroid for $i$.
+  
+  %Cells contain values that correspond to how responsible one data point is for another. It is better to say how responsible it is to be a part of another object or related to another object. 
+  We initialize the matrix $R$ with zeros, and compute the next values using the equation:
 
     \begin{equation}
         r(i, k) \leftarrow s(i, k) - \max\limits_{k' s.t. k' \neq k}\{ a(i, k') + s(i, k') \}
     \end{equation}
+ 
+ The goal is to quantify how similar is $i$ to $k$, compared to some $k$’, taking into account the availability of $k’$.   
     
-    
-  \item\textbf{Availability matrix:} This matrix contains values that correspond to how available one object is to be an exemplar for another object. With this means, how available one object is for a cluster to be a centroid of a cluster, and diagonal values is the sum of all positive responsibility values in the column excluding the object self-responsibility. 
-  The availability diagonal values are determined by the following formulas:
-
-    \begin{equation}
-        (i, k) \leftarrow \min\{0, r(k,k) + \sum\limits_{i' s.t. i' \notin \{i, k\}}{\max\{0, r(i', k)\}}
-    \end{equation} 
-    
-    For points on the non-diagonal we have:
+  \item\textbf{Availability matrix:} The matrix $a(i,k)$ quantifies how appropriate is it for $i$ to choose $k$ as its cluster centroid, taking into account the support from other elements that $k$ should a centroid. Availability is self-responsibility of $k$ plus the positive responsibilities of $k$ towards elements other than $i$ as shown in the following equation:
+  
     \begin{equation}
         a(k, k) \leftarrow \sum\limits_{i' \neq k}\max(0, r(i', k))
     \end{equation}
+  
+  The matrices $R$ and $A$ matrices are iteratively updated. This procedure may be terminated after a fixed number of iterations, after changes in the values obtained fall below a threshold, or after the values stay constant for some number of iterations.
+  
+  
+%   \begin{equation}
+%         (i, k) \leftarrow \min\{0, r(k,k) + \sum\limits_{i' s.t. i' \notin \{i, k\}}{\max\{0, r(i', k)\}}
+%     \end{equation} 
+  
+ % This matrix contains values that correspond to how available one object is to be a centroid for another object. With this means, how available one object is for a cluster to be a centroid of a cluster, and diagonal values is the sum of all positive responsibility values in the column excluding the object self-responsibility. 
+ % The availability diagonal values are determined by the following formulas:
 
+  Figure \ref{abc} illustrates how the AP algorithm sends responsibility and availability messages to data points \protect\cite{dueck2009affinity}. Responsibility $r(i,k)$ is the message from data point $i$ to candidate centroid $k$ and answer relies on determining if point $k$ is well-suited to be a centroid for data point $i$. Availability $a(i,k)$ sends a message from centroid $k$ to data point $i$ to find how well it would be for point $i$ to choose point $k$ as a centroid. 
+    
 
 
     \begin{figure}
     \centering
     \includegraphics[width = 13 cm]{image/Chapters/Chapter2/APmessage.PNG}
-    \caption{AP sends two types of message towards other data points: responsibility and availability \protect\cite{dueck2009affinity}. Responsibility $r(i,k)$, is the message from data $i$ to candidate exemplar $k$ and the respond back to figure out if point $k$ is well suited as an exemplar for point $i$.
-    Availability $a(i,k)$, send a message from exemplar point $k$ to point $i$ to find how well it would be for point $i$ to choose point $k$ as an exemplar.}
+    \caption{Message passing based on responsibility and availability matrices}
+    %AP sends two types of message towards other data points: responsibility and availability \protect\cite{dueck2009affinity}. Responsibility $r(i,k)$, is the message from data $i$ to candidate centroid $k$ and the respond back to figure out if point $k$ is well suited as a centroid for point $i$.    Availability $a(i,k)$, send a message from centroid $k$ to point $i$ to find how well it would be for point $i$ to choose point $k$ as a centroid. ##########THIS IS TOO MUCH TEXT TO BE PART OF A FIGURE CAPTION###########}
     \label{abc}
     \end{figure}
 
 
-  \item\textbf{Criterion matrix:} Lastly, in the criterion matrix, each cell is the sum of the availability matrix and responsibility matrix at that location. The highest criterion values of each row are designated as an exemplar.
+  \item\textit{Criterion matrix:} This matrix is calculated after the iteration process is terminated.The $c (i,k)$ matrix is the sum of $R$ and $A$. An element $i$ will be assigned to an exemplar $k$ which is not only highly responsible but also highly available to $i$  as shown in 
+  
+  \todo[inline]{put the equation for the C matrix here}
+  
+  %Lastly, in the criterion matrix, each cell is the sum of the availability matrix and responsibility matrix. The highest criterion values of each row are designated as a centroid.
+
+The element with the highest criterion value in each row would be designated to be a cluster centroid. Elements that have the same centroid will be in the same cluster.
+
+
+
+
+
 
 
 \end{itemize}
 
+The pseudo-code \ref{APo} shows the AP clustering algorithm. The Python code is available at https://scikit-learn.org/ open source repository. Four hyperparameters are used for tuning the clustering process. They are described as follows: 
 
-The number of exemplar will end up with the number of clusters. Rows that have the same exemplar will be in the same cluster. The pseudo-code \ref{APo} shows the AP clustering algorithm.
+\begin{itemize}
+
+\item \textit{Damping Factor} is the extent to which the current value is maintained relative to incoming values (weighted 1 - damping). This in order to avoid numerical oscillations when updating messages.
+
+\item Maximum number of iterations.
+
+\item Convergence is the number of iterations with no change in the number of estimated clusters that stops the convergence.
+
+\item Preferences The number of centroids is influenced by the input preferences value. If the preferences are not passed as arguments, they will be set to the median of the input similarities.
+
+\item Affinity The selection of which distance function to use.
+
+
+    % \item\textit{Preference Parameter:} determines a p how likely is a data point $i$ to be chosen as a centroid. This value is in the diagonal of similarity matrix. The number of identified clusters can be increased or decreased by changing this parameter correspondingly, and a good choice is to set the preference to be the median of all the similarities between data points \cite{li2012improved}.
+    % %This value for the e-counter dataset for the online phase is -4 and the value of the offline phase is -1. This number is a median value of the similarity matrix.
+    % \item\textit{Damping factor:}  is the extent to which the current data point is maintained relative to incoming data points. Damping should be between 0.5 to 1. 
+    % \item\textit{Maximum number of iteration:}  defines the maximum number of iterations. The default value for both online and offline phase is 100.
+    % \item\textit{Convergence iteration:}  is the number of iterations with no change in the number of estimated clusters that stop the convergence.
+\end{itemize}
 
 \begin{algorithm}[]
     \SetKwInOut{Input}{Input}
@@ -317,24 +402,15 @@ The number of exemplar will end up with the number of clusters. Rows that have t
  \caption{Affinity Propagation Algorithm}
 \label{APo}
 \end{algorithm}
+\todo[inline]{missing the  selection of the distance function a hyperparameter, also the input should be better explained in the text }
 
 
 
 
 
-% The convergence of the algorithm is dependent on the damping parameter. Preference control the probability of finding exemplars. The probability increases with the increasing value of preference till a threshold is reached().
 
-%The default values are listed below, which are used for our DSAP model during online and offline mode. These values work for our dataset and may vary based on the other data. Hyper-parameters are variables that control the performance and structure of any machine learning model. There are four main hyper-parameters that are used to control the performance of the proposed DSAP algorithm. Some of these parameters need to be defined at the start of the DSAP algorithm while a few are estimated based on the dataset under evaluation. These four hyper-parameters are:
+%To improve the algorithm performance, hyper-parameters should be considered. These parameters are variables that control the performance and structure of any machine learning model and they are grouped in four, Preference, damping maximum iteration, and convergence iteration. These parameters are described below.
 
-Applying AP for any dataset requires to meet two condition: no missing or null data in the inputs and The data should be numeric, not categorical.
-To improve the algorithm performance, hyper-parameters should be considered. These parameters are variables that control the performance and structure of any machine learning model and they are grouped in four, Preference, damping maximum iteration, and convergence iteration. These parameters are described below.
-\begin{itemize}
-    \item\textit{Preference parameter:}  Value determines how likely is a data point $i$ to be chosen as a centroid. This value is in the diagonal of similarity matrix. The number of identified clusters can be increased or decreased by changing this parameter correspondingly, and a good choice is to set the preference to be the median of all the similarities between data points \cite{li2012improved}.
-    %This value for the e-counter dataset for the online phase is -4 and the value of the offline phase is -1. This number is a median value of the similarity matrix.
-    \item\textit{Damping factor:}  is the extent to which the current data point is maintained relative to incoming data points. Damping should be between 0.5 to 1. 
-    \item\textit{Maximum number of iteration:}  defines the maximum number of iterations. The default value for both online and offline phase is 100.
-    \item\textit{Convergence iteration:}  is the number of iterations with no change in the number of estimated clusters that stop the convergence.
-\end{itemize}
 %elmi-In un-convergent cases, we have to increase lam manually and gradually and rerun AP until the algorithm converges. Another choice is to use a big damping factor close to 1 to eliminate oscillations, but AP will run very slow. Both choices may consume plenty of time, especially for a large data set
 %    \item Number of initial data points: 500 items from the head of the stream
  %   \item Threshold($\epsilon$): This number is the average distance between data points and exemplars in the first phase. For e-counter dataset it is equal to 1.
@@ -347,8 +423,16 @@ To improve the algorithm performance, hyper-parameters should be considered. The
 
 
 
-\subsection{K-means Clustering Algorithm} \label{kmeansalgo}
-K-means Algorithm was first used by J.MacQueen in 1967 \cite{macqueen}, the process of partitioning population into $k$ orders and used the first k data as centroids to the closest centroid.
+\subsection{K-means Clustering} \label{kmeansalgo}
+\todo[inline]{Nasrin you need to improve this section}
+
+K-means was first introduced by J.MacQueen in 1967 \cite{macqueen} as a method for partitioning data into isotropic clusters and is not as versatile as single link algorithms.
+Also, this algorithm is receptive to noisy data or outliers (one data point as an outlier can increase the squared error dramatically); it is suitable only when the mean is defined, and it needs the number of clusters prior, which is not easy when no prior information is available.
+The  K-means algorithm is limited to numeric attributes.
+
+
+
+partitioning population into $k$ orders and used the first k data as centroids to the closest centroid.
 K-means is a partitioning and k centroids algorithm that aims to group $N$ observations into $k$ clusters in which each observation belongs to the cluster with the nearest center.
 
 The K-means algorithm is formed of the following steps:
@@ -356,7 +440,7 @@ The K-means algorithm is formed of the following steps:
     \item Place k points in the space represented by the objects that are being clustered. These data points describe the initial set of centroids.
     \item Assign each data point to the group with the closest centroid.
     \item When all data points have been assigned to the closest group, the positions of the k centroids is being recalculated.
-    \item Repeat Steps 2 and 3 until convergence (centroids no longer move).
+    \item  Steps 2 and 3 repeat until convergence (centroids no longer move).
 \end{enumerate}
 
 
@@ -381,9 +465,7 @@ Finally, these process will be repeated until convergence.
 The K-means algorithm starts with the K initial set of cluster-centers and iteratively updates it to decrease the error function. A proof of the finite convergence of the K-means type algorithms is given in \cite{selim1984k}. The complexity of n iterations of the K-means algorithm is O(n * K * m * N). Which n is a number of iterations, K set of macro clusters, m is the sample size with N attributes.  This linear complexity is one reason for the demand of the Kmeans algorithms. Even if the number of data points is considerably large, K-means is computationally efficient. 
 Other reasons which make the algorithm so popular are a straightforward interpretation of clusters, simplicity of implementation, fast convergence, and adaptability to sparse data \cite{dhillon2001concept}.
 
- K-means is a partitioning algorithm that works well just on data with isotropic clusters and is not as versatile as single link algorithms.
-Also, this algorithm is receptive to noisy data or outliers (one data point as an outlier can increase the squared error dramatically); it is suitable only when the mean is defined, and it needs the number of clusters prior, which is not easy when no prior information is available.
-The  K-means algorithm is limited to numeric attributes. 
+ 
 Figure \ref{kmAlgo} presents the pseudo-code of K-means algorithm.
 
 \begin{figure}
@@ -392,7 +474,7 @@ Figure \ref{kmAlgo} presents the pseudo-code of K-means algorithm.
 \caption{K-means pseudocode }
 \label{kmAlgo}
 \end{figure}
-
+\todo[inline]{make a proper table for the algorithm}
 
 %%Elmi
 % The similarity measure on numeric attributes is the square Euclidean distance; the similarity measure on the categorical attributes is the number of mismatches between objects and the cluster prototypes.
@@ -435,7 +517,7 @@ There are several approaches to determine the number of clusters for K-means clu
 
 \noindent\textbf{Elbow Method:}
 
-Elbow method is a technique for K-means algorithm to find the optimal number of clusters by fitting the model with the range of value for $k$. In this method assume the line chart is an arm, then the elbow or the point of inflection on the curve is the best fit for the model. The scoring parameter can be distortion, Silhouette, and Calinski or many other parameters. Distortion computes the average of squared distance from each point to its assign centroid. This distance is usually is a Euclidean distance. Silhouette calculates the mean of Silhouette coefficient of all data points. Calinski score computes the ratio of dispersion between and within clusters.
+Elbow method is a technique for K-means algorithm to find the optimal number of clusters by fitting the model with the range of value for $k$. In this method assume the line chart is an arm, then the elbow or the point of inflection on the curve is the best fit for the model. The scoring parameter can be distortion, Silhouette, and Caliński or many other parameters. Distortion computes the average of squared distance from each point to its assign centroid. This distance is usually is a Euclidean distance. Silhouette calculates the mean of Silhouette coefficient of all data points. Caliński score computes the ratio of dispersion between and within clusters.
 
 
 
@@ -449,18 +531,21 @@ Elbow method is a technique for K-means algorithm to find the optimal number of 
 
 
 
-\section{Data Stream Clustering }
+\section{Streaming Cluster Analysis }
 \todo[inline]{SEQUENCE FOR THIS SECTION IS ONLINE/OFFLINE +  TIME WINDOWS +ALGORITHMS}
 
-Data stream $S$ is sequence of real-time objects $d_1, d_2, ..., d_3 $ $\xrightarrow S = {d_i}$ which are infinitive,ordered, fast-changing at the rapid rates \cite{han2011data}.
+\todo[inline]{start thi ssection explaining why streaming clustering is important}
+
+A data stream $S$ is sequence of infinitive, ordered, and fast-changing data points $d_1, d_2, ..., d_3 $ $\xrightarrow S = {d_i}$ \cite{han2011data}.
 
 
-In almost all clustering algorithms, the number of data points are fixed and evaluate each data point multiple times. However, many applications and systems generate observations continuously such as sensors, smart grids, network data, medical, finance and so on. In order to keep changes for new data points and the possible shift in cluster structures, classical clustering algorithms need to be run periodically. This method is computationally high and needs lot of data to be stored periodically. One major approach is to update existing clusters and merge new data points into the existing clusters by identifying emerging structures and removing outdated structures incrementally \cite{carnein2019optimizing}. This is the aim of data stream clustering algorithms which data points comes continuously in order and the stream is possibly unbounded.Finding the pattern without storing all the observations is a main task.
-Data stream clustering finds clusters based on streaming and it is different from traditional clustering \cite{toshniwal2013clustering}:
+In almost all clustering algorithms, the number of data points is fixed, and evaluate each data point multiple times. However, many applications and systems generate observations continuously, such as sensors, smart grids, network data, medical, finance, and so on. In order to keep changes for new data points and the possible shift in cluster structures, classical clustering algorithms need to be run periodically. This method is computationally high and needs many data to be stored periodically. One major approach is to update existing clusters and merge new data points into the existing clusters by identifying emerging structures and removing outdated structures incrementally \cite{carnein2019optimizing}. This is the aim of data stream clustering algorithms in which data points come continuously in order, and the stream is possibly unbounded. Finding the pattern without storing all the observations is the main task of stream clustering.
+
+Data stream clustering finds clusters based on the flow of data points into the model, and it is different from traditional clustering \cite{toshniwal2013clustering}:
 \begin{itemize}
     \item Traditional clustering data are static, the data stream is dynamic.
-    \item Traditional clustering datasets can be accumulated in memory but because of the enormous size of streaming data, it is not possible to store in memory.
-    \item traditional clustering results are fixed but The data stream clustering results vary over time.
+    \item Traditional clustering datasets can be accumulated in memory, but because of the enormous size of streaming data, it is impossible to store them in memory.
+    \item traditional clustering results are fixed, but The data stream clustering results vary over time.
 \end{itemize}
 
 
@@ -473,8 +558,8 @@ Many algorithms use similarity thresholds to decide whether an observation fits 
 
 
 \subsection{Two-phase Clustering Algorithms:}
-
-All these approaches, capture the location of dense in the data space and considers as clusters. These clusters can be mergered when they become to similar over the time, however, it is not possible to split clusters again since the underlying data was discarded and only the centre of the dense region was remained \cite{aggarwal2007data}. To avoid this issue, many clustering algorithms models are divided in two parts: an online and an offline phases \cite{aggarwal2003framework}. Aggarwal introduced CluStream algorithm, combined online summarization at the first stage with the offline stage using k-means. The two-phase clustering methods are visualized in figure \ref{2phase} by the grid structure.
+MISSSING: EXPLAIN THE SINGLE PASS, AND MAYBE OTHER APPROACHES USED FOR STREAMING
+All these approaches capture the location of dense in the data space and consider them as clusters. These clusters can be merged when they become similar over time. However, it is not possible to split clusters again since the underlying data was discarded and only the center of the dense region was remained \cite{aggarwal2007data}. To avoid this issue, many clustering algorithm models are divided into two parts: online and offline phases \cite{aggarwal2003framework}. Aggarwal introduced the CluStream algorithm, combined online summarization at the first stage with the offline stage using k-means. The two-phase clustering methods are visualized in figure \ref{2phase} by the grid structure.
 
 \begin{figure}
 \centering
@@ -486,15 +571,15 @@ All these approaches, capture the location of dense in the data space and consid
 
 The online requires a process for saving the summary statistics of a data stream in a fast manner. The offline phase uses the last stage summary statistics to provide the user with a fast understanding of the clusters whenever required. 
 
-The offline component which can be based on the user request, it uses online micro clustering to find macro clusters by re-clustering the clusters obtained. this step is not time related and can be happen any time by the request. 
+The offline component, which can be based on the user request, uses online micro clustering to find macro clusters by re-clustering the clusters obtained. This step is not time-related and can happen any time by request. 
 
 
 %The second phase is triggered at the end of a designated time interval. All the centroids of clusters which have been computed by using a sliding time window model, are re-clustered to create new macro clusters and centroids. The k-means algorithm is once again employed to compute the final $k_m$ macro clusters. The advantage of applying the macro-clustering is to gain further insight from the entirety of centroids after the designated streaming window. The optimal number of $k_m$ macro clusters can be calculated by using the same method as in micro cluster which is the elbow method. The elbow method calculation can be automated or estimated at the start of micro-clustering phase. This method works by applying the k-means algorithm on micro clusters computed for all sliding time windows. 
 
 
 \subsection{Time Window Models:}
-Due to data stream volume, it is impossible to store entire objects. To control which part of data is going to be processed, time window models have been proposed. The other reason to use time window model is to handle the concept-drift or data distribution over the time. It means This method aims to ignore outdated and historic data because they can change the trends or the data distribution.
-Four main types of window models have been introduced. The most recommended models are damped window, landmark window, sliding window and tilted or pyramidal window model \cite{nguyen2015survey, mansalis2018evaluation}, which they are described in more detail below and illustrated in figure \ref{time1}:
+Due to data stream volume, it is impossible to store entire objects. To control which part of data is going to be processed, time window models have been proposed. The other reason to use the time window model is to handle the concept-drift or data distribution over the time. It means This method aims to ignore outdated and historical data because they can change the trends or the data distribution.
+Four main types of window models have been introduced. The most recommended models are damped window, landmark window, sliding window, and tilted or pyramidal window model \cite{nguyen2015survey, mansalis2018evaluation}, which are described in more detail below and illustrated in Figure \ref{time1}:
 
 \begin{figure}[!h]
 \centering
@@ -507,23 +592,23 @@ Four main types of window models have been introduced. The most recommended mode
 
 \begin{itemize}
 
-    \item\textbf{Damped Time window:} It also referred as time-fading model, each data point has a different weight based on its arrival time so new data point has a higher weight than the old ones. This window model reduce the impact of old data. It is usually apply for density-based clustering algorithm. The Function: $f(\delta t)$ = $\mu_{\delta t}$ (0 < $\mu$ < 1) is usually used for this model where $\delta t$ is the age of data which is equal to time differentiation between current time and arrival time. A fading parameter $\mu$ is in the range between 0 to 1 \cite{nguyen2015survey}. 
+    \item\textbf{Damped Time window:} It is also referred to as time-fading model, each data point has a different weight based on its arrival time so new data point has a higher weight than the old ones. This window model reduces the impact of old data. It is usually applied for a density-based clustering algorithm. The Function: $f(\delta t)$ = $\mu_{\delta t}$ (0 < $\mu$ < 1) is usually used for this model where $\delta t$ is the age of data which is equal to time differentiation between current time and arrival time. A fading parameter $\mu$ is in the range between 0 to 1 \cite{nguyen2015survey}. 
     
     
-    \item\textbf{Landmark Time Window:} Landmark time window or in-terms of implementation can be called as a hopping model, clustering starts from a starting point call landmark to the current time. When a new window comes, all data from the previous landmark are removed. In the landmark time window, each data point is equally important.
+    \item\textbf{Landmark Time Window:} Landmark time window or in-terms of implementation can be called a hopping model, clustering starts from a starting point call landmark to the current time. When a new window comes, all data from the previous landmark are removed. In the landmark time window, each data point is equally important.
 
 
     
-    \item\textbf{Sliding Time Window: } The most important data is the most recent ones and old data will be removed but the data in the current window are equally valuable. The data structure of sliding window is based on FIFO (First-In-First-Out) principle which data from current time until specific time in the past. The window has a size of $w$ in the current time $t$, will slide (s, sliding(w)) where s[t-w+1, t].
-    The window size can be set based on resources and computational process \cite{silva2013data}.This model is efficient when most recent data is important \cite{mansalis2018evaluation}  
+    \item\textbf{Sliding Time Window: } The most important data is the most recent ones and old data will be removed but the data in the current window are equally valuable. The data structure of the sliding window is based on FIFO (First-In-First-Out) principle, which data from the current time until a specific time in the past. The window has a size of $w$ in the current time $t$, will slide (s, sliding(w)) where s[t-w+1, t].
+    The window size can be set based on resources, and computational process \cite{silva2013data}. This model is efficient when most recent data is necessary \cite{mansalis2018evaluation}  
     
-    \item\textbf{Pyramidal Time Window: } pyramidal or tilted time window focus on recent data without discarding old data. It applies various granularity levels based on the recency of data\cite{aggarwal2003framework, nguyen2015survey}. It stores almost all dataset and and prepare a balance between storage requirements and accuracy. This approach shows that current data are more accurate and should be fully modeled. The old data is aggregated and a generic representation is enough.
+    \item\textbf{Pyramidal Time Window: } pyramidal or tilted time window focus on recent data without discarding old data. It applies various granularity levels based on the recency of data\cite{aggarwal2003framework, nguyen2015survey}. It stores almost all datasets and prepares a balance between storage requirements and accuracy. This approach shows that current data are more accurate and should be fully modeled. The old data is aggregated, and a generic representation is enough.
     
 \end{itemize}    
 
 
 \subsection{Data Stream Clustering Algorithm}
-Data stream clustering algorithms are categorized in five main group as the traditional clustering algorithm mentioned before and illustrated in Figure \ref{method}. Some of these algorithms are described as follow.
+Data stream clustering algorithms are categorized into five leading groups, as the traditional clustering algorithm mentioned before and illustrated in Figure \ref{method}. Some of these algorithms are described as follows.
 
 
 \begin{figure}
@@ -538,8 +623,10 @@ Data stream clustering algorithms are categorized in five main group as the trad
     \item\textbf{Partitioning algorithms:}
 
 
-The First group is partitioning data stream clustering algorithm which they are listed in Table Table \ref{landmarkwin}. As far as we had research, there is not any research work present with affinity propagation used landmark time window model.
+The First group is partitioning data stream clustering algorithm, which is listed in Table Table \ref{landmarkwin}. 
+%As far as we had researched, no research work with affinity propagation used landmark time window model is presented.
 
+MISSING :DEFINITION OF WHAT A SINGLE-PASS IS
 
 \begin{table}[h]
     \centering
@@ -574,23 +661,22 @@ The First group is partitioning data stream clustering algorithm which they are 
 
 
 
-The Stream algorithm prposed by Guha et al. \cite{o2002streaming} is one of the earliest approach in this field. This method is k-median approach, and divides the stream into batches od data with the fix size. At each batch, k-median algorithm is applied. 
+The Stream algorithm proposed by Guha et al. \cite{o2002streaming} is one of the earliest approaches in this field. This method is the k-median approach and divides the stream into batches of data with a fixed size. At each batch, the k-median algorithm is applied. 
 
 
-Olindda introduced by Spinosa \cite{spinosa2007olindda}, based on the K-means clustering algorithm is a online anomaly detection algorithm. Olindda continuously monitors and adapts to emerging data distributions. Unknown samples are kept in a memory queue, and are periodically clustered and then either merged with existing similar cluster or added as a novel cluster to the pool of clusters.
-This model calculate the maximum distance between data points and centroids as a decision boundary (threshold) for each cluster. The union of the boundaries of all clusters is the global decision boundary which defines the model. A new unseen data point that falls inside this boundary is consistent with the model and therefore considered normal. Otherwise, This specific data point is labeled as an unknown and separated for further analysis.
+Olindda introduced by Spinosa \cite{spinosa2007olindda}, based on the K-means clustering algorithm, is an online anomaly detection algorithm. Olindda continuously monitors and adapts to emerging data distributions. Unknown samples are kept in a memory queue and are periodically clustered and then either merged with an existing similar cluster or added as a novel cluster to the pool of clusters.
+This model calculates the maximum distance between data points and centroids as a decision boundary (threshold) for each cluster. The union of the boundaries of all clusters is the global decision boundary that defines the model. A new unseen data point that falls inside this boundary is consistent with the model and therefore considered normal. Otherwise, This specific data point is labeled as an unknown and separated for further analysis.
 %similar to my work
-CluStream \cite{aggarwal2003framework} is inherited from BIRCH algorithm. The online phase is started by applying the k-means algorithm to create micro-clusters. When a new data point arrives, it is absorbed by its closest micro-cluster if it fit within an adaptive radius threshold. Otherwise, it creates a new cluster. To keep micro-clusters in some range, exppired clusters are removed based on a threshold on their average time stamp. If it cannot happen, the two closest micro-clusters will be merged.
+CluStream \cite{aggarwal2003framework} is inherited from the BIRCH algorithm. The online phase is started by applying the k-means algorithm to create micro-clusters. When a new data point arrives, it is absorbed by its closest micro-cluster if it fit within an adaptive radius threshold. Otherwise, it creates a new cluster. To keep micro-clusters in some range, expired clusters are removed based on a threshold on their average time stamp. If it cannot happen, the two closest micro-clusters will be merged.
 To support different time-horizons, CluStream frequently collects snapshots of the current CFs by a pyramidal time frame. 
 
 Another algorithm is HCluStream \cite{yang2006hclustream} is an extension of CluStream for categorical data by storing the frequency of attribute-levels for all categorical features. This algorithm creates a  categorical distance measure separately to combine with the traditional distance measure for continuous attributes.
 
-SWClustering \cite{zhou2008tracking} introduced a new data structure for this algorithm called Exponential Histogram of Cluster Feature (EHCF) which can handle cluster evolution and represents the changes of the cluster distribution and capture it. In online phase, it captures objects as synopses in EHCF structure, and in offline phase, algorithm clusters these collections of synopses using a k-means algorithm.
+SWClustering \cite{zhou2008tracking} introduced a new data structure for this algorithm called Exponential Histogram of Cluster Feature (EHCF), which can handle cluster evolution and represents the changes of the cluster distribution and capture it. In the online phase, it captures objects as synopses in the EHCF structure, and in the offline phase, the algorithm clusters these collections of synopses using a k-means algorithm.
 
-Ackermann et al. \cite{ackermann2012streamk} develop a new coreset construction for the Euclidean k-means clustering problem and called it StreamKM++. A coreset is a small weighted point set that approximates the original input
-point set with respect to a given optimization problem. This algorithm proposed a coreset construction for the Euclidean k-means clustering problem called coreset tree that is suitable for high dimensional data. Then, they used a standard streaming technique, called the merge-and-reduce technique to maintain observation in data streams. After processing the whole input stream, the k-MEANS++ algorithm applies to obtain a k-means clustering and celled it StreamKM++ algorithm.
+Ackermann et al. \cite{ackermann2012streamk} develop a new coreset construction for the Euclidean k-means clustering problem and called it StreamKM++. A coreset is a small weighted point set that approximates the original input point set with respect to a given optimization problem. This algorithm proposed a coreset construction for the Euclidean k-means clustering problem called coreset tree suitable for high dimensional data. Then, they used a standard streaming technique, called the merge-and-reduce technique, to maintain observation in data streams. After processing the whole input stream, the k-MEANS++ algorithm applies to obtain a k-means clustering and celled it the StreamKM++ algorithm.
 
-BICO \cite{fichtenberger2013bico} is another algorithm in this group which combines the BIRCH data structure with StreamKM++. 
+BICO \cite{fichtenberger2013bico} is another algorithm in this group that combines the BIRCH data structure with StreamKM++. 
 
 
 
@@ -620,7 +706,7 @@ BICO \cite{fichtenberger2013bico} is another algorithm in this group which combi
     \end{tabular}
 \end{table}
 
-BIRCH \cite{zhang1996birch} is one of the earliest stream clustering algorithm. This algorithm minimizes large datasets' memory requirements by summarizing the information contained in dense regions as Clustering Feature (CF) entries. CF has three components: number of data points, the d-dimensional vector with the linear sum of all data points, and sum of squares for all data points across dimensions. BIRCH incrementally builds a balanced-tree to maintain CFs, where each node can contain a fixed number of CFs. 
+BIRCH \cite{zhang1996birch} is one of the earliest stream clustering algorithms. This algorithm minimizes large datasets' memory requirements by summarizing the information contained in dense regions as Clustering Feature (CF) entries. CF has three components: the number of data points, the d-dimensional vector with the linear sum of all data points, and a sum of squares for all data points across dimensions. BIRCH incrementally builds a balanced-tree to maintain CFs, where each node can contain a fixed number of CFs. 
 For every new data point that comes into the model, the tree descends by following the child to its closest CF until a leaf node is reached. The new data point can either merged to its closest leaf-CF or creates a new leaf-CF. This method has a significant drawback which is the limited capacity of its leaves.
 
 Improved BIRCH \cite{ismael2014improved} is an extension of the BIRCH algorithm, which employs various distance thresholds per CF.
@@ -649,8 +735,6 @@ A-BIRCH \cite{lorbeer2016birch} is similar to Improved BIRCH, determines the thr
       \hline
       HDenStream         &     2009       &     Damped         &    DBSCAN      &  Online-offline \\
     \hline 
-      FlockStream        &    2009        &     Damped        &     Swarms      & Single-pass\\
-    \hline 
       rDenStream         &    2009        &    Damped         &     DBSCAN      & Online-offline \\
           \hline 
       C-DenStream        &    2009        &    Damped         &     C-DBSCAN    &Online-offline \\
@@ -664,9 +748,9 @@ A-BIRCH \cite{lorbeer2016birch} is similar to Improved BIRCH, determines the thr
     \end{tabular}
 \end{table}
 
-DenStream \cite{cao2006density} is the temporal extension of the CFs from BIRCH algorithm with having core micro cluster using time-faded CF. This algorithm was implemented with arbitrary shape data.
+DenStream \cite{cao2006density} is the temporal extension of the CFs from the BIRCH algorithm with having core micro cluster using time-faded CF. This algorithm was implemented with arbitrary shape data.
 
-SDStream \cite{ren2009density} is a variant of DenStream algorithm for sliding time window model. This algorithm keeps CMCs in the form of Exponential Histogram.
+SDStream \cite{ren2009density} is a variant of DenStream algorithm for sliding time window model. This algorithm keeps CMCs in the form of an Exponential Histogram.
  
 HDenStream \cite{lin2009density} is a combination of DStream (with the categorical distance measure ) and HCluStream for categorical datasets. 
 
@@ -681,7 +765,7 @@ PreDeConStream \cite{hassani2012density} was implemented simultaneously to HDDSt
 % HDDStream \cite{ntoutsi2012density}
 
 \item\textbf{Grid-based algorithms:}
-Grid-based algorithms are capture the density in the grid. Macro-clusters are usually obtained by grouping adjacent dense cells. How to make a grid cell is very challenging. Table \ref{gridd} shows the overview of some main algorithms in this group. The most popular grid-based algorithm is DStream \cite{chen2007density}.
+Grid-based algorithms capture the density in the grid. Macro-clusters are usually obtained by grouping adjacent dense cells. How to make a grid cell is very challenging. Table \ref{gridd} shows the overview of some main algorithms in this group. The most popular grid-based algorithm is DStream \cite{chen2007density}.
 
 
 \begin{table}[h]
@@ -715,14 +799,14 @@ Grid-based algorithms are capture the density in the grid. Macro-clusters are us
     \end{tabular}
 \end{table}
 
-Dstream has a fix grid size, with three different types of cells: dense cells, sparse cells, and transitional cells, which it is categorized between the other two types. The algorithm outlines new data points to its corresponding cell and is initialized by assigning all dense cells to individual clusters. These clusters are extended with all neighboring transitional grids or merged with neighboring dense cell clusters. In any intervals, the clustering assesses the weight of individual cell and includes the
+Dstream has a fixed grid size, with three different types of cells: dense cells, sparse cells, and transitional cells, which it is categorized between the other two types. The algorithm outlines new data points to its corresponding cell and is initialized by assigning all dense cells to individual clusters. These clusters are extended with all neighboring transitional grids or merged with neighboring dense cell clusters. In any intervals, the clustering assesses the weight of individual cell and includes the
 changes in cell types into the clustering.
 
 
 DUstream \cite{gao2005incremental} devides the data space once into fixed grid-cells.
 The algorithm processes the first part of data to start the clustering and maintains all cells with sufficient density. The density of cells is determined, corresponding to the total number of observations. 
 
-DDstream \cite{jia2008grid} is an extension on points that lie precisely on the grid boundaries. For these points, the distance to adjacent cell centers is calculated, and those points are assigned to their closest cell. 
+DDstream \cite{jia2008grid} is an extension of points that lie precisely on the grid boundaries. For these points, the distance to adjacent cell centers is calculated, and those points are assigned to their closest cell. 
 
 
 
@@ -757,15 +841,15 @@ This group of algorithms summarize the data stream as a statistical model, usual
 \end{table}
 
 
-COBWEB \cite{fisher1987knowledge} is a tree-based algorithm and each node describe a cluster. Tree incrementally builds by descending a new entry from the root to a leaf. 
+COBWEB \cite{fisher1987knowledge} is a tree-based algorithm, and each node describes a cluster. Tree incrementally builds by descending a new entry from the root to a leaf. 
 
-WStream \cite{tasoulis2006unsupervised} uses kernel density to keeps a number of windows in the data space. It means to use local maxima of a density estimate as cluster centers and the local minima as cluster boundaries. New data points can add to an existing window or it is used to initialize a new window with the default size. 
+WStream \cite{tasoulis2006unsupervised} uses kernel density to keeps several windows in the data space. It means to use the local maxima of a density estimate as cluster centers and the local minima as cluster boundaries. New data points can add to an existing window, or it is used to initialize a new window with the default size. 
 
-CluDiStream \cite{zhou2007distributed} applies EM algorithm for data stream clustering. This algorithm learns the distribution of underlying data streams by maximizing the likelihood of the data clusters. It keeps distribution of Gaussian mixture and a coordinator node in each location to combine the distributions.
+CluDiStream \cite{zhou2007distributed} applies EM algorithm for data stream clustering. This algorithm learns the distribution of underlying data streams by maximizing the likelihood of the data clusters. It keeps the distribution of Gaussian mixture and a coordinator node in each location to combine the distributions.
 
 SWEM \cite{dang2009based} uses EM to chunks of data with random initial parameters. Distributions for the first chunk of data calculates. Each cluster is then summarized using a CF and macro-clusters by applying EM again.
 
-SVStream \cite{wang2011svstream} is based on support vector clustering (SVC) which transform the data into the higher dimensional space. The model is run on chunks, and the first one runs SVC. For other chunks it checks if it is in the radius of spheres or not. If yes, a new sphere is initialize. 
+SVStream \cite{wang2011svstream} is based on support vector clustering (SVC), which transforms the data into the higher dimensional space. The model is run in chunks, and the first one runs SVC. For other chunks, it checks if it is in the radius of spheres or not. If yes, a new sphere is initialized. 
 
 
 
@@ -774,10 +858,10 @@ SVStream \cite{wang2011svstream} is based on support vector clustering (SVC) whi
 
 \end{itemize}
 
+\subsection{Streaming k-means clustering}
 
-
-
-
+move things from the other chapters(s) to here
+look at the thesis from Luke to describe the method. the only [platform we have is R]
    	    
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
@@ -890,84 +974,7 @@ SVStream \cite{wang2011svstream} is based on support vector clustering (SVC) whi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Indoor Localization  and Occupancy Detection}
 
-Location-based services (LBS) become extremely popular and it is part of daily life. The location-based services and their applications require a high level of standard in positioning technology. The positioning technology has shifted from the outdoors to indoor and this is because of two reason \cite{xia2017indoor}. people usually spend most of their time indoors. Besides, most mobile phones and data communications are performed indoors. Moreover, phone data show that the demand for indoor mobile communication is very powerful. 
-
-Indoor localization systems can hire a wide range of technologies such as infrared, RFID, sensors, WiFi, Bluetooth and, etc. Using WiFi is one of the best approach due to availability of mobile device on user side. 
-
-\begin{table}[]
-\caption{Comparison between GPS and WiFi technologies.}
-\small
-\centering
-\label{tab:my-table}
-\begin{tabular}{@{}ccc@{}}
-\toprule
-\textbf{Technology} & \textbf{Accuracy level} & \textbf{Advantage}                                                                                    \\ \midrule
-GPS                 & High                    & \begin{tabular}[c]{@{}c@{}}*Good accuracy\\ *Not strong for indoor\end{tabular}                       \\ \midrule
-WiFi                & Medium                  & \begin{tabular}[c]{@{}c@{}}*Good accuracy for indoor\\ *Limited coverage\\  *Medium cost\end{tabular} \\ \bottomrule
-\end{tabular}
-\end{table}
-
-
-The most used method for estimating the location of indoor mobile objects or positioning with WiFi networks is fingerprinting method. The fingerprinting method works based on the signal strength. 
-
-
-
-
-
-
-\subsection{Indoor Localization Using Sensors}
-The magnificent growth of indoor localization studies can lead to many real-world applications, including smart homes, smart campuses, and localize users to provide services. The purpose of indoor localization is to recognize a location within a multi-storied building with a smart device.  The GPS does not work in an indoor environment accurately as signal strength fluctuates weakly, leading to the user’s device not receiving location updates at fixed periods. 
-
-There are various applications for measuring number of people and occupancy, it can be a simple pen and paper to fully automated, sensor solutions.
-Automated solutions use people counting technology to automatically count people as they enter and exit of buildings. People counting is ideal for any kind of buildings that require intelligent system especially for huge and crowded buildings such as malls, hospitals, stadiums, etc. People's movement is precious data for occupancy monitoring, smart building management, and social distancing management.  Using these systems can give users, a better understanding of the workplace and room usage, reduce energy consumption or optimize building design and staff levels.
-
-This technology can be considered in terms of:
-\begin{itemize}
-    \item\textbf{Accuracy}: Sensors are designed to count number of people at any places continuously.
-    \item\textbf{Historical data log}: comprehensive historical data and reports are available with the user requests. Some reports may show how occupancy changes over time, also, how well the building complied with occupancy limits.
-    \item\textbf{Cost}: The cost of these sensor may be higher at first for the sensor hardware, however, this is offset by zero or minimal ongoing costs.
-\end{itemize}
-
-The bidirectional people counter sensors is one of these types of sensors used for the dataset applied in this research work. The principle of these sensors are based on the interruption of the horizontal infrared beans which usually installed at entrance or exit. However, other technologies such as thermal and stereo-vision can be used. When this infrared bean is interrupted, the receiver detects this movement and it will increase the internal counter. The sensor data will find its way to the server through the gateway SNG. The overview of this scenario shows in Figure \ref{people}. Different types of these sensors are available bellow which they are produced by the International Road Dynamics company  .
-
-\begin{figure}
-\centering
-\includegraphics[width = 12cm,height = 5cm]{image/pc.jpg}
-\caption{People counter infrastructure used for our experimental dataset. Modified Figure of \protect\cite{SensM}}
-\label{people}
-\end{figure}
-
-
-\begin{table}[!h]{}
-\small
-\centering
-\caption{List of people counter sensors of International Road Dynamics company}%\cite{people}.}
-\begin{tabular}{llll}
-\toprule
-\textbf{Features} & \textbf{Transmitter} & \textbf{Receiver}  & \textbf{Applications}     \\
-\midrule
-Display/Wireless/Bidirectional     &  PTx20-1 & PRx20WD1 & Entrance and daily counts\\ 
-Wireless/Bidirectional             &  PTx20-1 & PRx20W1  & Entrance and daily counts\\ 
-Display/Bidirectional              &  PTx20-1 & PRx20D1  & Entrance and daily counts\\ 
-USB/Bidirectional                  &  PTx20-1 & PRx20U2  & Entrance and daily counts\\ 
-Display/USB/Bidirectional          &  PTx20-1 & PRx20UD2 & Entrance and daily counts\\ 
-\bottomrule
-\label{sensor}
-\end{tabular}
-\end{table}
-
-
-
-
-\subsection{Indoor Localization Using WiFi}
-
-Automatic user localization calculates the position of the user with knowing latitude, longitude and altitude. This can be calculated by having an electronic device such as a mobile phone. Indoor localization is still a challenging topic and it is because of the loss of GPS signals in indoor environments.
-
-Wireless-based indoor localization is another way for measurements. Wireless waves can go through obstacles like walls or doors and provide ubiquitous coverage of a building. WLAN indoor localization uses received signals value (RSSI) to indicate the distance to points and get the current point's location.
-This architecture need two things, the beacon station that emits the wireless signals and electronic devices such as cellphones. 
-Fingerprint means the characteristic or feature of signals which RSS can be one of them. The assumption underneath this fingerprint-based indoor localization is that for each position in the area, the signals' features are different. By relying on the variation of signals in a distinct position, the current location can be obtained.
 
 
 
