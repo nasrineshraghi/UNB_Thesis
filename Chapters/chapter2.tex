@@ -170,10 +170,9 @@ Therefore, selecting an algorithm is an important step, as certain algorithms mi
 
 The main advantages and disadvantages of these different categories of clustering methods are summarized in Table \ref{methoda}. 
 
-
 \begin{table}[!h]\scriptsize
 % \centering
-\caption{ Comparison of clustering methods \protect\cite{mousavi2015data}.}
+\caption{ Comparison of clustering methods.}% \protect\cite{mousavi2015data}
 \label{methoda}  
 \small
 \begin{tabularx}{\linewidth}{p{3cm} p{5.5cm} p{5.5cm}}
@@ -253,11 +252,6 @@ The main advantages and disadvantages of these different categories of clusterin
 
 
 
-
-
-%This work is built based on the two very famous partitioning algorithms, affinity propagation and K-means. The detail of these two algorithm are explained in detail.
-
-
 \subsection{Affinity Propagation Clustering}
 
 % $O(N^2logN)$ where N is the number of data points. It can be imagined that if the number of data points is very huge, then it is impossible to do clustering using AP
@@ -269,16 +263,16 @@ Affinity propagation (AP) is a partitioning-based clustering algorithm that has 
 
 
 Unlike clustering algorithms such as k-means, affinity propagation does not require the number of clusters to be determined or estimated before running the algorithm. It considers all data points as a potential centroids until an optimal set of clusters and their respective centroids are found through an iteration process as illustrated in Figure \ref{APPi}. 
-\todo[inline]{Please explain the contents of this figure}
+% \todo[inline]{Please explain the contents of this figure}
 
 %illustrates the gradually emerging of clusters and centroids, but the tenth iterations show the uncertainly of having clusters shows with the faded blue lines until the last and final iteration to find a good cluster solution. NOT POSSIBLE TO UNDERSTAND THE MESSAGE OF THIS PARAGRAPH
 
-\begin{figure}
-\centering
-\includegraphics[width = 13 cm]{image/Chapters/Chapter2/APDurek.PNG}
-\caption{Iteration process of affinity propagation (Source: \protect\cite{dueck2009affinity})}
-\label{APPi}
-\end{figure}
+% \begin{figure}
+% \centering
+% \includegraphics[width = 13 cm]{image/Chapters/Chapter2/APDurek.PNG}
+% \caption{Iteration process of affinity propagation (Source: \protect\cite{dueck2009affinity})}
+% \label{APPi}
+% \end{figure}
 
 
 The AP algorithm supports similarities that are not symmetric, and it is not dependent on initialization found on other clustering algorithms \cite{refianti2017time}.However, it has a significant speed problem, particularly for clustering large-scale data sets. Affinity Propagation needs $O(N^2T)$ time to update the message where N and T represent the number of data points and the number of iterations \cite{frey2007clustering}. Finally, applying AP for any data set requires to meet two conditions: no missing or null data in the inputs and the data should be numeric, not categorical.
@@ -333,7 +327,11 @@ The AP algorithm consists of four matrices: similarity matrix, responsibility ma
 
 
   \item\textit{Criterion matrix:} This matrix is calculated after the iteration process is terminated.The $c (i,k)$ matrix is the sum of $R$ and $A$. An element $i$ will be assigned to an exemplar $k$ which is not only highly responsible but also highly available to $i$  as shown in 
-  
+    
+    \begin{equation}
+        c(i, k) \leftarrow r(i, k) + a(i, k)
+    \end{equation}
+    
   \todo[inline]{put the equation for the C matrix here}
   
   %Lastly, in the criterion matrix, each cell is the sum of the availability matrix and responsibility matrix. The highest criterion values of each row are designated as a centroid.
@@ -536,8 +534,6 @@ Elbow method is a technique for K-means algorithm to find the optimal number of 
 
 \todo[inline]{start thi ssection explaining why streaming clustering is important}
 
-A data stream $S$ is sequence of infinitive, ordered, and fast-changing data points $d_1, d_2, ..., d_3 $ $\xrightarrow S = {d_i}$ \cite{han2011data}.
-
 
 In almost all clustering algorithms, the number of data points is fixed, and evaluate each data point multiple times. However, many applications and systems generate observations continuously, such as sensors, smart grids, network data, medical, finance, and so on. In order to keep changes for new data points and the possible shift in cluster structures, classical clustering algorithms need to be run periodically. This method is computationally high and needs many data to be stored periodically. One major approach is to update existing clusters and merge new data points into the existing clusters by identifying emerging structures and removing outdated structures incrementally \cite{carnein2019optimizing}. This is the aim of data stream clustering algorithms in which data points come continuously in order, and the stream is possibly unbounded. Finding the pattern without storing all the observations is the main task of stream clustering.
 
@@ -548,17 +544,51 @@ Data stream clustering finds clusters based on the flow of data points into the 
     \item traditional clustering results are fixed, but The data stream clustering results vary over time.
 \end{itemize}
 
+A data stream $S$ is sequence of infinitive, ordered, and fast-changing data points $d_1, d_2, ..., d_3 $ $\xrightarrow S = {d_i}$ \cite{han2011data}.
 
 %The methods that discuss the problem of data stream clustering can be categorized into: (1) one-pass methods that assume a unique underlying model of streaming data and cannotmstudy the evolution of data distribution, (2) evolving clustering methods that take into account the behavior of data as it may evolve over time.
 
-Many algorithms use similarity thresholds to decide whether an observation fits into an existing cluster or splitting the data space into a grid cells and store the location of dense or include fitting a model to represent the observed data. These categories and all related algorithms are shown in Figure \ref{method}, which divided in four main groups as follow \cite{zubaroglu2020data, ghesmoune2016state}. All these categories were reviewed in the cluster analysis section. 
+Many algorithms use similarity thresholds to decide whether an observation fits into an existing cluster or splitting the data space into a grid cells and store the location of dense or include fitting a model to represent the observed data.
 
 
 
 
 
-\subsection{Two-phase Clustering Algorithms:}
-MISSSING: EXPLAIN THE SINGLE PASS, AND MAYBE OTHER APPROACHES USED FOR STREAMING
+
+
+
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Single-pass
+% It is an array of the prototypes derived
+% from k-median clustering. Because the first algorithms which
+% were proposed simply view the stream clustering as a
+% single-pass problem, the goal of these algorithms is to handle
+% the infinite size of streams summarizing the stream history
+% by dividing the stream into batches of predefined size m, in
+% which each batch returns the k-representatives in the array.
+% When the size of the representative array reaches the maximum
+% boundary m these algorithms perform clustering in
+% these k-representatives making the next level of representatives.
+
+
+% single-pass means that you are supposed to process every element just once (and not copy it). Such algorithms obviously must be in linear time, which makes them good candidates for big data and MapReduce (if they can be somewhat divided, this is not necessarily trivial).
+
+% Single-pass doesn't necessarily mean the results will be updateable and thus usable for online or streaming operation. However they often are, as they never need to access "old" data, and the summaries they are allowed to keep usually can be kept and updated.
+
+% Single-pass are mostly interesting when you have too much data to keep or process more than once. So for "real time" applications and such. Obviously, the results will usually be worse than when you had full data available anytime
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Data Stream Processing}
+Processing of data for clustering purposes follows typically one of the following directions:
+
+\begin{enumerate}
+    \item\textbf{Online Clustering:}These methods observe the stream clustering problem as a single-pass clustering challenge and adopt a general adaptive strategy to maintain the clusters. A single clustering model is maintained over the stream and it is updated as new data points come from the stream. Such an approach though does not allow for investigation of the cluster structure at different time intervals.
+    \item\textbf{Two-phase Clustering Algorithms:}
 All these approaches capture the location of dense in the data space and consider them as clusters. These clusters can be merged when they become similar over time. However, it is not possible to split clusters again since the underlying data was discarded and only the center of the dense region was remained \cite{aggarwal2007data}. To avoid this issue, many clustering algorithm models are divided into two parts: online and offline phases \cite{aggarwal2003framework}. Aggarwal introduced the CluStream algorithm, combined online summarization at the first stage with the offline stage using k-means. The two-phase clustering methods are visualized in figure \ref{2phase} by the grid structure.
 
 \begin{figure}
@@ -571,20 +601,22 @@ All these approaches capture the location of dense in the data space and conside
 
 The online requires a process for saving the summary statistics of a data stream in a fast manner. The offline phase uses the last stage summary statistics to provide the user with a fast understanding of the clusters whenever required. 
 
-The offline component, which can be based on the user request, uses online micro clustering to find macro clusters by re-clustering the clusters obtained. This step is not time-related and can happen any time by request. 
+The offline component, which can be based on the user request, uses online micro clustering to find macro clusters by re-clustering the clusters obtained. This step is not time-related and can happen any time by request.
 
+
+\end{enumerate}
 
 %The second phase is triggered at the end of a designated time interval. All the centroids of clusters which have been computed by using a sliding time window model, are re-clustered to create new macro clusters and centroids. The k-means algorithm is once again employed to compute the final $k_m$ macro clusters. The advantage of applying the macro-clustering is to gain further insight from the entirety of centroids after the designated streaming window. The optimal number of $k_m$ macro clusters can be calculated by using the same method as in micro cluster which is the elbow method. The elbow method calculation can be automated or estimated at the start of micro-clustering phase. This method works by applying the k-means algorithm on micro clusters computed for all sliding time windows. 
 
 
-\subsection{Time Window Models:}
+\subsection{Time Window Models}
 Due to data stream volume, it is impossible to store entire objects. To control which part of data is going to be processed, time window models have been proposed. The other reason to use the time window model is to handle the concept-drift or data distribution over the time. It means This method aims to ignore outdated and historical data because they can change the trends or the data distribution.
 Four main types of window models have been introduced. The most recommended models are damped window, landmark window, sliding window, and tilted or pyramidal window model \cite{nguyen2015survey, mansalis2018evaluation}, which are described in more detail below and illustrated in Figure \ref{time1}:
 
 \begin{figure}[!h]
 \centering
 \includegraphics[width = 9cm,height = 7cm]{image/timeW.PNG}
-\caption{Time Window Models.}
+\caption{Time Window Models \protect\cite{carnein2019optimizing}.}
 \label{time1}
 \end{figure}
 
@@ -611,12 +643,12 @@ Four main types of window models have been introduced. The most recommended mode
 Data stream clustering algorithms are categorized into five leading groups, as the traditional clustering algorithm mentioned before and illustrated in Figure \ref{method}. Some of these algorithms are described as follows.
 
 
-\begin{figure}
-    \centering
-    \includegraphics[width = 12 cm]{image/Chapters/Chapter2/streammethod.png}
-    \caption{Data stream clustering algorithms categories}
-    \label{method}
-\end{figure}
+% \begin{figure}
+%     \centering
+%     \includegraphics[width = 12 cm]{image/Chapters/Chapter2/streammethod.png}
+%     \caption{Data stream clustering algorithms categories}
+%     \label{method}
+% \end{figure}
 
 
 \begin{itemize}
@@ -628,6 +660,8 @@ The First group is partitioning data stream clustering algorithm, which is liste
 
 MISSING :DEFINITION OF WHAT A SINGLE-PASS IS
 
+
+
 \begin{table}[h]
     \centering
     \caption{Overview of partitioning-based stream clustering algorithms implemented with the time window models \protect\cite{carnein2019optimizing, mansalis2018evaluation}. }
@@ -638,45 +672,42 @@ MISSING :DEFINITION OF WHAT A SINGLE-PASS IS
       \textbf{Algorithms} & \textbf{Year} & \textbf{ Method } & \textbf{Processing} & \textbf{ Time Window}  \\
      \hline \midrule
 
-      Stream             &   2002        &   k-median        &  Single-pass      & Landmark \\
+      Stream \cite{o2002streaming}&   2002        &   k-median        &  Single-pass      & Landmark \\
      \hline
-     Olindda          &   2003        &   k-means         &   Single-pass     & Landmark \\
+     Olindda \cite{spinosa2007olindda} &   2003        &   k-means         &   Online     & Landmark \\
     \hline
-     CluStream            &   2003        &  k-means       &  Online-Offline      & Pyramidal \\
+     CluStream \cite{aggarwal2003framework} &   2003 &  k-means  &  Online-Offline      & Pyramidal \\
     \hline   
-     HCluStream           &    2006        &    k-means     &      & Pyramidal\\
+     HCluStream \cite{yang2006hclustream} &    2006       &    k-means       &      & Pyramidal\\
     \hline    
-     SWClustering       &    2008        &    k-means     &    Online-offline    & Sliding\\
+     SWClustering \cite{zhou2008tracking} &    2008       &    k-means   &  Online-offline    & Sliding\\
        \hline
-      StreamKM++       &    2012       &   k-means++ & Merge-reduce  & Landmark \\
+      StreamKM++ \cite{ackermann2012streamk} &    2012  &   k-means++   & Merge-reduce      & Landmark \\
     \hline 
-      BICO               &    2013        &    k-means     &                     & Landmark\\
+      BICO \cite{fichtenberger2013bico} &    2013       &    k-means       &             & Landmark\\
     \hline
-     StreamXM            &   2015        &  x-means         &  merge-reduce      & Landmark \\
-    \hline
-    %  Stream K-means     &   2017        &  k-means         &  Online-offline      & Sliding/Damped \\
 \bottomrule
     \end{tabular}
 \end{table}
 
 
 
-The Stream algorithm proposed by Guha et al. \cite{o2002streaming} is one of the earliest approaches in this field. This method is the k-median approach and divides the stream into batches of data with a fixed size. At each batch, the k-median algorithm is applied. 
+% The Stream algorithm proposed by Guha et al. \cite{o2002streaming} is one of the earliest approaches in this field. This method is the k-median approach and divides the stream into batches of data with a fixed size. At each batch, the k-median algorithm is applied. 
 
 
-Olindda introduced by Spinosa \cite{spinosa2007olindda}, based on the K-means clustering algorithm, is an online anomaly detection algorithm. Olindda continuously monitors and adapts to emerging data distributions. Unknown samples are kept in a memory queue and are periodically clustered and then either merged with an existing similar cluster or added as a novel cluster to the pool of clusters.
-This model calculates the maximum distance between data points and centroids as a decision boundary (threshold) for each cluster. The union of the boundaries of all clusters is the global decision boundary that defines the model. A new unseen data point that falls inside this boundary is consistent with the model and therefore considered normal. Otherwise, This specific data point is labeled as an unknown and separated for further analysis.
-%similar to my work
-CluStream \cite{aggarwal2003framework} is inherited from the BIRCH algorithm. The online phase is started by applying the k-means algorithm to create micro-clusters. When a new data point arrives, it is absorbed by its closest micro-cluster if it fit within an adaptive radius threshold. Otherwise, it creates a new cluster. To keep micro-clusters in some range, expired clusters are removed based on a threshold on their average time stamp. If it cannot happen, the two closest micro-clusters will be merged.
-To support different time-horizons, CluStream frequently collects snapshots of the current CFs by a pyramidal time frame. 
+% Olindda introduced by Spinosa \cite{spinosa2007olindda}, based on the K-means clustering algorithm, is an online anomaly detection algorithm. Olindda continuously monitors and adapts to emerging data distributions. Unknown samples are kept in a memory queue and are periodically clustered and then either merged with an existing similar cluster or added as a novel cluster to the pool of clusters.
+% This model calculates the maximum distance between data points and centroids as a decision boundary (threshold) for each cluster. The union of the boundaries of all clusters is the global decision boundary that defines the model. A new unseen data point that falls inside this boundary is consistent with the model and therefore considered normal. Otherwise, This specific data point is labeled as an unknown and separated for further analysis.
+% %similar to my work
+% CluStream \cite{aggarwal2003framework} is inherited from the BIRCH algorithm. The online phase is started by applying the k-means algorithm to create micro-clusters. When a new data point arrives, it is absorbed by its closest micro-cluster if it fit within an adaptive radius threshold. Otherwise, it creates a new cluster. To keep micro-clusters in some range, expired clusters are removed based on a threshold on their average time stamp. If it cannot happen, the two closest micro-clusters will be merged.
+% To support different time-horizons, CluStream frequently collects snapshots of the current CFs by a pyramidal time frame. 
 
-Another algorithm is HCluStream \cite{yang2006hclustream} is an extension of CluStream for categorical data by storing the frequency of attribute-levels for all categorical features. This algorithm creates a  categorical distance measure separately to combine with the traditional distance measure for continuous attributes.
+% Another algorithm is HCluStream \cite{yang2006hclustream} is an extension of CluStream for categorical data by storing the frequency of attribute-levels for all categorical features. This algorithm creates a  categorical distance measure separately to combine with the traditional distance measure for continuous attributes.
 
-SWClustering \cite{zhou2008tracking} introduced a new data structure for this algorithm called Exponential Histogram of Cluster Feature (EHCF), which can handle cluster evolution and represents the changes of the cluster distribution and capture it. In the online phase, it captures objects as synopses in the EHCF structure, and in the offline phase, the algorithm clusters these collections of synopses using a k-means algorithm.
+% SWClustering \cite{zhou2008tracking} introduced a new data structure for this algorithm called Exponential Histogram of Cluster Feature (EHCF), which can handle cluster evolution and represents the changes of the cluster distribution and capture it. In the online phase, it captures objects as synopses in the EHCF structure, and in the offline phase, the algorithm clusters these collections of synopses using a k-means algorithm.
 
-Ackermann et al. \cite{ackermann2012streamk} develop a new coreset construction for the Euclidean k-means clustering problem and called it StreamKM++. A coreset is a small weighted point set that approximates the original input point set with respect to a given optimization problem. This algorithm proposed a coreset construction for the Euclidean k-means clustering problem called coreset tree suitable for high dimensional data. Then, they used a standard streaming technique, called the merge-and-reduce technique, to maintain observation in data streams. After processing the whole input stream, the k-MEANS++ algorithm applies to obtain a k-means clustering and celled it the StreamKM++ algorithm.
+% Ackermann et al. \cite{ackermann2012streamk} develop a new coreset construction for the Euclidean k-means clustering problem and called it StreamKM++. A coreset is a small weighted point set that approximates the original input point set with respect to a given optimization problem. This algorithm proposed a coreset construction for the Euclidean k-means clustering problem called coreset tree suitable for high dimensional data. Then, they used a standard streaming technique, called the merge-and-reduce technique, to maintain observation in data streams. After processing the whole input stream, the k-MEANS++ algorithm applies to obtain a k-means clustering and celled it the StreamKM++ algorithm.
 
-BICO \cite{fichtenberger2013bico} is another algorithm in this group that combines the BIRCH data structure with StreamKM++. 
+% BICO \cite{fichtenberger2013bico} is another algorithm in this group that combines the BIRCH data structure with StreamKM++. 
 
 
 
@@ -863,6 +894,11 @@ SVStream \cite{wang2011svstream} is based on support vector clustering (SVC), wh
 move things from the other chapters(s) to here
 look at the thesis from Luke to describe the method. the only [platform we have is R]
    	    
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+K-means can also be used not just on offline (static) datasets, but also on online (dynamic) datasets. This is what can be defined as stream clustering. Stream clustering is used to provide fast responses where new data points coming into the data stream are analyzed in near to real-time. This provides insight almost immediately and can be largely beneficial with data.
+  	    
+Stream clustering with k-means begins with clustering the initial dataset (if applicable) and then updating the location of the clusters as new data enters the stream to provide more optimal cluster centers. A few issues arise when stream clustering, one of the main problems comes from the changing distribution of the data as the dataset changes over time. This is also known as concept drift (Carnein & Trautmann, 2019). To assist with concept drift, time windows are used in order to summarize data into certain defined time-based windows.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
 % \begin{algorithm}[H]
