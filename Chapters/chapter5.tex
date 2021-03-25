@@ -60,6 +60,24 @@ Considering the challenges of clustering data streams to have updated clusters, 
 \subsection{Data Stream Simulation}
 % Data elements in the stream arrive online, there is no control over the order in which elements arrive, either within a single stream. Streams are potentially unlimited in size
 
+#####################################
+ Using affinity propagation for streaming clustering faces two difficulties. First, AP has been implemented for batch processing but it should handle data clustering and large datasets in the online mode. The most important point to consider is AP suffers from quadratic computational complexity.
+Extensive data that are continuously coming are required to store. Analyzing big datasets and extracting patterns is not possible with affinity propagation due to the time complexity issue.
+One way to apply affinity propagation algorithm is using the divide and conquer approach \cite{khalilian2016data}. This approach introduced by Nittel et al.\cite{nittel2004scaling}, has mainly three steps as shown in Figure \ref{dividee}: partitioning the dataset into different chunks, then clustering each chunk and find the results, lastly, computes the results out of all chunks of data. 
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width = 11 cm]{image/Chapters/Chapter3/divide.PNG}
+    \caption{Divide and conquer approach to generate clustering out of big data \protect\cite{zhang2009toward}}
+    \label{dividee}
+\end{figure}
+
+
+Our first attempt working with the extensive dataset was to implement this technique to generate data stream clustering \cite{ivarispatio}, and it was the first version of DSAP, which is presented in this thesis. However, it has a history of all data points, and the time and memory complexity are still high, and most algorithms that have this approach are unable to track the change in the trend of the data stream. 
+Due to the reason above, some research has been done on AP streaming clustering and introduce new approaches.
+
+#####################################################
+
 In order to mimic a data stream, it is necessary to convert the collected data into a stream. For DSAP this conversion is performed by the Scikit-Multiflow data stream simulation framework from Python.  Scikit-Multiflow is a free and open-source tool \cite{montiel2018scikit} and it is part of the River machine learning library in Python. the prerequisites to install Scikit-multiflow package (\textit{skmultiflow}) are NumPy and Cython libraries. The \texttt{skmultiflow.data} module includes two group of classes that either perform batch-to-stream conversions or generate standard data streams like waveform, gaussian as shown in Figure \ref{sci}. The batch-to-stream conversion classes generates stream from a file source (.csv files) in the disk or from data in the memory.
 
 \begin{figure}

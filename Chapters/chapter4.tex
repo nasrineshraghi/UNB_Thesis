@@ -233,7 +233,7 @@ The outputs of this step are the set of micro-clusters from the previous window,
     
     %These points potentially represent new clusters. By applying the AP algorithm once again, new micro-clusters $Cm'$ are generated. Then, these new clusters $Cm'$ are added to the micro-clusters $Cm$ obtained before, and the model is updated ($Cm = Cm' + Cm$). The tasks performed during these steps are listed in Algorithm \ref{alg1} for better understanding.
     
-  \todo[inline]{how to get rid of old centroids... as soon as the centroids are not longer significant to compute the E , they are disregarded using the damping factor. HOw do you do that??? } 
+  \todo[inline]{how to get rid of old centroids... as soon as the centroids are not longer significant to compute the E , they are disregarded using the  factor. HOw do you do that??? } 
 
    In order to avoid the number of centroids to spread beyond control, old centroids that are no longer deemed relevant are removed. To do this, an expiration parameter $e_x$ is introduced. This value is applied to forget centroids that haven't been selected in the recent windows as quantified by $ex$. The $ex$ number can be chosen to include all the time windows from the start or just the last few windows, depending on the user requirements. All the clusters whose associated timestamps are older than $ex$ window lengths ($ex \times L$) from the current time are considered obsolete and hence discarded. 
    %This value is obtained by subtracting the current time from the $ex$ number of time period. If any centroid in the previous time window seen in the current window, the timestamp associated to this centroid should be updated.
