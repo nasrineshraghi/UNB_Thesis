@@ -1,7 +1,7 @@
 %%--------------------Chapter 3------------------------
-\documentclass[../UNBThesis2.tex]{subfiles}
+% \documentclass[../UNBThesis2.tex]{subfiles}
 \setlength{\parindent}{2em}
-\begin{document}
+% \begin{document}
 \chapter{Literature Review}
 
 Indoor positioning technologies have been a key enabler for advancing the usefulness of Internet of Things in biomedical and health care applications. Many positioning technologies have been explored for generating positioning information of people in indoor spaces, including Wi-Fi, BLE beacons, RFID tags, visible light wave, and ultra-wide band \cite{namiot2015indoor, jeon2018ble}. 
@@ -123,6 +123,10 @@ The number of clusters to be found is not fixed, and the clustering problem is d
 
 Previous research work has confirmed the trade-off between the computational cost and the performance of StraP. The distortion and purity metrics have been applied to evaluate the quality of the clustering results, using data sets such as the Intrusion Detection benchmark data(KDD99), synthetic stream data, and the streams jobs submitted to a EGEE grid system \cite{zhang2008data}. While the accuracy of StrAP was found satisfactory, the computational time was high, hampering its further use with large volumes of stream data.  
 \todo[inline]{Nasrin: check types of data used : labeled or not labeled}
+[The first dataset they used is an artificially generated stream, motivated by testing the ability of StrAP handling the dynamically changing distribution(sin function).
+The second dataset is the network connection data used in KDD Cup 1999 (KDD99) Intrusion Detection(label data).
+The next one is grid monitoring. EGEE jobs in the whole EGEE grid during 5 months.Besides the 6 attributes it has(related to time-cost), each job is labeled by its final state, successfully finished (good job) or failed (bad job, including about 45 error types. The 5 million jobs include about 20 main error types (more than 1,500 occurrences).that the job labels are not used in the clustering process, however they used a posteriori, as an indicator of the clustering quality.
+]
 
 % To validate a STRAP, the Intrusion Detection benchmark(KDD99) and EGEE real-world datasets are used for monitoring and discovering anomalies within a grid computing infrastructure. The result of this work is compared with DenStream, and comparatively satisfactory results are investigated. Also, computational time in this model is higher than DenStream. 
 
@@ -168,21 +172,22 @@ The experimental results show that IStrAP can effectively eliminate outliers, an
 
 %IStrAP used KDD Cup 99 dataset and used the Page-Hinkley standard test to update the clustering model. The results show that the IStrAP has higher accuracy, lower time complexity, and better adaptability for stream data over than STRAP. With this dataset, they just chose 120 data points to show the result, and the result is poorly demonstrated with the percent of accuracy and time. FROM WHERE THIS INFORMATION COME FROM???
 
-Another research work on improving StrAP found in the literature is the ISTRAP \cite{sui2018dynamic}. It inherits the advantages of the StrAP algorithm and provides a better performance in terms of cluster evolution. This algorithm can detect three types of evolutionary patterns: emergence, disappearance, and re-occurrence. StrAP can only detect the emergence patterns. one and the next two types are implemented in this work. Cluster emergence refers to the occurrence of a new cluster at time $t$. Cluster disappearance refers to the existing cluster that is not visited by the recently arrived data points. Disappeared clusters need to be removed from the model. Cluster re-occurrence defines where a previously disappeared cluster recurs at time $t$.
+Another research work on improving StrAP found in the literature is the ISTRAP \cite{sui2018dynamic}. It inherits the advantages of the StrAP algorithm and provides a better performance in terms of cluster evolution. This algorithm can detect three types of evolutionary patterns: emergence, disappearance, and re-occurrence. StrAP can only detect the emergence patterns. 
 
-For this algorithm, two reservoirs are introduced: one is the for saving the outliers (emergence) and the second one is for storing inactive clusters (re-occurence). Also, ISTRAP defines the clusters into two states, active and inactive, at each timestamp. Active state means that the cluster is still valid at current timestamp because at least one data point is assigned to it during a time interval. Inactive state indicates the corresponding clusters are expired because they are out of recent data point which representation for any pattern of the data.
-the framework of the ISTRAP algorithm is illustrated in figure \ref{istrap} which is described as below:
+Cluster emergence refers to the occurrence of a new cluster at time $t$. Cluster disappearance refers to an existing cluster that is not visited by any recently arrived data points. Disappeared clusters need to be removed from the model. Cluster re-occurrence occurs when a previously disappeared cluster reoccurs at time $t$.
+
+For this algorithm, two reservoirs are proposed: an emergence reservoir for saving the outliers and the re-occurrence reservoir for storing inactive clusters. Moreover, ISTRAP defines the clusters using two states: active and inactive. Active state means that a cluster is still valid at current timestamp because at least one data point has been assigned to it during a time interval. Inactive state indicates the clusters that are expired because they have not gain any recent data point. The workflow of the ISTRAP algorithm is illustrated in Figure \ref{istrap}. The main steps are described as follows:
 
 \begin{figure}
 \centering
 \includegraphics[width =10 cm]{image/Chapters/Chapter3/istrap1.PNG}
-\caption{The framework of ISTRAP algorithm.}
+\caption{The proposed ISTRAP workflow}
 \label{istrap}
 \end{figure}
 
 \begin{itemize}
-    \item[$\bullet$] First, initial exemplars are obtained by applying the AP algorithm on the first bunch of data.
-    \item[$\bullet$] As the stream flows in, each data point will go the outlier judgment step, and the minimum distance of the data point from the exemplar compares with the threshold. If it is less than the threshold, it will assign to the nearest exemplar; otherwise, it goes to the reservoir.
+    \item[$\bullet$] First, initial exemplars are obtained by applying the AP algorithm on the first batch of stream data points.
+    \item[$\bullet$] As the stream flows in, each data point will go through the outlier judgment step, and the minimum distance of the data point from the exemplar is compared against a threshold. If the distance is less than the threshold, the data point will be assigned to the nearest cluster; otherwise, it is sent to the reservoir.
     \item[$\bullet$] All clusters in remove reservoir are checked if they re-occur, then recurrent clusters will be moved back into the model
     \item[$\bullet$] The emergence criterion is triggered if new clusters need to be obtained. So, from the outlier reservoir, the model will be rebuilt by the WAP algorithm.
     \item[$\bullet$] The model will check all active clusters if they are still active or not. The inactive clusters will be removed and goes to the removed reservoir.
@@ -310,8 +315,9 @@ Also, APDenStream can remove outliers without upgrade potential noise points tim
 
 %any streaming algo for indoor
 
-\todo[inline]{research premise}
-First group is partitioning data stream clustering algorithm which they are listed in Table \ref{landmarkwin}. As far as we had research, there is not any research work present with affinity propagation used landmark time window model.
+\todo[inline]{research premise + conclusions
+
+ As far as we had research, there is not any research work present with affinity propagation used landmark time window model.
 
 is there  any paper related to occupant behaviour(stair usage) + stream clustering???
 There is no paper related to ecounter(sensors) + clustering as well as stream clustering????
@@ -329,7 +335,7 @@ OffLine
 why we havent used this algorithm: our data is already densed 
 
 all of them used weighted WAP: why havent we used WAP???
-one of the reasons for us not to use stattics and WAP was that our data is inherently do do contain outliers
+one of the reasons for us not to use stattics and WAP was that our data is inherently do do contain outliers}
 
 % \section{occupancy}
 %\section{Latest Development in Indoor Localization }
@@ -418,4 +424,4 @@ introduced.
 
 This value is applied to forget centroids that haven't been selected in the recent windows as quantified by $ex$. The $ex$ number can be chosen to include all the time windows from the start or just the last few windows, depending on the user requirements. All the clusters whose associated timestamps are older than $ex$ window lengths ($ex \times L$) from the current time are considered obsolete and hence discarded. }
 
-\end{document}
+% \end{document}

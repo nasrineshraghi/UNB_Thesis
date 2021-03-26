@@ -1,9 +1,9 @@
 %%-----------------Chapter 4---------------------------
-\documentclass[../UNBThesis2.tex]{subfiles}
+% \documentclass[../UNBThesis2.tex]{subfiles}
 % \usepackage{adjustbox/}
 % \usepackage{array,booktabs}
 \setlength{\parindent}{2em}
-\begin{document}
+% \begin{document}
 
 \chapter{Data Stream Affinity Propagation}
 %This chapter introduces a conceptual framework capable to process data stream clustering using a sliding time window model. 
@@ -59,13 +59,13 @@ The DSAP algorithm is based on the online and offline clustering phases. The onl
 \subsection{Online Micro-Cluster Phase}
 
 %The online clustering phase initializes a set of micro-clusters with centroids and subsequently analyzes the latest data stream by applying the landmark time window model in a continuous manner that gives updated micro-clusters. (THIS PARAGRAPH DOES NOT MAKE SENSE)
- The online micro-cluster phase initializes by receiving data streams as a continuous sequence of data points that are harvested using the landmark time window model. Therefore, the specifications for creating a landmark time window are its start time and landmark duration $L$, where
+ The online micro-cluster phase initializes by receiving data streams as a continuous sequence of data points that are harvested using the landmark time window model. Therefore, the specifications for creating a landmark time window are its start time and landmark duration $L$ with $\Omega$ data points, where
  $x_i$ is the $i^{th}$ data point in the $j^{th}$ window ($W_j$) in such a way that
  
   \begin{equation}
 W_j = \begin{cases}
-    0 \quad \phantom{\infty}\text{: if}\,\, i < L  \\
-    x_{i+(j-1)*L} \quad \phantom{}  \text{, where $i$=1,2,...,$L$}\,\, :Otherwise \\ \label{landmarkcal}
+    0 \quad \phantom{\infty}\text{: if}\,\, i < \Omega  \\
+    x_{i+(j-1)*\Omega} \quad \phantom{}  \text{, where $i$=1,2,...,$\Omega$}\,\, :Otherwise  \label{landmarkcal}
       \end{cases}
     \end{equation} 
  %$x_i$ number of arriving data points should follow the following rules
@@ -85,8 +85,6 @@ Data points in the same landmark window are treated as equally important. In pra
     \end{figure}
  
 This online micro-cluster phase consists of three major steps: initialization, comparison, and activateAP and update $\epsilon_{W_j}$. %The tasks performed during these three steps are implemented in Algorithm 5.1 described in the next Chapter.
-
-\todo[inline]{Is this algorithm in Chapter 5???}
 
 %If the next starting time is not available, we calculate the first time after the last time of the data in the window  [0][0].    
     % \[    \left [  s_{1} =\left ( E{1},N_{1},\sigma_{1},t{1} \right )  \right ], \left [ s_{2} = \left ( E_{2},N_{2},\sigma 2,t{1} \right ) \right ],\]
@@ -132,7 +130,7 @@ This online micro-cluster phase consists of three major steps: initialization, c
 \item[]\textbf{Initialization}
 
 
-The data stream is ingested in a windowed manner using the landmark time window model $W_0, W_1, ..W_j, ..,W_N $, where each window $W_j$ contains $L$ data points and $L$ is defined as the time interval of window $W_j = [x_1,x_2...,x_i,..x_L]$.
+The data stream is ingested in a windowed manner using the landmark time window model $W_0, W_1, ..W_j, ..,W_N $, where each window $W_j$ contains $\Omega$ data points and $L$ is defined as the time interval of window $W_j = [x_1,x_2...,x_i,..x_{\Omega}]$.
 
 The clustering process is initiated by assigning the first sequence of data points from a data stream to the initial landmark time window $W_0$ as illustrated in Figure \ref{land}. The landmark time interval is a-priori determined based on user requirements, data rate, and expected latency of the expected data streams. For example, if high latency is expected in harvesting the data points, a long duration for the time intervals is advised. In contrast, in processing data from high rate streams, short time intervals will improve the clustering process. 
 
@@ -170,7 +168,7 @@ The outputs of the initialization step are a set of micro-clusters centroids ($C
     
 \item[]\textbf{Comparison}
 
-As new data points arrive, the DSAP algorithm allocates them into their respective new time windows $W_j = [x_1,x_2...,x_i,..x_L]$ using the same landmark time interval $L$ as defined in the previous step. For each new data point, a set of tasks are devised as follows:
+As new data points arrive, the DSAP algorithm allocates them into their respective new time windows $W_j = [x_1,x_2...,x_i,..x_{\Omega}]$ using the same landmark time interval $L$ as defined in the previous step. For each new data point, a set of tasks are devised as follows:
 
 \begin{itemize}
     \item[$\bullet$] Compute the Euclidean distances between each new data point $x_i$ and the current micro-cluster centroids $C_{m_q}$ using Equation \ref{eq1}.
@@ -226,7 +224,7 @@ The outputs of this step are the set of micro-clusters from the previous window,
     
 
     %Finally, these new clusters are added to the previous micro-clusters $Cm$, and the model is being updated ($Cm = Cm' + Cm$). 
-    The next task is to compute the new $\epsilon'_T$ by taking into account the centroids of the new micro-clusters found within a particular landmark window. This is accomplished by computing the mean of the intra-cluster distances using the new micro-clusters. The update $\epsilon_T$ is computed by applying the mean between the new $\epsilon'_T$ and the current $\epsilon_T$. The updated $\epsilon_T$ is then used when the forthcoming data points from a new landmark time window arrive.
+    The next task is to compute the new $epsilon_{W_j}$ by taking into account the centroids of the new micro-clusters found within a particular landmark window. This is accomplished by computing the mean of the intra-cluster distances using the new micro-clusters. The update $epsilon_{W_j}$ is computed by applying the mean between the new and the current $epsilon_{W_j}$. The updated $epsilon_{W_j}$ is then used when the forthcoming data points from a new landmark time window arrive.
     
     
   
@@ -287,73 +285,90 @@ Intrinsic clustering validation uses the internal information of the clustering 
 
 \todo[inline]{have you computed the metrics for micro and macro clusters??? or just macro clusters??} %Nasrin: Just Macro clusters
 
-\begin{table}[htbp]\scriptsize
-% \centering
-\caption{Intrinsic clustering metrics used for validation of clustering results.}
-\label{comp}   
-\begin{tabularx}{\linewidth}{|p{2cm}|p{5cm}|p{3cm}|p{3.4cm}|}
-\hline
- \multicolumn{1}{|c|}{\textit{\textbf{Metric}}} &
- \multicolumn{1}{|c|}{\textit{\textbf{Description}}} &
- \multicolumn{1}{|c|}{\textit{\textbf{Advantages}}}   &   
-\multicolumn{1}{|c|}{\textit{\textbf{Disadvantages}}} 
-\tabularnewline \hline
-\vfill 
- \raggedright Silhouette Index &  
-\vfill
- It measures how similar a data point is to its own cluster compared to other clusters.
- &
+% \begin{table}[htbp]\scriptsize
+% % \centering
+% \caption{Intrinsic clustering metrics used for validation of clustering results.}
+% \label{comp}   
+% \begin{tabularx}{\linewidth}{|p{2cm}|p{5cm}|p{3cm}|p{3.4cm}|}
+% \hline
+%  \multicolumn{1}{|c|}{\textit{\textbf{Metric}}} &
+%  \multicolumn{1}{|c|}{\textit{\textbf{Description}}} &
+%  \multicolumn{1}{|c|}{\textit{\textbf{Advantages}}}   &   
+% \multicolumn{1}{|c|}{\textit{\textbf{Disadvantages}}} 
+% \tabularnewline \hline
+% \vfill 
+%  \raggedright Silhouette Index &  
+% \vfill
+%  It measures how similar a data point is to its own cluster compared to other clusters.
+%  &
  
- \begin{enumerate}[*,nosep,leftmargin=0.2cm]
- \item Value bounded between [-1,1]  
- \item High scores when clusters are well separated
-\end{enumerate}
-\tabitem
-&       
-\begin{itemize}[*,nosep,leftmargin=0.2cm]
-    \setlength\itemsep{0em}
-     \item High computational complexity
-     \item Higher value for convex clusters unlike density based clusters
-\end{itemize} 
-\tabularnewline \hline
-\vfill 
- Caliński-Harabasz Index     &     
-\vfill
-It is the ratio between the intra-cluster dispersion and the inter-cluster dispersion.
-& 
-\begin{itemize}[*,nosep,leftmargin=0.2cm]
-    \item Fast to compute
-    \item Easy to interpret %as it gives higher value when clusters are dense
-\end{itemize}
- &       
+%  \begin{enumerate}[*,nosep,leftmargin=0.2cm]
+%  \item Value bounded between [-1,1]  
+%  \item High scores when clusters are well separated
+% \end{enumerate}
+% \tabitem
+% &       
+% \begin{itemize}[*,nosep,leftmargin=0.2cm]
+%     \setlength\itemsep{0em}
+%      \item High computational complexity
+%      \item Higher value for convex clusters unlike density based clusters
+% \end{itemize} 
+% \tabularnewline \hline
+% \vfill 
+%  Caliński-Harabasz Index     &     
+% \vfill
+% It is the ratio between the intra-cluster dispersion and the inter-cluster dispersion.
+% & 
+% \begin{itemize}[*,nosep,leftmargin=0.2cm]
+%     \item Fast to compute
+%     \item Easy to interpret %as it gives higher value when clusters are dense
+% \end{itemize}
+%  &       
 
-\begin{itemize}[*,nosep,leftmargin=0.2cm]
-    \item Higher value for convex clusters% compared with density based clusters
-\end{itemize}
-\tabularnewline \hline
-\vfill 
-Davies-Bouldin Index        &       
-\vfill
-It is the average similarity measure of each cluster with its most similar cluster%, where similarity is the ratio of within-cluster distances to between-cluster distances
-& 
-\begin{itemize}[*,nosep,leftmargin=0.2cm]
-    \item Simple to implement
-    \item value is able to compute when features inheritent to the dataset
-    %\item Quantity computation ?????
-\end{itemize}
-         &      
+% \begin{itemize}[*,nosep,leftmargin=0.2cm]
+%     \item Higher value for convex clusters% compared with density based clusters
+% \end{itemize}
+% \tabularnewline \hline
+% \vfill 
+% Davies-Bouldin Index        &       
+% \vfill
+% It is the average similarity measure of each cluster with its most similar cluster.%, where similarity is the ratio of within-cluster distances to between-cluster distances
+% & 
+% \begin{itemize}[*,nosep,leftmargin=0.2cm]
+%     \item Simple to implement
+%     \item Value is able to compute when features inheritent to the dataset
+%     %\item Quantity computation ?????
+% \end{itemize}
+%          &      
          
-\begin{itemize}[*,nosep,leftmargin=0.2cm]
-    \item Higher values for convex clusters
-    \item Limited to Euclidean distance only
-\end{itemize}
+% \begin{itemize}[*,nosep,leftmargin=0.2cm]
+%     \item Higher values for convex clusters
+%     \item Limited to Euclidean distance only
+% \end{itemize}
 
-\tabularnewline\hline
+% \tabularnewline\hline
 
-\end{tabularx}
+% \end{tabularx}
+% \end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[htbp]
+\small
+\caption{Intrinsic clustering metrics used for validation of clustering results.}
+\label{comp}
+\begin{tabular}{llll}
+\hline
+\multicolumn{1}{c}{\textbf{Metrics}}                                  & \multicolumn{1}{c}{\textbf{Description}}                                                                                                 & \multicolumn{1}{c}{\textbf{Advantages}}                                                                                                          & \multicolumn{1}{c}{\textbf{Disadvantages}}                                                                                                                  \\ \hline\midrule
+\begin{tabular}[c]{@{}l@{}}Silhouette\\  Index\end{tabular}           & \begin{tabular}[c]{@{}l@{}}It measures how similar\\ a data point is to its own\\ cluster compared to \\ other clusters.\end{tabular} & \begin{tabular}[c]{@{}l@{}}* Value bounded \\  between {[}-1,1{]}\\ * High scores when \\ clusters are well\\  separated\end{tabular}             & \begin{tabular}[c]{@{}l@{}}* High computational\\    complexity\\ * Higher value for \\    convex clusters  unlike\\    density-based clusters\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}Caliński-\\ Harabasz \\ Index\end{tabular} & \begin{tabular}[c]{@{}l@{}}It is the ratio between\\ the intra-cluster \\ dispersion and the\\ inter-cluster dispersion.\end{tabular}    & \begin{tabular}[c]{@{}l@{}}* Fast to compute\\ * Easy to interpret\end{tabular}                                                                  & \begin{tabular}[c]{@{}l@{}}* Higher value for\\    convex clusters\end{tabular}                                                                             \\ \hline
+\begin{tabular}[c]{@{}l@{}}Davies-\\ Bouldin\\  Index\end{tabular}    & \begin{tabular}[c]{@{}l@{}}It is the average\\  similarity  measure\\ of each cluster with \\ its most similar cluster.\end{tabular}     & \begin{tabular}[c]{@{}l@{}}*Simple to implement\\ *Value is able to com-\\    pute when features\\    inherent to the \\    dataset\end{tabular} & \begin{tabular}[c]{@{}l@{}}* Higher values for \\    convex clusters\\ * Limited to Euclidean\\    distance only\end{tabular}                               \\ \hline\midrule
+\end{tabular}
 \end{table}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
 
 
 \subsection{Silhouette Index}
@@ -645,7 +660,7 @@ The silhouette index, Caliński-Harabasz index, and Davies-Bould in index are pr
 % --------------------------------------------
 
 
-\end{document}
+% \end{document}
 
 
 % the drawback of applying K-means clustering algorithm is that is need to calculate the number of clustre prior 

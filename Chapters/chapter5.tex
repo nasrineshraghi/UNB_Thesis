@@ -1,5 +1,5 @@
 %%---------------Chapter 5------------------------------
-\documentclass[../UNBThesis2.tex]{subfiles}
+% \documentclass[../UNBThesis2.tex]{subfiles}
 \setlength{\parindent}{2em}
 % \usepackage{caption}
 % \usepackage{subcaption}
@@ -38,7 +38,7 @@
 
 
 
-\begin{document}
+% \begin{document}
 
 \chapter{ Model Implementation and Data Description}
 
@@ -104,24 +104,28 @@ def getWindowSize(start_time,L):
     except:
         idx1 = 0
         idx2 = 0
-    windowSize = idx2 - idx1
+    XOmega = idx2 - idx1
+    windowSize = XOmega
     return windowSize
 \end{lstlisting}
 
 
-Every time window has a different start time, and this start time should be updated after the end of the window length is reached (\texttt{start\_time = start\_time + time\_period}). If there is no data point available in a particular window, the Scikit-Multiflow function, (\texttt{stream.next\_sample(windowSize)}) skips that window and goes to the next one.
+Every time window has a different start time, and this start time should be updated after the end of the window length is reached (\texttt{start\_time = start\_time + L}). If there is no data point available in a particular window or the number of them are few, the Scikit-Multiflow function (\texttt{stream.next\_sample(windowSize)}) skips that window and goes to the next one.
+
 \begin{lstlisting}
-# skip if the window is empty
-        if windowSize == 0:
+# skip if the window is empty or few number of points are available
+# For example 5 data points or less 
+        if windowSize < 5:
             X = stream.next_sample()
-            window = window +1
             continue
+        else:    
+            j = j +1
 \end{lstlisting}
 
 
-It should be noted that if the landmark window is a count-based window instead of time, \texttt{windowSize} needs to be defined as the number of data point in each window instead of getting the value from the \texttt{getWindowSize} function above. For instance \texttt{windowSize = 100} means that each time the latest 100 data point from the stream are accessed.
+It should be noted that if the landmark window is a count-based window instead of time, \texttt{windowSize} needs to be defined as the number of data point in each window instead of getting the value from the \texttt{getWindowSize} function above. For instance \texttt{windowSize = 100} means that each time the latest 100 data point from the stream are accessed. In this case number of data points in the window $\Omega$ is equal to $L$.
 
-The DSAP online micro-cluster phase is implemented in three steps as described before in Chapter 4: initialization, comparison, and activateAP and update $\epsilon_{W_j}$.
+The DSAP online micro-cluster phase is implemented in three steps as described before in Chapter 4: initialization, comparison, and ActivateAP with update $\epsilon_{W_j}$.
 
 In the Initialization step, the AP algorithm is applied on all data points present in the first window $W_0$ from the data stream (\texttt{AffinityPropagation().fit($W_0$)})
 
@@ -129,7 +133,6 @@ In the Initialization step, the AP algorithm is applied on all data points prese
 #(1) Initialization. AP on the first time window
 from sklearn.cluster import AffinityPropagation 
 # AP library needs to be added first
-
 AP = AffinityPropagation(preference, damping).fit(W0)
 cluster_centers_indices = AP.cluster_centers_indices_
 labels = AP.labels_
@@ -137,22 +140,22 @@ Cm = AP.cluster_centers_
 n_clusters_ = len(cluster_centers_indices)
 \end{lstlisting}
 
-The AP algorithm generates a set of micro clusters (Cm). To initiate the DSAP model, sufficient number of data points are required in the first window. Hence, it is important to choose an optimal value for the window size; otherwise, AP cannot reach convergence, and the model will fail. After the micro-clusters are generated, the distance matrix of all data points and centroids in each cluster are calculated by the \texttt{getAdaptiveThreshold} function. The average distance of these values gives the initial threshold that will be used in the comparison step.
+The AP algorithm generates a set of micro clusters (Cm). To initiate the DSAP model, sufficient number of data points are required in the first window. Hence, it is important to choose an optimal value for the window size; otherwise, AP cannot reach convergence, and the model will fail. After the micro-clusters are generated, the distance matrix of all data points and centroids in each cluster are calculated by the \texttt{getAdaptiveThreshold} function. The average distance of these values gives the initial $\epsilon_{W_0}$ that will be used in the comparison step.
 
 
 \begin{lstlisting}
 # Calculate the threshold distance
 def getAdaptiveThreshold(W,Cm):
     epsilon = np.mean(distance.cdist(W,Cm,'Euclidean'))
-    return epsilon
+    return epsilon 
 \end{lstlisting}
 
 In addition, the timestamp associated to each cluster centroids should be kept in an array with the size of initial centroids. The time for all centroids in the first window are equal.
 
 \begin{lstlisting}
 #time associated to initial centroids
-Cm_time = np.ones(len(my_centers))*start_time
-Cm_time = Cm_time.astype(int)
+tq = np.ones(len(Cm))*start_time
+tq = tq.astype(int)
 \end{lstlisting}
 
 
@@ -170,7 +173,7 @@ for i in range(windowSize):
          branch = np.concatenate((branch , np.reshape(x[i,:],(-1,2)))) 
          #Updating time associated to centroid met in this step
          ind = np.argmin(ed)          
-         Cm_time[ind] = start_time
+         tq[ind] = start_time
     else:
         indx = indx +1
         cache.append(x[i])       
@@ -190,9 +193,9 @@ Cmpr = f.cluster_centers_
 #Cmpr is the Cm prime as mentioned in the text
 Cm = np.append(Cmpr, Cm, axis = 0)
 #Adding timestamp to new micro-clusters  
-cache_Cm_time = np.ones(len(out_centers))*start_time
-cache_Cm_time = cache_Cm_time.astype(int)
-Cm_time = np.concatenate((Cm_time, cache_Cm_time), axis=0)
+cache_tq = np.ones(len(out_centers))*start_time
+cache_tq = cache_tq.astype(int)
+tq = np.concatenate((tq, cache_tq), axis=0)
 \end{lstlisting}
 
 
@@ -211,13 +214,13 @@ In order to keep the number of micro-clusters under control and avoid obsolete c
 \begin{lstlisting}
 # Add the starting time of each centroids to the array of time
 expiration = ex
-remain_centers = np.ones(len(Cm_time))
-for i in range(len(Cm_time)):
+remain_centers = np.ones(len(tq))
+for i in range(len(tq)):
     # Remove the centroids with the time more than the ex
-    if Cm_time[i] < start_time - ex * time_period:
+    if tq[i] < start_time - ex * time_period:
         remain_centers[i] = 0
 Cm  = my_centers[remain_centers==1]
-Cm_time = Cm_time[remain_centers==1]
+tq = tq[remain_centers==1]
 \end{lstlisting}
 
 
@@ -232,9 +235,9 @@ The next phase of the DSAP algorithm is the offline macro-cluster phase which ge
 \small
     \SetKwInOut{Input}{Input}
     \textbf{Input:}
-         Data stream: $S$, landmark time window length: $L$ creates windows ${ W_0,W_1, ..., W_N : W_j = x_1, ..., x_L}$, start\_time;\newline 
+         Data stream: $S$, landmark time window length: $L$ creates windows ${ W_0,W_1, ..., W_N : W_j = x_1, ..., x_{\Omega}}$, ex ;\newline 
     \textbf{Hyperparameters:}
-        {Preference, Damping, $\epsilon$, ex}\newline
+        {Preference, Damping, $\epsilon$}\newline
         \textbf{Output:}
         Set of micro clusters with centroids $Cm= [Cm_1,Cm_2,Cm_3, ...]$,  set of macro clusters with centroids $C_M= [C_{M_1}, C_{M_2}, ...C_{M_k}]$ \\
         
@@ -281,7 +284,7 @@ The next phase of the DSAP algorithm is the offline macro-cluster phase which ge
         \For{($x_i:i = 1:L$)}{
         $[Ed]$ = d($x_i, Cm$) \newline
         
-        \eIf{min ($[Ed]) < \epsilon_T$}
+        \eIf{min ($[d]) < \epsilon_T$}
         {   
         $Cm \leftarrow{x_i}   $
         (merge with micro\_clusters)\\%\tcp{kkkk}\\
@@ -422,7 +425,7 @@ To validate the clustering results, three Intrinsic evaluation metrics: Silhouet
 \item\textbf{Silhouette Coefficient}
 Silhouette Coefficient cluster evaluation metric is implemented as function \texttt{silhouette\_score} and is available in the \texttt{sklearn.metrics} library in Python.  The input parameter of this function is an array of pairwise Euclidean distances between micro-cluster centroids and the final macro-cluster centroids, %cluster label for each data point, and metric to use for calculating a distance between data points in a feature array which is Euclidean for our work. 
 
-The Silhoutte calculation in R is performed by the function \texttt{silhouette()} that is available in package \textbf{cluster}. This function \texttt{silhouette(distdata, idmedoid, idcluster)} just needs a vector of cluster members and a dissimilarity matrix.
+The Silhoutte calculation in R is performed by the function \texttt{silhouette()} that is available in package \texttt{cluster}. This function \texttt{silhouette(distdata, idmedoid, idcluster)} just needs a vector of cluster members and a dissimilarity matrix.
 
 
 
@@ -1189,4 +1192,4 @@ The computer, various tools and languages used for these studies are listed belo
 
 % some lat lang 2 user capture the poin t the same time with diffrent phones
 
-\end{document}
+% \end{document}

@@ -1,7 +1,7 @@
 %%----------Chapter 2------------------------------------------
-\documentclass[../UNBThesis2.tex]{subfiles}
+% \documentclass[../UNBThesis2.tex]{subfiles}
 \setlength{\parindent}{2em}
-\begin{document}
+% \begin{document}
 \chapter{Background}
 
 %As the number of connected devices and applications that generate huge amount of data at very high speed increases, the need for faster data mining techniques is enhanced. This research work proposes a data stream clustering algorithm that builds upon the Affinity Propagation clustering algorithm. The concept of time windows that partition the data into manageable chunks is introduced in order to apply these algorithms for data stream clustering.
@@ -19,81 +19,11 @@ This Chapter presents an overview of clustering by reviewing the concepts, metho
 \subsection{Overview}
 Clustering refers to partitioning a set of data points (also referred to as observations or tuples) into groups according to a proximity measure. Distance functions are predominantly used to determine a proximity measure of dissimilarity/similarity between clusters.  This proximity measure directly affects the formation of the resulting clusters. Almost all clustering algorithms are explicitly or implicitly connected to some definition of distance function \cite{zumel2014practical}. The most commonly used distance functions for quantitative features are summarized in Table \ref{tabdis}. 
 
-\begin{table}[!h]{}
-\centering
-\caption{Main distance functions used for computing proximity measures \protect%\cite{xu2015comprehensive}
-}
-    \label{tabdis}
-    \begin{tabular}{p{4cm} l p{5cm} l  p{6cm} }
-    \hline
-    \textbf{Distance} & \textbf{Function} & \textbf{Description} \\ \hline
-    \midrule
-    
-    
-    
-     Euclidean distance             &  
-     
-    $\sqrt {\sum _{i=1}^{n}  \left( q_{i}-p_{i}\right)^2 }$
-
-  
-     &  
-     The root square differences between co-ordinates of a pair of data points, most applied way of representing distance in clustering. Tend to form hyperspherical clusters.
-     
-     \\ \hline
-     
-    
-     Manhattan distance                 &    
-     
-    $ \sum_{i=1}^n \abs{q_i - p_i}$
-     
-     
-     &  
-    The sum of the distances in each dimension in a n-dimensional space
-     \\
-     \hline
-     Minkowski distance                &    
-     
- $\left( \sum_{i=1}^n \abs{q_i - p_i}^n \right)^{\frac{1}{n}}$
-
-     
-     &  
-
-      The generalization of the Euclidean distance and the Manhattan distance
-     
-     \\
-    \hline
-    
-    Cosine distance                    &   
-    
-    $1 - cos \alpha = \frac{q_i^{T} - p_i}{\|q_i\| \|p_i\|}$
-   
-    
-    &  
-    % 1-Stays the same in the face of rotational change in data, 
-    % 2-The most commonly used distance in document area
-    A metric for measuring distance when the magnitude of the vectors does not matter, commonly used in text data
-    \\
-    \hline
-    
-    Mahalanobis distance               &   
-    
-     
-    $\sqrt{(q_i - p_i)^T S^{-1} (q_i - p_i)}$
-
-    &  
-    The distance between a data point and the mean, requiring high computational complexity
-    % 1- S is the co-variance matrix inside the cluster,  
-    % 2- High computation complexity
-    \\
-    \hline
-    \bottomrule
-
-\end{tabular}
-\end{table}
 
 
 
-\begin{table}[]
+
+\begin{table}[!h]
 \caption{Main distance functions used for computing proximity measures}
 \label{tabdis}
 \begin{tabular}{lll}
@@ -523,23 +453,10 @@ The K-means clustering algorithm that has been used in this thesis is described 
     \color{black}
     n_j = \sum_{i=1}^n R_{ij}\\
     \mu_j = \frac{1}{n_j} \sum_{i = 1}^n R_{ij} x_i
+    
   }
-
  }
-
-% \begin{equation}
-% J = \sum_{n=1}^{N} \sum_{k=1}^{K} r_{nk} ||x_n - \mu_k||^2
-% \label{eqn:kmeans_objective_function}
-% \end{equation}
-
-
-
-
 {
-       
-
-
-
 
 \textbf{return} {$\mu_1 , ... , \mu_k$\\ }
 }
@@ -547,7 +464,10 @@ The K-means clustering algorithm that has been used in this thesis is described 
  \label{kmeanalgo}
 \end{algorithm}
 
- 
+ % \begin{equation}
+% J = \sum_{n=1}^{N} \sum_{k=1}^{K} r_{nk} ||x_n - \mu_k||^2
+% \label{eqn:kmeans_objective_function}
+% \end{equation}
  
  
  
@@ -787,7 +707,7 @@ Data stream clustering methods can be categorized into five leading groups accor
 
 \begin{table}[h]
     \centering
-    \caption{ Overview of data stream clustering methods \cite{mansalis2018evaluation}}
+    \caption{ Overview of data stream clustering methods \protect\cite{mansalis2018evaluation}}
     \label{landmarkwin}
     \small
     \begin{tabular}{c c c c c}
@@ -1311,7 +1231,7 @@ In particular, the online-offline processing for streaming K-means clustering ha
 
 
   
-\end{document}
+% \end{document}
 
 
 %\subsection{Sliding Time Window for the Workflow}
