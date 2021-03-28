@@ -40,9 +40,9 @@
 
 % \begin{document}
 
-\chapter{ Model Implementation and Data Description}
+\chapter{Implementation and Data Description}
 
-In this Chapter, the design and implementation details of the DSAP algorithm are presented. Next, the performance of the model is evaluated using two case studies that are related to people movement in an indoor environment. The two studies are: an e-counter based Indoor staircase usage experiment and a WiFi fingerprint-based Indoor Localization dataset. Finally, the proposed algorithm is compared with the existing streaming K-means algorithm, which is also described in this chapter.
+In this Chapter, the design and implementation details of the DSAP algorithm are presented. Next, the performance of the model is evaluated using two case studies that are related to people movement in an indoor environment. The two studies are: an e-counter based Indoor staircase usage experiment and a WiFi fingerprint-based Indoor Localization dataset. Finally, the streaming K-means algorithm is also described in this Chapter.
 
 
 %The DSAP algorithm is a clustering approach consisting of phases as shown in Figure \ref{frame}. The online micro-cluster phase detects newly arriving data points and updates the clusters. The offline macro-cluster phase generates summary clusters periodically or at the end of the stream. The intrinsic clustering validation Phase ,and clustering performance evaluation phase assesses the clustering quality based on different criteria. The last phase, comparison between DSAP and streaming K-means shows the DSAP results compare to the streaming K-means results.
@@ -105,6 +105,7 @@ def getWindowSize(start_time,L):
         idx1 = 0
         idx2 = 0
     XOmega = idx2 - idx1
+# XOmega is window size
     windowSize = XOmega
     return windowSize
 \end{lstlisting}
@@ -138,15 +139,17 @@ cluster_centers_indices = AP.cluster_centers_indices_
 labels = AP.labels_
 Cm = AP.cluster_centers_
 n_clusters_ = len(cluster_centers_indices)
+X = np.array(xi)
+X_label = np.array(labels)
 \end{lstlisting}
 
-The AP algorithm generates a set of micro clusters (Cm). To initiate the DSAP model, sufficient number of data points are required in the first window. Hence, it is important to choose an optimal value for the window size; otherwise, AP cannot reach convergence, and the model will fail. After the micro-clusters are generated, the distance matrix of all data points and centroids in each cluster are calculated by the \texttt{getAdaptiveThreshold} function. The average distance of these values gives the initial $\epsilon_{W_0}$ that will be used in the comparison step.
+The AP algorithm generates a set of micro clusters (Cm). To initiate the DSAP model, sufficient number of data points are required in the first window. Hence, it is important to choose an optimal value for the window size; otherwise, AP cannot reach convergence, and the model will fail. After the micro-clusters are generated, the distance matrix of all data points and centroids in each cluster are calculated by the \texttt{getAdaptiveThreshold()} function. The average distance of these values gives the initial $\epsilon_{W_0}$ that will be used in the comparison step.
 
 
 \begin{lstlisting}
 # Calculate the threshold distance
-def getAdaptiveThreshold(W,Cm):
-    epsilon = np.mean(distance.cdist(W,Cm,'Euclidean'))
+def getAdaptiveThreshold(Wj,Cm):
+    epsilon = np.mean(distance.cdist(Wj,Cm,'Euclidean'))
     return epsilon 
 \end{lstlisting}
 
@@ -159,52 +162,55 @@ tq = tq.astype(int)
 \end{lstlisting}
 
 
-The output of the initialization step are a set of micro-clusters with centroids ($C_m$) and an initial threshold value ($\epsilon_T$).
+The output of the initialization step are a set of micro-clusters with centroids ($C_m$) and an initial threshold value ($\epsilon_{W_0}$).
 
-The next step of the online micro-cluster phase is comparison. For the following windows from $W_1$ to $W_N$, all data points in each window are compared with the existing micro-clusters. The Euclidean distance of each new point $x_i$ in the window to it's closest micro-cluster centroid is calculated. If the distance is less than the threshold $\epsilon_T$, $x_i$ is added to the micro-clusters and the timestamp associated to those specific centroids needs to be updated. Otherwise, it is kept temporarily in the cache until all data points in the window are being evaluated. 
+The next step of the online micro-cluster phase is comparison. For the following windows from $W_1$ to $W_N$, all data points in each window are compared with the existing micro-clusters. The Euclidean distance of each new point $x_i$ in the window to it's closest micro-cluster centroid is calculated. If the distance is less than the threshold $\epsilon_{W_j}$, $x_i$ is added to the micro-clusters and the timestamp associated to those specific centroids needs to be updated. Otherwise, it is kept temporarily in the cache until all data points in the window are being evaluated. 
 
 \begin{lstlisting}
-#(2) Comparison step. 
+#(2) Comparison step.
+# Update the start time for each window
+windowsize = getWindowSize(start_time, L)
+start_time = start_time + L
 indx = 0
 cache = []
 for i in range(windowSize):
-    Ed = distance.cdist(Cm,x,'Euclidean')     
-    if min(Ed) < epsilon:
-         branch = np.concatenate((branch , np.reshape(x[i,:],(-1,2)))) 
+    d = distance.cdist(Cm,x,'Euclidean')
+    ind = np.argmin(d)    
+    if min(d) < epsilon:
+         X = np.concatenate((X , np.reshape(x[i,:],(-1,2))))
+         X_label = np.concatenate((X_label , np.reshape(ind,(-1))))
          #Updating time associated to centroid met in this step
-         ind = np.argmin(ed)          
          tq[ind] = start_time
     else:
-        indx = indx +1
         cache.append(x[i])       
-
+        indx = indx +1
 \end{lstlisting}
 
 %At the end, the AP will apply again to find new micro-clusters out of these data. If there is no data point is in the cache, the next window will come in the model.
 
-In the next ActivateAP step, AP is applied on all the remaining data points in the cache whose distance from the centroids are more than the adaptive threshold $\epsilon_T$ for the current time window. In the end, clusters obtained from this step are added to the updated micro-clusters. Moreover, 
+In the next ActivateAP step, AP is applied on all the remaining data points in the cache whose distance from the centroids are more than the adaptive threshold $\epsilon_{W_j}$ for the current time window. In the end, clusters obtained from this step are added to the updated micro-clusters.  
 
 
 \begin{lstlisting}
 #(3) ActivateAP step for the cached points
 cachedata = np.array(cache)        
 AP_cache = AffinityPropagation(preference, damping).fit(cachedata)
-Cmpr = f.cluster_centers_
-#Cmpr is the Cm prime as mentioned in the text
-Cm = np.append(Cmpr, Cm, axis = 0)
-#Adding timestamp to new micro-clusters  
-cache_tq = np.ones(len(out_centers))*start_time
+C`m = AP_cache.cluster_centers_
+#C`m is the Cm prime, new micro-clusters
+Cm = np.append(C`m, Cm, axis = 0)
+# Assign timestamp to new micro-clusters
+cache_tq = np.ones(len(C`m))*start_time
 cache_tq = cache_tq.astype(int)
 tq = np.concatenate((tq, cache_tq), axis=0)
 \end{lstlisting}
 
 
-As new micro-clusters are generated at the end of the ActivateAP step, the threshold value needs to be recalculated based on the updated micro-clusters. Once again the adaptive threshold function is called upon to estimate temporary threshold values. This value is compared with the threshold $\epsilon_T$. If the value is greater than $\epsilon_T$ then a simple average of the two thresholds is selected as the new threshold otherwise the threshold remains unchanged. The decision to choose the average of the two numbers was taken to ensure that the threshold doesn't blow up in size due to a sparse cluster or noise.
+As new micro-clusters are generated at the end of the ActivateAP step, the threshold value needs to be recalculated based on the updated micro-clusters. Once again the adaptive threshold function is called upon to estimate new threshold values. This value is compared with the threshold $\epsilon_{W_j}$. If the value is greater than $\epsilon_{W_j}$ then a average of the two thresholds is selected as the new threshold otherwise the threshold remains unchanged. The decision to choose the average of the two numbers was taken to ensure that the threshold doesn't blow up in size due to a sparse cluster or noise.
 \begin{lstlisting}
 # Update the threshold value.
-epsilonTpr = getAdaptiveThreshold(Cmpr, cachedata)
-if epsilon < epsilonTpr:
-    epsilon = (epsilonTpr + epsilon)/2  
+epsilonC`m = getAdaptiveThreshold(C`m, cachedata)
+if epsilon < epsilonC`m:
+    epsilon = (epsilonC`m + epsilon)/2  
 \end{lstlisting}
 
 In order to keep the number of micro-clusters under control and avoid obsolete clusters, cluster centroids that are older than the expiration number $ex$ times the time period (older than a specific number of landmark) are removed periodically. The oldest relevant time is calculated by subtracting the $ex$ number of time periods from the current timestamp (\texttt{start\_time}). The centroids with timestamps greater than this value are retained in the updated centroids along with their updated associated timestamps. Based on the duration of interest this expiration value is set by the user at the start of the stream clustering process. 
@@ -212,14 +218,15 @@ In order to keep the number of micro-clusters under control and avoid obsolete c
 
 
 \begin{lstlisting}
-# Add the starting time of each centroids to the array of time
-expiration = ex
+# Remove old micro-clusters
+# Number is an integer value defines by the user
+ex = Number
 remain_centers = np.ones(len(tq))
 for i in range(len(tq)):
     # Remove the centroids with the time more than the ex
-    if tq[i] < start_time - ex * time_period:
+    if tq[i] < start_time - ex * L:
         remain_centers[i] = 0
-Cm  = my_centers[remain_centers==1]
+Cm  = Cm[remain_centers==1]
 tq = tq[remain_centers==1]
 \end{lstlisting}
 
@@ -232,111 +239,116 @@ The next phase of the DSAP algorithm is the offline macro-cluster phase which ge
 %%%%%%%%%%%%%%%%%%%%% DSAP  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{algorithm}[htbp]
+       
+\caption{DSAP online Micro and offline Macro Clustering Algorithm}
+    \label{algSDAPi}
 \small
-    \SetKwInOut{Input}{Input}
     \textbf{Input:}
-         Data stream: $S$, landmark time window length: $L$ creates windows ${ W_0,W_1, ..., W_N : W_j = x_1, ..., x_{\Omega}}$, ex ;\newline 
+         Data stream: $S$ as windows ${ W_0,W_1, ..., W_N : W_j = x_1, ..., x_{\Omega}}$ with the length L, ex ;\newline 
     \textbf{Hyperparameters:}
-        {Preference, Damping, $\epsilon$}\newline
+        {Preference, Damping, $\epsilon_{W_j}$}\newline
         \textbf{Output:}
-        Set of micro clusters with centroids $Cm= [Cm_1,Cm_2,Cm_3, ...]$,  set of macro clusters with centroids $C_M= [C_{M_1}, C_{M_2}, ...C_{M_k}]$ \\
+        Set of micro clusters with centroids $Cm= [Cm_1,Cm_2, ..., Cm_q]$,  set of macro clusters with centroids $C_M= [C_{M_1}, C_{M_2}, ...C_{M_k}]$ \\
         
         \SetKwFunction{FIROC}{getWindowSize} 
          \SetKwProg{Fn}{Function}{}{}
-         \Fn{\FIROC{start\_time, $L$} %\tcp{\color{green}return thewindow size} 
+         \Fn{\FIROC{$start\_time, L$} 
          }{
-         $time\_period$ = start\_time + $L$ \\
+         $time\_period = start\_time + L$ \\
          $windowSize$ = $S(time\_period)$
+        %  $windowSize = time\_period - start\_time$
          }
-         \KwResult{$windowSize$} %\newline
-         
-         
-        \SetKwFunction{FIROC}{getAdaptiveThreshold}          
+         \KwResult{$windowSize$} 
+                 \SetKwFunction{FIROC}{getAdaptiveThreshold}          
          \SetKwProg{Fn}{Function}{}{}
          \Fn{\FIROC{$W_j$, $Cm$}}{
-         $\epsilon_T$ = mean(d($W_j, Cm$))
+         $\epsilon_{W_j}$ = mean(d($W_j, Cm$))
                   }
-         \KwResult{$\epsilon_T$} %\newline
-         \Statex  \hfill     \textbf{\textcolor{red}O\textcolor{red}n\textcolor{red}l\textcolor{red}i\textcolor{red}n\textcolor{red}e \textcolor{red}P\textcolor{red}h\textcolor{red}a\textcolor{red}s\textcolor{red}e\textcolor{red}:}\\
+         \KwResult{$\epsilon_{W_j}$} 
+         \Statex  \hfill              
+         \ContinuedFloat\hfill
+        \textcolor{red}{\textbf{Online Phase}}\\
+         j = 0\\
          \While{!(stream.has\_more\_samples())}{
-
-    
+         
+      	\eIf{(j == 1) %\tcp{\color{green}First window}
+       	} 
+       	{\hfill \Comment{Initialization}\\
+       	$W_0$ = \texttt{S.getWindowSize($start\_time, L$)}\;\newline
+       	\SetKwFunction{FIROC}{AP}        \;  
+             \SetKwProg{Fn}{Function}{}{}
+             \Fn{\FIROC{ $W_0$}}{}
+             \KwResult{Initial micro-clusters: $Cm = [Cm_1,Cm_2,...,Cmq]$, label data points: $X$, $[tq] = start\_time$}\\
+             $\epsilon_{W_j}$ = getAdaptiveThreshold($W_0, Cm$)\;
             
-        
-   	\eIf{(j == 1) \tcp{\color{green}First window}} 
-   	{\hfill \Comment{Initialization}\\
-   	$W_0$ = \texttt{S.getWindowSize(start\_time, L)}\;\newline
-   	\SetKwFunction{FIROC}{AP}        \;  
-         \SetKwProg{Fn}{Function}{}{}
-         \Fn{\FIROC{ $W_0$}}{}
-         \KwResult{Initial micro-clusters: $Cm = [Cm_1,Cm_2,...]$,\\ Cm_T = start\_time}\\
-         $\epsilon_T$ = getAdaptiveThreshold($W_0, Cm$)\;
-        %  Cm_T = start\_time
-         }
-         {
-  $W_j$ = \texttt{S.getWindowSize(start\_time + L*j, L)}\;
-   
-          %  \If{getWindowSize == 0}
+             }
+             {
+      $W_j$ = \texttt{S.getWindowSize($start\_time + L*j, L$)}\;\\
+      $start\_time = start\_time + L$\\
+       
+              %  \If{getWindowSize == 0}
       %  {$W_j = W_j + 1$}  \newline
         % \newline
         
          %\Statex \hfill     \textbf{{Online Phase:}}\\
-        \For{($x_i:i = 1:L$)}{
-        $[Ed]$ = d($x_i, Cm$) \newline
+        \For{($x_i:i = 1:\Omega$)}{\hfill \Comment{Comparison}\;\\
+        $[d]$ = d($[Cm], x_i$) \newline
         
-        \eIf{min ($[d]) < \epsilon_T$}
+        \eIf{min ($[d]) < \epsilon_{W_j}$}
         {   
-        $Cm \leftarrow{x_i}   $
+        $Cm[X] \leftarrow{x_i}   $
         (merge with micro\_clusters)\\%\tcp{kkkk}\\
-        Cm_T = updated(start\_time)
+        $[tq] = start\_time$
         
         }
         {
-        \STATE $cache \leftarrow{x_i} $ \hfill \Comment{Comparison}\;
+        \STATE $cache \leftarrow{x_i} $ 
         
         %\STATE $W_i \xrightarrow \mathrm{C_{m0}}$\;
         }
         
-        
-         }%if 1st
-         \If{$i == L$}
-         {                                  \hfill \Comment{ActivateAP}\\
+        \hfill \Comment{ActivateAP}\\
+        %if 1st
+        %  \If{$i == \Omega$}
+        %  {                                  
          \SetKwFunction{FIROC}{AP}          
          \SetKwProg{Fn}{Function}{}{}
          \Fn{\FIROC{Cache}}{}
-         \KwResult{new micro-clusters:$[Cm']$}
-                $\epsilon_T'$ = getAdaptiveThreshold($W_j,Cm'$)
+         \KwResult{new micro-clusters:$[C'm]$\\
+                $\epsilon_{W_J}'$ = getAdaptiveThreshold($C'm,cache$)\\
+                $tq_{cache} = start\_time$
+                }
 
-         }
+        %  }
+        }
 
-        Update micro\_clusters: $Cm = Cm + Cm'$ \\
-        Update Threshold : $\epsilon_T$ = mean($\epsilon_T, $\epsilon_T')
+        Update micro\_clusters: $Cm = Cm + C'm$ \\
+        Updated timestamp $tq = tq + tq_{cache}$\\
+        Update Threshold : $\epsilon_{W_j}$
         
         
 
       }
        
-      \If{$Cm_T < start\_time - ex * L$}
-        {$Cm = False$}
+      \If{$tq < start\_time - ex * L$}
+        {Discard Cm }
          
-        \textbf{Results: } Micro Clusters: $Cm= [Cm_1,Cm_2,Cm_3, ...]$ %}
+        \textbf{Results: } Micro Clusters: $Cm= [Cm_1,Cm_2,Cm_3, ..., Cm_q]$ %}
         }
-        % \end{algorithm}
-        % \begin{algorithm}
+        \end{algorithm}
+        \begin{algorithm}
             
-        %   \ContinuedFloat
-        %   \hfill\textbf{{\textcolor{red}O\textcolor{red}f\textcolor{red}f\textcolor{red}l\textcolor{red}i\textcolor{red}n\textcolor{red}e \textcolor{red}P\textcolor{red}h\textcolor{red}a\textcolor{red}s\textcolor{red}e\textcolor{red}:}}\\
-%          \If{j == N}{                        
 
+         \If{end of S}{            \\            
+          \ContinuedFloat\hfill
+\textcolor{red}{\textbf{Offline Phase}}\\
          
-%          \SetKwFunction{FIROC}{AP}
-%          \SetKwProg{Fn}{Function}{:}{}
-%         \Fn{\FIROC{$Cm$}}{}
-%      \KwResult{Macro Clusters: $C_M= [C_{M_1}, C_{M_2}, ...C_{M_k}]$} 
-%      }
-       
-\caption{DSAP online and offline Clustering Algorithm}
-    \label{algSDAPi}
+         \SetKwFunction{FIROC}{AP}
+         \SetKwProg{Fn}{Function}{:}{}
+        \Fn{\FIROC{$Cm$}}{}
+     \KwResult{Macro Clusters: $C_M= [C_{M_1}, C_{M_2}, ...C_{M_k}]$} 
+     }
+
 \end{algorithm}
 
 
@@ -808,17 +820,27 @@ Finally, the feature selection task was performed to provide a target dataset re
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % I think we can remove this subsection. I can explain in next chapter
-\subsubsection{Data Stream Clustering}
-The measurements from the e-counters were analyzed to find patterns in time and space. Clusters of similar measurements with respect to position and count were generated using the DSAP and streaming K-means algorithms. To initiate the clustering algorithms, the size of the landmark time window needs to be defined. Different windows sizes ranging from 1 hour to 30 hours were test with the DSAP algorithm. A reasonable compromise between speed and accuracy of clusters was obtained for a window size of 5 hours, hence this was chosen as the size of the landmark window.% and because the number of people using the stairs are usually not significant or after working hours there is not much commuting, we consider each window with the length of 4 hour.
-There are several hyper parameters that need to be set in order to use the DSAP and streaming K-means algorithms correctly. This values are a function of the dataset under study. 
-\begin{itemize}
-    \item The damping factor for AP algorithm is constant for all AP function called and is equal to 0.9
-    \item The maximum iteration is the predefined value and it is 100.
-    \item The preference hyperparameter is the median value of the similarity matrix.
-    \item The expiration value equal to forget older windows is the last 5 landmark window (If it was applied). 
-    \item The landmark time frame is equal to every 5 hours.
-%    \item For the streaming k means algorithm the number of the macro clusters was obtained by the elbow method. This number is $k$ = 6 for the entire dataset.
-\end{itemize}
+% \subsubsection{Data Stream Clustering}
+% The measurements from the e-counters were analyzed to find patterns in time and space. Clusters of similar measurements with respect to position and count were generated using the DSAP and streaming K-means algorithms. To initiate the clustering algorithms, the size of the landmark time window needs to be defined. Different windows sizes ranging from 1 hour to 30 hours were test with the DSAP algorithm. A reasonable compromise between speed and accuracy of clusters was obtained for a window size of 5 hours, hence this was chosen as the size of the landmark window.% and because the number of people using the stairs are usually not significant or after working hours there is not much commuting, we consider each window with the length of 4 hour.
+% There are several hyper parameters that need to be set in order to use the DSAP and streaming K-means algorithms correctly. This values are a function of the dataset under study. 
+% \begin{itemize}
+%     \item The damping factor for AP algorithm is constant for all AP function called and is equal to 0.9
+%     \item The maximum iteration is the predefined value and it is 100.
+%     \item The preference hyperparameter is the median value of the similarity matrix.
+%     \item The expiration value equal to forget older windows is the last 5 landmark window (If it was applied). 
+%     \item The landmark time frame is equal to every 5 hours.
+% %    \item For the streaming k means algorithm the number of the macro clusters was obtained by the elbow method. This number is $k$ = 6 for the entire dataset.
+% \end{itemize}
+
+
+
+
+
+
+
+
+
+
 
 
 %  The same landmark window was used in the online clustering phase to generate micro-clusters. Once the data stream ended and all the micro clusters have been stored, the DSC function generation was again used for the computation of the macro clusters in the offline macro clustering Phase. 
@@ -1155,18 +1177,18 @@ Two numerical variables were selected: the SPACEID and the Phone ID for this stu
 \end{itemize}
 
 
-\subsubsection{Data Stream Clustering} 
-The UJIIndoorLoc dataset is quite different from the e-counter dataset. The data was collected in 6 days (training data) and the days are non-uniformly distributed over 2 month as shown in table \ref{udate} earlier. The data collection during those six days was not continuous but collected at a much higher cadence. For these reasons a smaller landmark time window of 10 minutes was applied on this dataset.
+% \subsubsection{Data Stream Clustering} 
+% The UJIIndoorLoc dataset is quite different from the e-counter dataset. The data was collected in 6 days (training data) and the days are non-uniformly distributed over 2 month as shown in table \ref{udate} earlier. The data collection during those six days was not continuous but collected at a much higher cadence. For these reasons a smaller landmark time window of 10 minutes was applied on this dataset.
 
-\begin{itemize}
-    \item A constant damping factor equal to 0.9 for AP algorithm.
-    \item The maximum iteration for AP is the predefined value and it is equal to 100.
-    \item The preference hyper-parameter for AP is the median value of the similarity matrix.
-    \item The expiration value equal to the last 5 landmark window is chosen. 
-    \item The time frame for this data is every 10 minutes.
-    % \item For the streaming K-means algorithm $k$= 7 for each time window was selected based on the elbow method. The optimal k value was computed before the initiation of the stream clustering process.
+% \begin{itemize}
+%     \item A constant damping factor equal to 0.9 for AP algorithm.
+%     \item The maximum iteration for AP is the predefined value and it is equal to 100.
+%     \item The preference hyper-parameter for AP is the median value of the similarity matrix.
+%     \item The expiration value equal to the last 5 landmark window is chosen. 
+%     \item The time frame for this data is every 10 minutes.
+
     
-\end{itemize}
+% \end{itemize}
 
 
 

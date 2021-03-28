@@ -118,7 +118,7 @@ The e-counter dataset is an example of spatially distributed measurements that c
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[width = 11 cm]{image/Chapters/Chapter6/ApFirstWeekIntervention.png}
+    \includegraphics[width = 11 cm]{image/Chapters/Chapter6/ApFirstWeekIntervention1.png}
     % \includegraphics[width = 11 cm]{image/Chapters/Chapter6/17ap.966Y.png}%ecounter_time data
     \caption{AP algorithm is applied on e-counter data for one week. The first week of intervention: 29 April- 5 May. with the damping = 0.96 and preference(np.median(similarity matrix) = -50 }
     \label{oneweek}
@@ -134,11 +134,39 @@ Based on the elbow method as shown in Figure \ref{elbkmean} left, the number of 
     \includegraphics[width=.49\textwidth]{image/Chapters/Chapter6/elbowBeforerInt.png}
     \includegraphics[width=.49\textwidth]{image/Chapters/Chapter6/kmeans1WeekBefore.png}
     \caption{K-means algorithm is applied on e-counter data for one week(first week before intervention: March 18- March 24).}
-    \label{elbkmean}
+    \label{beforAPp}
 \end{figure}   
    
-    
-    
+
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width = 11 cm]{image/Chapters/Chapter6/ApFirstWeekBeforeInt.png}
+    \caption{AP algorithm is applied on e-counter data for one week. The first week before intervention. with the damping = 0.96 and preference(np.median(similarity matrix) = -4 }
+    \label{befA}
+\end{figure}
+
+
+\begin{table}[!h]
+\small
+\caption{Comparison of AP, DSAP, K-means, and Streaming K-means Evaluation Metrics for the first week before intervention ( March 18- March 24).}
+\label{befcom}
+\begin{tabular}{l
+>{\columncolor[HTML]{CBCEFB}}c 
+>{\columncolor[HTML]{FFCCC9}}c 
+>{\columncolor[HTML]{CBCEFB}}c 
+>{\columncolor[HTML]{FFCCC9}}c }
+\hline
+\multicolumn{1}{c}{\textbf{Metrics}} & \textbf{AP} & \textbf{K-means} & \textbf{DSAP} & \textbf{Stream K-means} \\ \hline\midrule
+\textbf{Processing time (s)}         & 23          & 0.28             & 0.66           & 0.6                       \\ \hline
+\textbf{Memory consumption (MB)}     & 517         & 580              & 212           & 313                        \\ \hline
+\textbf{Number of clusters}          & 7           & 7                & 7             & 7                          \\ \hline
+\textbf{Silhouette Coefficient}      & 0.7         & 0.6              & 0.5         & 0.7                       \\ \hline
+\textbf{Caliński-Harabasz Index}     & 380         & 1237             & 87            & 150                         \\ \hline
+\textbf{Davies-Bouldin Index}        & 0.6         & 0.5              & 0.5          & 0.19                        \\ \hline\midrule
+\end{tabular}
+\end{table}
+
     
     
     
@@ -151,27 +179,25 @@ Based on the elbow method as shown in Figure \ref{elbkmean} left, the number of 
 \end{figure}    
 
 
+
 \begin{table}[!h]
-    \centering
-    \caption{Comparison of AP, DSAP, K-means, and Streaming K-means Evaluation Metrics for first week of intervention (Apr 29 - May 5).AP: Damping=0.96 }
-    \label{all3}
-    \begin{tabular}{|c|c|c|c|}
-    \hline
-      Metrics & AP & DSAP & K-means  \\
-     \hline
-      Processing time (s)         & 28       & 19 & 0.30      \\
-     \hline
-      Memory consumption (MB)     & 862      & 222 & 586 \\
-     \hline
-      Number of clusters          & 14       & 7 & 6   \\
-      \hline
-      Silhouette Coefficient      & 0.47     & 0.63 & 0.61\\
-    \hline
-    Caliński-Harabasz Index       & 1421     & 1303 & 12340      \\
-    \hline
-     Davies-Bouldin Index         & 0.57     &    0.48 & 0.68 \\
-    \hline
-    \end{tabular}
+\small
+\caption{Comparison of AP, DSAP, K-means, and Streaming K-means Evaluation Metrics for the first week of intervention (Apr 29 - May 5).AP: Damping=0.96 and preference is the median value of the similarity matrix.}
+\label{all3}
+\begin{tabular}{l
+>{\columncolor[HTML]{CBCEFB}}c 
+>{\columncolor[HTML]{FFCCC9}}c 
+>{\columncolor[HTML]{CBCEFB}}c 
+>{\columncolor[HTML]{FFCCC9}}c }
+\hline
+\multicolumn{1}{c}{\textbf{Metrics}} & \textbf{AP} & {\color[HTML]{333333} \textbf{K-means}} & \textbf{DSAP} & \textbf{Streaming K-means} \\ \hline\midrule
+\textbf{Processing time (s)}         & 26          & 0.3                                                             & 0.69          & 0.45                       \\ \hline
+\textbf{Memory consumption (MB)}     & 519         & 586                                                             & 212           & 213                        \\ \hline
+\textbf{Number of clusters}          & 14          & 6                                                               & 11            & 6                          \\ \hline
+\textbf{Silhouette Coefficient}      & 0.47        & 0.6                                                             & 0.4           & 0.7                       \\ \hline
+\textbf{Caliński-Harabasz Index}     & 1421        & 1234                                                            & 35            & 100                         \\ \hline
+\textbf{Davies-Bouldin Index}        & 0.57        & 0.68                                                            & 0.49          & 0.31                        \\ \hline\midrule
+\end{tabular}
 \end{table}
 
 
@@ -182,6 +208,45 @@ Based on the elbow method as shown in Figure \ref{elbkmean} left, the number of 
     \caption{K-means algorithm is applied on e-counter data for one week(first week after intervention: May 27- June 2).}
     \label{elbkmean}
 \end{figure}   
+
+
+
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width = 11 cm]{image/Chapters/Chapter6/ApFirstWeekAfterInt.png}
+    \caption{AP algorithm is applied on e-counter data for one week. The first week after intervention. with the damping = 0.96 and preference(np.median(similarity matrix)=.7  }
+    \label{apaft}
+\end{figure}
+
+
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+\begin{table}[!h]
+\small
+\caption{Comparison of AP, DSAP, K-means, and Streaming K-means Evaluation Metrics for the first week after intervention (May 27- June 2 ).}
+\label{Aftcom}
+\begin{tabular}{l
+>{\columncolor[HTML]{CBCEFB}}c 
+>{\columncolor[HTML]{FFCCC9}}c 
+>{\columncolor[HTML]{CBCEFB}}c 
+>{\columncolor[HTML]{FFCCC9}}c }
+\hline
+\multicolumn{1}{c}{\textbf{Metrics}} & \textbf{AP} & {\color[HTML]{333333} \textbf{K-means}} & \textbf{DSAP} & \textbf{Streaming K-means} \\ \hline\midrule
+\textbf{Processing time (s)}         & 20          & 0.33                                    & 0.71          & 0.67                       \\ \hline
+\textbf{Memory consumption (MB)}     & 541         & 570                                     & 212           & 214                        \\ \hline
+\textbf{Number of clusters}          & 19          & 6                                       & 10            & 6                          \\ \hline
+\textbf{Silhouette Coefficient}      & 0.14        & 0.6                                     & 0.4           & 0.6                        \\ \hline
+\textbf{Caliński-Harabasz Index}     & 278         & 11574                                   & 50            & 80                         \\ \hline
+\textbf{Davies-Bouldin Index}        & 0.64        & 0.6                                     & 0.66          & 0.42                       \\ \hline\midrule
+\end{tabular}
+\end{table}
+
+
+
 
 
     
@@ -260,11 +325,30 @@ The first week of intervention was also analyzed using a 4 hour landmark time wi
 
 \begin{figure}[]
     \centering
-    \includegraphics[width=.49\textwidth]{image/Chapters/Chapter6/window10H.png}%ecounter_time data
-    \includegraphics[width=.49\textwidth]{image/Chapters/Chapter6/firstweekinterK.png}
+    \includegraphics[width=.49\textwidth]{image/Chapters/Chapter6/during3hour-samp 9.preference 1.No Thre.png}
+    \includegraphics[width=.49\textwidth]{image/Chapters/Chapter6/StreamKDuring.png}
     \caption{Clustering results from DSAP and streaming K-means algorithms applied on the e-counter data for the first week of intervention 29 April- 5 May.}
     \label{6}
 \end{figure}
+
+
+\begin{figure}[]
+    \centering
+    \includegraphics[width=.49\textwidth]{image/Chapters/Chapter6/before5hour-samp 9.preference 4.No Thre.png}%ecounter_time data
+    \includegraphics[width=.49\textwidth]{image/Chapters/Chapter6/streamKbefore.png}
+    \caption{Clustering results from DSAP and streaming K-means algorithms applied on the e-counter data for the first week before intervention.}
+    \label{26}
+\end{figure}
+
+
+\begin{figure}[]
+    \centering
+    \includegraphics[width=.49\textwidth]{image/Chapters/Chapter6/After5hour-samp 9.preference 4.No Thre.png}
+    \includegraphics[width=.49\textwidth]{image/Chapters/Chapter6/StreamKAfter.png}
+    \caption{Clustering results from DSAP and streaming K-means algorithms applied on the e-counter data for the first week after intervention.}
+    \label{36}
+\end{figure}
+
 
 
 
@@ -283,6 +367,29 @@ The first week of intervention was also analyzed using a 4 hour landmark time wi
 
 
 
+\begin{figure}[!h]
+    \centering
+      \includegraphics[width=0.5\textwidth]{image/Chapters/Chapter6/oneWeekBeforehourly.png}\hfill
+    \includegraphics[width=0.5\textwidth]{image/Chapters/Chapter6/PositionCountOneWeekBeforer.png}\hfill
+    \includegraphics[width=0.5\textwidth]{image/Chapters/Chapter6/oneweekCountDistributonBefore.png}\hfill 
+    \includegraphics[width=0.5\textwidth]{image/Chapters/Chapter6/oneweekBeforePositionDistributon.png}
+    \caption{One week data distribution. First week before intervention from March 18 - March 24.}
+    \label{55}
+\end{figure}
+
+
+\begin{figure}[!h]
+    \centering
+      \includegraphics[width=0.5\textwidth]{image/Chapters/Chapter6/oneWeekAfterhourly.png}\hfill
+    \includegraphics[width=0.5\textwidth]{image/Chapters/Chapter6/PositionCountOneWeekAfter.png}\hfill
+    \includegraphics[width=0.5\textwidth]{image/Chapters/Chapter6/oneweekCountDistributonAfter.png}\hfill 
+    \includegraphics[width=0.5\textwidth]{image/Chapters/Chapter6/oneweekafterPositionDistributon.png}
+    \caption{One week data distribution. First week after intervention from May 27- June 2.}
+    \label{55}
+\end{figure}
+
+
+
 
 
 % \begin{figure}[!h]
@@ -296,58 +403,6 @@ The first week of intervention was also analyzed using a 4 hour landmark time wi
 
 
 
-
-\begin{table}[!h]
-    \centering
-    \caption{Comparison of AP, DSAP, K-means, and Streaming K-means Evaluation Metrics for first week before intervention ( March 18- March 24).}
-    \label{all3}
-    \begin{tabular}{|c|c|c|c|}
-    \hline
-      Metrics & AP & DSAP & K-means  \\
-     \hline
-      Processing time (s)        &    23     &      & 0.28      \\
-     \hline
-      Memory consumption (MB)    &     517   &      & 580      \\
-     \hline
-      Number of clusters         &     7     &      &    7   \\
-      \hline
-      Silhouette Coefficient     &    0.7    &      &   0.6    \\
-    \hline
-    Caliński-Harabasz Index      &    380    &      &   12370    \\
-    \hline
-     Davies-Bouldin Index        &     0.4  &      &  0.5     \\
-    \hline
-    \end{tabular}
-\end{table}
-
-
-
-
-
-
-
-\begin{table}[!h]
-    \centering
-    \caption{Comparison of AP, DSAP, K-means, and Streaming K-means Evaluation Metrics for first week after intervention ( ).}
-    \label{all3}
-    \begin{tabular}{|c|c|c|c|}
-    \hline
-      Metrics & AP & DSAP & K-means  \\
-     \hline
-      Processing time (s)        &    21     &      &  0.33 \\
-     \hline
-      Memory consumption (MB)    &     941   &      &  570  \\
-     \hline
-      Number of clusters         &    19     &      &  6    \\
-      \hline
-      Silhouette Coefficient     &    0.13    &      &   0.6 \\
-    \hline
-    Caliński-Harabasz Index      &    268    &      &  11572\\
-    \hline
-     Davies-Bouldin Index        &     0.67  &      &  0.6  \\
-    \hline
-    \end{tabular}
-\end{table}
 
 
 
