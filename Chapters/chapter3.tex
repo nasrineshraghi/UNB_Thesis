@@ -200,15 +200,16 @@ Four parameters $\delta$, $\alpha$, $\beta$, $\lambda$  are needed to monitor th
 
 \todo[inline]{ Nasrin: a paragraph here how this algorithm was tested, labeled or not labeled data, what kind of quaity and performance metrics have used.}
 
-To test the effectiveness for emergence and disappearance and recurrent detection of ISTRAP, the AS synthetic dataset and MNIST real-wold dataset were performed.
+To test the effectiveness of the emergence, disappearance, and recurrent detection of ISTRAP, the AS synthetic dataset, and the MNIST real-world dataset were performed.
 The MNIST dataset contains images of handwritten digits and their corresponding labels.
-The results show that ISTRAP and StrAP can detect emergence accuracy, however, disappearance was not detected by StrAP.
+The results show that ISTRAP and StrAP can detect emergence accuracy; however, the disappearance was not detected by StrAP.
 
-The ISTRAP suffers from parameter settings that are needed to be set manually. Meanwhile, as a Euclidean
-distance-based algorithm, ISTRAP cannot handle well with high-dimensional data streams. 
+However, ISTRAP has improved the current state of the StrAP model and quality of the clusters, but at the cost of introducing additional parameters that increase the model's complexity and make it less unsupervised and not fully automated, that is the goal of the AP algorithm.
+Moreover, the time complexity will increase compared to the StrAP algorithm due to the increase of computational for two reservoirs, which should check for every new data point. There is no result available for the time efficiency of this algorithm and compares it with the StrAP model.
 
 
-%Four Real datasets and two artificial numerical datasets are applied to evaluate this algorithm. The real-world data stream,  MNIST, contains handwritten digits from 0 to 9 and is used to test the performance of the ISTRAP. In the end, the results compared with the STRAP algorithm and find out that STRAP is unable to detect re-occurrence. However, ISTRAP has very powerful effectiveness in tracking the re-occurrence of the with a delay.
+
+% ISTRAP has very powerful effectiveness in tracking the re-occurrence of the with a delay.
 
 
 \textbf{APDenStream Algorithm:}
@@ -343,7 +344,7 @@ Furthermore, the DSAP algorithm allows the user to decide to keep a number of la
 also missing: expiration parameter alph, beta, parameter to tune the updating, we can use only one the expirations???  treshold is usualy the mean, but in our case we update the treshold} 
 
 
-
+The DSAP algorithm is more efficient in terms of detecting the emergence, re-occurrence, and disappearance without extra cost and by having a time window repository. Every window can detect the emergence of new clusters while order clusters remove over time. By changing the expiration value, the old clusters can be re-appear without introducing new clusters or tuning several parameters and keep the algorithm more efficient. Moreover, updating the threshold in each window makes the algorithm more robust and improves clusters' quality instead of keeping it fixed. 
 
 
  

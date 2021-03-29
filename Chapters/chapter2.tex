@@ -450,7 +450,7 @@ The K-means clustering algorithm that has been used in this thesis is described 
   \For{j = 1 : k}
   {
     \small\color{blue}\texttt{Update each centroid by the mean value of data points within each cluster:}
-    \color{black}
+    \color{black}\\
     n_j = \sum_{i=1}^n R_{ij}\\
     \mu_j = \frac{1}{n_j} \sum_{i = 1}^n R_{ij} x_i
     
@@ -733,17 +733,15 @@ Data stream clustering methods can be categorized into five leading groups accor
     \hline 
       BICO               &    2013   &    k-means     &  Online-Offline    & Landmark  \\
       \hline
+      StreamXM           &    2015   &    X-means     &  Merge-reduce    & Landmark  \\
+        \hline
       \hline
        \rowcolor{lightgray}&& \rowcolor{lightgray}\centering\textbf{Hierarchical-based }  & &  \\
       \hline 
       \hline 
       BIRCH             &    1996        &     CF-tree           &  Single-pass    & Landmark \\
      \hline
-     Improved BIRCH     &    2014        &    CF-tree            &                 & Landmark \\
-      \hline
       TS-Stream         &     2015       &    Decision Tree      & Single-pass     & Sliding  \\
-    \hline 
-      A-BIRCH           &    2017        &   CF-tree             & Single-pass     & Landmark\\
       \hline
       \hline
      \rowcolor{lightgray}& &\rowcolor{lightgray}\centering \textbf{Density-based}  & &  \\
@@ -754,6 +752,8 @@ Data stream clustering methods can be categorized into five leading groups accor
      SDStream            &    2009     &    DBSCAN       & Online-offline  &   Sliding \\
       \hline
       HDenStream         &     2009    &    DBSCAN       &  Online-offline &   Damped  \\
+        \hline
+      FlockStream        &     2009    &    Swarms       &  Single-pass    &   Damped  \\
         \hline 
       rDenStream         &    2009     &     DBSCAN      & Online-offline  &   Damped  \\
         \hline 
@@ -780,25 +780,22 @@ Data stream clustering methods can be categorized into five leading groups accor
       MR-Stream          &    2009        &     Dense-region      &  Online-offline    & Damped\\
     \hline 
       PKS-Stream         &    2011        &    Dense-region       &  Online-offline    & Damped\\
-          \hline 
+    \hline 
       DENGRIS            &    2012        &   Dense-region        &  Single-pass       & Sliding\\
       \hline 
-
       \hline
      \rowcolor{lightgray}& &\rowcolor{lightgray}\centering\textbf{Model-based}  & &  \\
       \hline 
       \hline
       COBWEB             &    1987        &   tree-based      &    Online-offline   & Landmark \\
      \hline
-     CluDistream         &     2007       &   EM Algorithm    &  Online-offline     &  Landmark \\
-    \hline 
       SWEM               &    2009        &  EM Algorithm     &  Online-offline     & Sliding\\
      \hline
      pcStream            &    2015        &    SIMCA          &   Single-pass       & Damped  \\
     \hline 
       SNCStream          &    2015        &    Network        &   Online            & Damped  \\
     \hline 
-    $SNCStream^{+}$      &    2016        &       Network     &    Online           & Damped  \\
+    SNCStream+      &    2016        &       Network     &    Online           & Damped  \\
       
 \bottomrule
     \end{tabular}

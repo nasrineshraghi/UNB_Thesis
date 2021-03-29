@@ -196,6 +196,9 @@ In the next ActivateAP step, AP is applied on all the remaining data points in t
 cachedata = np.array(cache)        
 AP_cache = AffinityPropagation(preference, damping).fit(cachedata)
 C`m = AP_cache.cluster_centers_
+AP_cache_label = AP_cache.labels_
+X = np.concatenate((X , np.reshape(cachedata[i,:],(-1,2))))
+X_label = np.concatenate((X_label , np.reshape(AP_cache_label,(-1))))
 #C`m is the Cm prime, new micro-clusters
 Cm = np.append(C`m, Cm, axis = 0)
 # Assign timestamp to new micro-clusters
@@ -743,9 +746,7 @@ The sensors captured movement for all 24 hours and all days continuously. The ra
 Date             &  mm/dd/yyyy      &   Date of measurement                                 \\\hline
 Time             &  hh:mm:ss 24H    &   Time of measurement                                 \\\hline
 Count            &  integer         &   Number of people counted by the sensor              \\ \hline
-Status           &  integer         &                                                        \\ \hline  
 Sensor           &  Up, Down, In, Out, IN/Out-reserved & Direction of the sensor             \\ \hline
-Type             &  Counter A/B                                                             \\ \hline
 Position         &    string         &   Sensor location in the building                                                                                                      \\ \hline
 Location Code    &     H2-L3             & Code for each location                                                                                                                                       \\ \hline
     \bottomrule
