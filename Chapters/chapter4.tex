@@ -261,7 +261,7 @@ The outputs of this step are the set of micro-clusters from the previous window,
 
 %need a table for notations and definitions! variables in the code
 % which is illustrated in Figure \ref{frame} by the green box,
-\subsection{ Offline Macro-Cluster Phase}
+\subsection{Offline Macro-Cluster Phase}
 
 The offline macro-cluster phase in DSAP, starts after $N$ time windows have passed. In this phase, all the micro-clusters $C_m$ generated during the online micro-cluster phase are re-clustered using the AP algorithm to generate $k$ number of macro-clusters $C_M = (C_{M_1}, C_{M_2}, ..., C_{M_k})$. This process is usually not considered time-critical and the number of macro-clusters are expected to be less than the number of micro-clusters. The hyperparameters related to the AP algorithm such as the damping factor, the maximum number of iterations, and the convergence iteration are the same as in the online-micro phase. The only parameter that is different is the preference parameter which is set to the median of the similarity matrix of all the micro-clusters obtained from the online phase.
 \todo[inline]{Have you used the same hyperparameters??? Or they are changed??? e.g. number of interactions was the same for micro and macro clustering???} %Nasrin: No I don't change them. Just preference has been changed , which is the median of similarity matrix and I did not give it a number.
@@ -396,7 +396,7 @@ The primary advantage of the silhouette index is its straightforward interpretat
 %\end{figure}
     
 
-\subsection{ Caliński-Harabasz Index}
+\subsection{Caliński-Harabasz Index}
 It is also known as the variance ratio criterion, which is used to score dense and well-separated clusters. A recent comparative study of available clustering indices demonstrated this index as one of the best cluster validity indices \cite{arbelaitz2013extensive}. 
 \todo[inline]{not sure if you have cited this paper}%Fixed it
 

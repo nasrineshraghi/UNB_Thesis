@@ -6,7 +6,7 @@
 
 %As the number of connected devices and applications that generate huge amount of data at very high speed increases, the need for faster data mining techniques is enhanced. This research work proposes a data stream clustering algorithm that builds upon the Affinity Propagation clustering algorithm. The concept of time windows that partition the data into manageable chunks is introduced in order to apply these algorithms for data stream clustering.
 
-This Chapter presents an overview of clustering by reviewing the concepts, methods, and underlying steps of two traditional clustering algorithms known as the affinity propagation (AP) and k-means. Data stream clustering algorithms are also introduced with the existing time window models being used for computing stream clusters. 
+This Chapter presents an overview of clustering by reviewing the concepts, methods, and underlying steps, focusing on the affinity propagation (AP) methods. Data stream clustering algorithms are also introduced with the existing time window models being used for computing stream clusters. 
 
 %Finally, indoor localization systems are described due to the potential wide range of services they can provide by leveraging Internet of Things (IoT) and ubiquitous connectivity. 
 
@@ -381,128 +381,125 @@ The AP clustering algorithm that has been used in this thesis is described in Al
 
 
 
-\subsection{K-means Clustering} \label{kmeansalgo}
-\todo[inline]{Nasrin you need to improve this section}
+% \subsection{K-means Clustering} \label{kmeansalgo}
+% \todo[inline]{Nasrin you need to improve this section}
 
-K-means was first introduced by J.MacQueen in 1967 \citet{macqueen} as a method for partitioning numerical data into isotropic clusters.% and is not as versatile as single link algorithms. 
-It is a distance based algorithm  which aims to assign each observation to a cluster with the nearest mean (cluster centroid) based on it's distance from the centroid. The number of clusters need to be defined in advance. This is not straightforward task since no prior information is generally available.
+% K-means was first introduced by J.MacQueen in 1967 \citet{macqueen} as a method for partitioning numerical data into isotropic clusters.% and is not as versatile as single link algorithms. 
+% It is a distance based algorithm  which aims to assign each observation to a cluster with the nearest mean (cluster centroid) based on it's distance from the centroid. The number of clusters need to be defined in advance. This is not straightforward task since no prior information is generally available.
 
-K-means is a suitable algorithm due to its simplicity and low computational costs. The complexity for $n$ iterations of the K-means algorithm is $O(n*K*m*N)$, where $n$ is a number of iterations, $K$ set of macro clusters, $m$ is the sample size with N attributes.  This linear complexity is one reason for the popularity of the Kmeans algorithms. It guarantees convergence and scales quite well to large datasets owing to lower memory requirements. The algorithm can be generalized to clusters of different shapes and sizes, such as elliptical clusters. Other reasons which make the algorithm so popular are a straightforward interpretation of clusters, simplicity of implementation, fast convergence, and adaptability to sparse and large data \cite{dhillon2001concept}.
+% K-means is a suitable algorithm due to its simplicity and low computational costs. The complexity for $n$ iterations of the K-means algorithm is $O(n*K*m*N)$, where $n$ is a number of iterations, $K$ set of macro clusters, $m$ is the sample size with N attributes.  This linear complexity is one reason for the popularity of the Kmeans algorithms. It guarantees convergence and scales quite well to large datasets owing to lower memory requirements. The algorithm can be generalized to clusters of different shapes and sizes, such as elliptical clusters. Other reasons which make the algorithm so popular are a straightforward interpretation of clusters, simplicity of implementation, fast convergence, and adaptability to sparse and large data \cite{dhillon2001concept}.
 
-However, this algorithm is receptive to noisy data or outliers (one data point as an outlier can increase the squared error dramatically). It is suitable for data with spherical/convex clusters and well defined mean values. The output of K-Means algorithm depends on the initial value of the centroids which are the basis for the cluster determination. In essence, it is an optimization problem where a local optimal clustering can be achieved, whereas a global optimal is not always guaranteed. It is advised to run the algorithm multiple times in order to reduce the chances of a local minima solution. %It is a heuristic algorithm in which the final clustering results highly depend on the initial settings, although a reasonably good approximation is possible. 
+% However, this algorithm is receptive to noisy data or outliers (one data point as an outlier can increase the squared error dramatically). It is suitable for data with spherical/convex clusters and well defined mean values. The output of K-Means algorithm depends on the initial value of the centroids which are the basis for the cluster determination. In essence, it is an optimization problem where a local optimal clustering can be achieved, whereas a global optimal is not always guaranteed. It is advised to run the algorithm multiple times in order to reduce the chances of a local minima solution. %It is a heuristic algorithm in which the final clustering results highly depend on the initial settings, although a reasonably good approximation is possible. 
 
-The main goal of K-means as a partitioning algorithm is to minimize the sum of the distances between the n data points and their representative cluster centroids into k sets $(S = s_1,...,s_n)$ and cluster them in an iterative manner. In the other words, its objective is to find:
+% The main goal of K-means as a partitioning algorithm is to minimize the sum of the distances between the n data points and their representative cluster centroids into k sets $(S = s_1,...,s_n)$ and cluster them in an iterative manner. In the other words, its objective is to find:
 
-\begin{equation}
-    \sum_{i=1}^k \sum_{x \in S_i} \norm{x-\mu}^2
-\end{equation}
-
-Where $\mu$ is the mean of data points in $S_i$. However, the pre-assumption in the above equation is that the distance between the data points is the squared Euclidean distance and computed as $\norm{x - \mu}^2$. Although there are other distance metrics to find the closest distance, the Euclidean distance is widely used by other researchers owing to it's easy interpretation with low dimensional data. 
-
-The K-means algorithm consists of the following steps that are illustrated in Figure \ref{ite}.
-\begin{enumerate}
-    \item Randomly select k points as centroids of clusters based on the predefined value of k. These data points describe the initial set of centroids.
-    \item To create the k clusters, every data point from the dataset is assigned to the nearest centroid. The Euclidean distance is used for calculating the distance between each data point and the initial centroids. 
-    
-    \item After all the data points have been assigned to their closest groups, the positions of the k centroids is recalculated by averaging all of the data points assigned in each cluster.
-    
-    \item  Steps 2 and 3 are repeated until convergence is reached. This is achieved if the centroid values do not change further, the sum of distances between the data points and the centroid of each cluster does not change, the data points assigned to all clusters are the same as the previous assignment, or the maximum iteration number has been reached in case the algorithm is given a fixed iteration.
-\end{enumerate}
-
-\begin{figure}
-\centering
-\includegraphics[width = 10 cm]{image/Chapters/Chapter2/kmeanshif.png}
-\caption{K-means Algorithm: finding clusters in a 2D data space iteratively \protect\cite{benavente2017automatic}. (a)cluster centroids initialized randomly, (b) data points map to the closest centroids, (c) centroids are moved to the mean of each cluster map points, (d,e,f) steps b and c are repeated iteratively until convergence.}
-\label{ite}
-\end{figure}
-
-% In the next step,  the centroids are moved to the mean of each cluster's mapped points which ${\mu_k}$ is the mean of cluster $k$ :
 % \begin{equation}
-%     {\mu_k} = \frac{1}{{N_k}}\sum_{q=1}^{{N_k}} {x_q}
+%     \sum_{i=1}^k \sum_{x \in S_i} \norm{x-\mu}^2
 % \end{equation}
 
-%In this formula, $N_k$ is the number of instances belonging to cluster $k$
-% Finally, these process will be repeated until convergence. 
+% Where $\mu$ is the mean of data points in $S_i$. However, the pre-assumption in the above equation is that the distance between the data points is the squared Euclidean distance and computed as $\norm{x - \mu}^2$. Although there are other distance metrics to find the closest distance, the Euclidean distance is widely used by other researchers owing to it's easy interpretation with low dimensional data. 
 
-
-% The K-means algorithm starts with the K initial set of cluster-centers and iteratively updates it to decrease the error function. A proof of the finite convergence of the K-means type algorithms is given in \cite{selim1984k}. 
-
-The K-means clustering algorithm that has been used in this thesis is described in Algorithm \ref{kmeanalgo}. The Python code for this algorithm as well as AP is available at https://scikit-learn.org/ open source repository. 
-
-
-
-\begin{algorithm}[H]
-\SetAlgoLined
-\small
-\textbf{Input:} {Data: $X$ = ${x_1,..., x_n}$}\\
-\textbf{Hyper-parameters:} {Number of clusters k, $max\_iter$}\\
-\textbf{Output:} {Set of cluster with the centroids $C = {c_1,..., c_k}$ }\\
-\textbf{Initialization:} {Set $\mu_i$, $i = 1,..., k$ to random data points }\\
-\While{(Convergence)}{
-  \For{i= 1 : n}{
-    \small\color{blue}\texttt{Assign each data point to the closest centroid:}
-    \color{black}\\
-    R_{ij} =  \arg \min_j ||x_i - \mu_j||^2, 
-    j \in 1, ..., k 
-  
-  }
-  
-  \For{j = 1 : k}
-  {
-    \small\color{blue}\texttt{Update each centroid by the mean value of data points within each cluster:}
-    \color{black}\\
-    n_j = \sum_{i=1}^n R_{ij}\\
-    \mu_j = \frac{1}{n_j} \sum_{i = 1}^n R_{ij} x_i
+% The K-means algorithm consists of the following steps that are illustrated in Figure \ref{ite}.
+% \begin{enumerate}
+%     \item Randomly select k points as centroids of clusters based on the predefined value of k. These data points describe the initial set of centroids.
+%     \item To create the k clusters, every data point from the dataset is assigned to the nearest centroid. The Euclidean distance is used for calculating the distance between each data point and the initial centroids. 
     
-  }
- }
-{
-
-\textbf{return} {$\mu_1 , ... , \mu_k$\\ }
-}
- \caption{ K-means Clustering Algorithm}
- \label{kmeanalgo}
-\end{algorithm}
-
- % \begin{equation}
-% J = \sum_{n=1}^{N} \sum_{k=1}^{K} r_{nk} ||x_n - \mu_k||^2
-% \label{eqn:kmeans_objective_function}
-% \end{equation}
- 
- 
- 
-% Figure \ref{kmAlgo} presents the pseudo-code of K-means algorithm.
+%     \item After all the data points have been assigned to their closest groups, the positions of the k centroids is recalculated by averaging all of the data points assigned in each cluster.
+    
+%     \item  Steps 2 and 3 are repeated until convergence is reached. This is achieved if the centroid values do not change further, the sum of distances between the data points and the centroid of each cluster does not change, the data points assigned to all clusters are the same as the previous assignment, or the maximum iteration number has been reached in case the algorithm is given a fixed iteration.
+% \end{enumerate}
 
 % \begin{figure}
 % \centering
-% \includegraphics[width = 10cm,height = 4cm]{image/Chapters/Chapter2/6.png}
-% \caption{K-means pseudocode }
-% \label{kmAlgo}
+% \includegraphics[width = 10 cm]{image/Chapters/Chapter2/kmeanshif.png}
+% \caption{K-means Algorithm: finding clusters in a 2D data space iteratively \protect\cite{benavente2017automatic}. (a)cluster centroids initialized randomly, (b) data points map to the closest centroids, (c) centroids are moved to the mean of each cluster map points, (d,e,f) steps b and c are repeated iteratively until convergence.}
+% \label{ite}
 % \end{figure}
-\todo[inline]{make a proper for the algorithm}
 
-%%Elmi
-% The similarity measure on numeric attributes is the square Euclidean distance; the similarity measure on the categorical attributes is the number of mismatches between objects and the cluster prototypes.
+% % In the next step,  the centroids are moved to the mean of each cluster's mapped points which ${\mu_k}$ is the mean of cluster $k$ :
+% % \begin{equation}
+% %     {\mu_k} = \frac{1}{{N_k}}\sum_{q=1}^{{N_k}} {x_q}
+% % \end{equation}
 
- %%%%%%%%%%%%%%%%%%%%%%%%%  ELMI
-
-% A number of convergence conditions are possible. For example, the search
-% may stop when the partitioning error is not reduced by the relocation of the centers.
-% This indicates that the present partition is locally optimal. Other stopping
-% criteria can be used also such as exceeding a pre-defined number of iterations.
+% %In this formula, $N_k$ is the number of instances belonging to cluster $k$
+% % Finally, these process will be repeated until convergence. 
 
 
-% The Achilles heel of the K-means algorithm involves the selection of the initial partition. The algorithm is very sensitive to this selection, which may make the difference between global and local minimum.
-% K-Means is one of the simplest unsupervised learning algorithms that solve the well known clustering problem. The procedure follows a simple and easy way to classify a given data set through a certain number of clusters (assume k clusters) fixed a priori.The main idea is to define k centroids, one for each cluster. These centroids should be placed in a cunning way because of different location causes different result. So, the better choice is to place them as much as possible far away from each other.The next step is to take each point belonging to a given data set and associate it to the nearest centroid. When no point is pending, the first step is completed and an early group is done. At this point, it is needed to re-calculate k new centroids as centers of the clusters resulting from the previous step. After these k new centroids, a new binding has to be done between the same data points and the nearest new centroid. A loop has been generated. As a result of this loop it may notice that the k centroids change their location step by step until no more changes are done. In other words centroids do not move any more.Finally, this algorithm aims at minimizing an objective function, in this case a squared error function. The objective function
+% % The K-means algorithm starts with the K initial set of cluster-centers and iteratively updates it to decrease the error function. A proof of the finite convergence of the K-means type algorithms is given in \cite{selim1984k}. 
 
-% \begin{equation}
-%     W(s,c) = \sum {k=1}^K\sum{iE S_k} \norm{y_i - c_k}^2
-% \end{equation}
-% Where S is a K-cluster partition of the entity set represented by vectors yi (iI) in the M-dimensional feature space,consisting of non-empty non-overlapping clusters Sk, each with a centroid ck (k=1,2,…K).
-% ###############
+% The K-means clustering algorithm that has been used in this thesis is described in Algorithm \ref{kmeanalgo}. The Python code for this algorithm as well as AP is available at https://scikit-learn.org/ open source repository. 
 
 
 
+% \begin{algorithm}[H]
+% \SetAlgoLined
+% \small
+% \textbf{Input:} {Data: $X$ = ${x_1,..., x_n}$}\\
+% \textbf{Hyper-parameters:} {Number of clusters k, $max\_iter$}\\
+% \textbf{Output:} {Set of cluster with the centroids $C = {c_1,..., c_k}$ }\\
+% \textbf{Initialization:} {Set $\mu_i$, $i = 1,..., k$ to random data points }\\
+% \While{(Convergence)}{
+%   \For{i= 1 : n}{
+%     \small\color{blue}\texttt{Assign each data point to the closest centroid:}
+%     \color{black}\\
+%     R_{ij} =  \arg \min_j ||x_i - \mu_j||^2, 
+%     j \in 1, ..., k 
+  
+%   }
+  
+%   \For{j = 1 : k}
+%   {
+%     \small\color{blue}\texttt{Update each centroid by the mean value of data points within each cluster:}
+%     \color{black}\\
+%     n_j = \sum_{i=1}^n R_{ij}\\
+%     \mu_j = \frac{1}{n_j} \sum_{i = 1}^n R_{ij} x_i
+    
+%   }
+%  }
+% {
+
+% \textbf{return} {$\mu_1 , ... , \mu_k$\\ }
+% }
+%  \caption{ K-means Clustering Algorithm}
+%  \label{kmeanalgo}
+% \end{algorithm}
+
+%  % \begin{equation}
+% % J = \sum_{n=1}^{N} \sum_{k=1}^{K} r_{nk} ||x_n - \mu_k||^2
+% % \label{eqn:kmeans_objective_function}
+% % \end{equation}
+ 
+ 
+ 
+% % Figure \ref{kmAlgo} presents the pseudo-code of K-means algorithm.
+
+% % \begin{figure}
+% % \centering
+% % \includegraphics[width = 10cm,height = 4cm]{image/Chapters/Chapter2/6.png}
+% % \caption{K-means pseudocode }
+% % \label{kmAlgo}
+% % \end{figure}
+% \todo[inline]{make a proper for the algorithm}
+
+% %%Elmi
+% % The similarity measure on numeric attributes is the square Euclidean distance; the similarity measure on the categorical attributes is the number of mismatches between objects and the cluster prototypes.
+
+%  %%%%%%%%%%%%%%%%%%%%%%%%%  ELMI
+
+% % A number of convergence conditions are possible. For example, the search
+% % may stop when the partitioning error is not reduced by the relocation of the centers.
+% % This indicates that the present partition is locally optimal. Other stopping
+% % criteria can be used also such as exceeding a pre-defined number of iterations.
+
+
+% % The Achilles heel of the K-means algorithm involves the selection of the initial partition. The algorithm is very sensitive to this selection, which may make the difference between global and local minimum.
+% % K-Means is one of the simplest unsupervised learning algorithms that solve the well known clustering problem. The procedure follows a simple and easy way to classify a given data set through a certain number of clusters (assume k clusters) fixed a priori.The main idea is to define k centroids, one for each cluster. These centroids should be placed in a cunning way because of different location causes different result. So, the better choice is to place them as much as possible far away from each other.The next step is to take each point belonging to a given data set and associate it to the nearest centroid. When no point is pending, the first step is completed and an early group is done. At this point, it is needed to re-calculate k new centroids as centers of the clusters resulting from the previous step. After these k new centroids, a new binding has to be done between the same data points and the nearest new centroid. A loop has been generated. As a result of this loop it may notice that the k centroids change their location step by step until no more changes are done. In other words centroids do not move any more.Finally, this algorithm aims at minimizing an objective function, in this case a squared error function. The objective function
+
+% % \begin{equation}
+% %     W(s,c) = \sum {k=1}^K\sum{iE S_k} \norm{y_i - c_k}^2
+% % \end{equation}
+% % Where S is a K-cluster partition of the entity set represented by vectors yi (iI) in the M-dimensional feature space,consisting of non-empty non-overlapping clusters Sk, each with a centroid ck (k=1,2,…K).
+% % ###############
 
 
 
@@ -513,27 +510,30 @@ The K-means clustering algorithm that has been used in this thesis is described 
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-There are several approaches for determining the number of clusters for K-means clustering algorithm such as elbow method, Silhouette score, information criterion approach or cross-validation \cite{kodinariya2013review}.
 
 
 
-\noindent\textbf{Elbow Method:}
-
-Elbow method is a technique used for K-means algorithm to find the optimal number of clusters by fitting the model with the range of value for $k$ clusters. In this method if the line chart is assumed as an arm, then the elbow or the point of inflection on the curve as shown in Figure \ref{elb} is the best fit for the model. The scoring parameter can be distortion, Silhouette, and Caliński or many other parameters. Distortion computes the average of squared distance from each point to its assign centroid. This distance is usually is a Euclidean distance. Silhouette calculates the mean of Silhouette coefficient of all data points. Caliński score computes the ratio of dispersion between and within clusters.
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
+% There are several approaches for determining the number of clusters for K-means clustering algorithm such as elbow method, Silhouette score, information criterion approach or cross-validation \cite{kodinariya2013review}.
 
-\begin{figure}
-\centering
-\includegraphics[width = 0.8\textwidth]{image/elbow.png}
-\caption{The elbow curve found for a $k$ range from 4 to 11 clusters. The black dotted line is optimal the number of clusters determined by the elbow method}
-\label{elb}
-\end{figure}
 
-The elbow method is suitable for small $k$ values. As the $k$ value increases, the average distortion degree becomes smaller. The number of data points in each category decreases, and they are closer to the center of gravity. As the $k$ value increases, the position where the improvement effect of the distortion degree decreases the most is the k value corresponding to the elbow  
+
+% \noindent\textbf{Elbow Method:}
+
+% Elbow method is a technique used for K-means algorithm to find the optimal number of clusters by fitting the model with the range of value for $k$ clusters. In this method if the line chart is assumed as an arm, then the elbow or the point of inflection on the curve as shown in Figure \ref{elb} is the best fit for the model. The scoring parameter can be distortion, Silhouette, and Caliński or many other parameters. Distortion computes the average of squared distance from each point to its assign centroid. This distance is usually is a Euclidean distance. Silhouette calculates the mean of Silhouette coefficient of all data points. Caliński score computes the ratio of dispersion between and within clusters.
+
+
+
+% \begin{figure}
+% \centering
+% \includegraphics[width = 0.8\textwidth]{image/elbow.png}
+% \caption{The elbow curve found for a $k$ range from 4 to 11 clusters. The black dotted line is optimal the number of clusters determined by the elbow method}
+% \label{elb}
+% \end{figure}
+
+% The elbow method is suitable for small $k$ values. As the $k$ value increases, the average distortion degree becomes smaller. The number of data points in each category decreases, and they are closer to the center of gravity. As the $k$ value increases, the position where the improvement effect of the distortion degree decreases the most is the k value corresponding to the elbow  
 
 
 \section{Streaming Cluster Analysis }
@@ -803,7 +803,7 @@ Data stream clustering methods can be categorized into five leading groups accor
 
 
 
-In particular, the online-offline processing for streaming K-means clustering has been applied to many algorithms such as CluStream, Olindda, SWClustering, and BICO. The open-source available DSC\_TwoStage in R version of streaming K-means using the 2-phase processing was used in this thesis, and is further discussed in Chapter 5.  
+% In particular, the online-offline processing for streaming K-means clustering has been applied to many algorithms such as CluStream, Olindda, SWClustering, and BICO. The open-source available DSC\_TwoStage in R version of streaming K-means using the 2-phase processing was used in this thesis, and is further discussed in Chapter 5.  
 
 
 

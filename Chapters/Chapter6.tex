@@ -29,7 +29,7 @@
 % \section{experimental results}
 % \section{Experiments with real-world e-counter data}
 
-time interval used is four hour for ecounters
+time interval used is one hour for ecounters
 time interval used was 10 minutes for wifi
 
 
@@ -181,7 +181,7 @@ Based on the elbow method as shown in Figure \ref{elbkmean} left, the number of 
 
 
     
-If the data comes in as a data stream or if the data is really large, then batch processing or stream clustering techniques can be applied to analyze the data. Employing a divide and conquer approach, the AP algorithm was applied using a one-hour landmark time window to compare against the results from AP and k-means for the first week of intervention starting on XXXXXX. In order to interpret the results from the entire week more clearly, one needs to understand the evolution of clusters during a day. Some statistics from the first Wednesday of the intervention period XXXX are shown in Figure \ref{1daystat}. This day follows the overall pattern of stair usage as shown in the top-left panel of the Figure \ref{1daystat} which matches with the trends seen earlier in the aggregate plots \ref{spa2}. The accumulated number of people passing through a particular level is mentioned at the top of the panel shown in the top right of Figure \ref{1daystat}. This figure also shows the spatial distribution of measurements for the day. It should be noticed that levels 3-2 and 5-4 have similar aggregated numbers, but it seems like the contribution comes from a higher percentage of high value counts for level 5-4.
+If the data comes in as a data stream or if the data is really large, then batch processing or stream clustering techniques can be applied to analyze the data. Employing a divide and conquer approach, the AP algorithm was applied using a one-hour landmark time window to compare against the results from AP and k-means for the first week of intervention starting on March 18. In order to interpret the results from the entire week more clearly, one needs to understand the evolution of clusters during a day. Some statistics from the first Wednesday of the intervention period are shown in Figure \ref{1daystat}. This day follows the overall pattern of stair usage as shown in the top-left panel of the Figure \ref{1daystat} which matches with the trends seen earlier in the aggregate plots \ref{spa2}. The accumulated number of people passing through a particular level is mentioned at the top of the panel shown in the top right of Figure \ref{1daystat}. This figure also shows the spatial distribution of measurements for the day. It should be noticed that levels 3-2 and 5-4 have similar aggregated numbers, but it seems like the contribution comes from a higher percentage of high value counts for level 5-4.
 
 The bottom left panel of Figure \ref{1daystat} clearly shows that the maximum number of records measures only one person. Note that the scale of the y-axis is logarithmic and the number of records with higher count values reduces exponentially. The position histogram for the day is shown in the bottom-right of the same figure. On this day too the highest number of counts were observed on level 2-1 while both the north-side levels (4-3 North and 5-4 North) record the least activity that is at least three times lower than those of level 2-1. 
 
@@ -296,7 +296,7 @@ The first week of intervention was also analyzed using a 4 hour landmark time wi
     \centering
     \includegraphics[width=.49\textwidth]{image/Chapters/Chapter6/before5hour-samp 9.preference 4.No Thre.png}%ecounter_time data
     \includegraphics[width=.49\textwidth]{image/Chapters/Chapter6/streamKbefore1.png}
-    \caption{Clustering results from DSAP and streaming K-means algorithms applied on the e-counter data for the first week before intervention. Window size =5 hour, damping = 0.9, expiration value = 50.}
+    \caption{Clustering results from DSAP and streaming K-means algorithms applied on the e-counter data for the first week before intervention. damping = 0.9, expiration value = 50.}
     \label{26}
 \end{figure}
 
@@ -474,7 +474,7 @@ The first week of intervention was also analyzed using a 4 hour landmark time wi
 \textbf{Processing time (s)}         & 20          & 0.33                                    & 0.71          & 0.67                       \\ \hline
 \textbf{Memory consumption (MB)}     & 541         & 570                                     & 212           & 214                        \\ \hline
 \textbf{Number of clusters}          & 19          & 6                                       & 10            & 6                          \\ \hline
-\textbf{Silhouette Coefficient}      & 0.14        & 0.6                                     & 0.4           & 0.6                        \\ \hline
+\textbf{Silhouette Index}      & 0.14        & 0.6                                     & 0.4           & 0.6                        \\ \hline
 \textbf{Caliński-Harabasz Index}     & 278         & 11574                                   & 50            & 80                         \\ \hline
 \textbf{Davies-Bouldin Index}        & 0.64        & 0.6                                     & 0.66          & 0.42                       \\ \hline\midrule
 \end{tabular}
@@ -536,7 +536,7 @@ The first week of intervention was also analyzed using a 4 hour landmark time wi
 %      \hline
 %       Number of clusters  &  4     \\
 %       \hline
-%       Silhouette Coefficient    &    0.63 \\
+%       Silhouette     &    0.63 \\
 %     \hline
 %     Calinski-Harabasz Index     & 1303       \\
 %     \hline
@@ -736,7 +736,7 @@ Comparison table and closing inference..xx
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Indoor Occupant Behaviour Experiment}
+\section{Occupant Behaviour Experiment}
 
 This experiment is located at three buildings of at the UJI university campus with three buildings and four to five floors. In this scenario, buildings are named with order from one to three which related to campus building T1, TD and TC which TC is the only building with five floors as shown in Figure \ref{nama} (a) and the 3D plot of all levels and buildings are plotted in Figure \ref{nama} (b), which colors are show different floor in all buildings. 
 
@@ -956,7 +956,7 @@ Figure \ref{elbowkwifi} shows the elbow method to find the optimal number of clu
 \textbf{Processing time (s)}         & 414         & 1.9                                     & 2.2             & 0.58                       \\ \hline
 \textbf{Memory consumption (MB)}     & 1933        & 412                                     & 290           & 238                        \\ \hline
 \textbf{Number of clusters}          & 5           & 6                                       & 6             & 6                          \\ \hline
-\textbf{Silhouette Coefficient}      & 0.3         & 0.5                                     & 0.55          &                            \\ \hline
+\textbf{Silhouette Index}      & 0.3         & 0.5                                     & 0.55          &                            \\ \hline
 \textbf{Caliński-Harabasz Index}     & 7193        & 25330                                   & 365           &                            \\ \hline
 \textbf{Davies-Bouldin Index}        & 0.7         & 0.6                                     & 0.57          &                            \\ \hline\midrule
 \end{tabular}
