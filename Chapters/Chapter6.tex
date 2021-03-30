@@ -21,19 +21,74 @@
 % \colorbox{yellow}{waterfal one month --> x: month y: position z: number of people }
 
 % \begin{document}
-\chapter{Results and Discussion}
+\chapter{Discussion of the Results}
 
 %\subsubsection{Comparison between DSAP and streaming K-means Phase}: The aim is to demonstrate the relevance of the proposed DSAP approach compared to streaming K-means algorithm. very important to explain why streaming kemans: - difficult to find available source code from previusouly proposed stream AP, etc...online)no offline) - no window
 % \section{Validation of DSAP Algorithm}
 % \section{Experimentation on Dataset}
 % \section{experimental results}
 % \section{Experiments with real-world e-counter data}
+
+time interval used is four hour for ecounters
+time interval used was 10 minutes for wifi
+
+
+
+to show the results:
+
+Ecounters 
+
+descriptive: entire experiment/distribution: Fig 6.1. daily total number of counts for the entire experiment time. White: two weeks off for the March break, 6.2 gree in friday, orange is tuesday, fig 6.3, fig 6.4,  fig 6.5 (we need the other two blocks), maybe 6.6 is not needed(Nasrin, if you find an interpretation that is relevant)>>>>> we have all these figures, but the conclusion is that the campaign has not worked, not motivated people to take the stairs... time of the experiment was the end of the semester...
+
+AP (weekly patterns)
+
+fig. 8: Comparison of cluster patterns found during one week of before, during, and after intervention
+clusters for one week of data ( data points, and numbers show how many data points a cluster has, colour represents the clusters) before the intervention 
+one week of data before intervention
+you will add
+one week of data during the intervention
+one week of data after the intervention
+
+Kmeans >>>  OUT
+fig 6.9: same week as before, same data as fig 8, but running kmeans
+
+
+DSAP
+CLUSTER EVOLUTION
+fig.7: show the hourly evolution of the micro-cluster for each time window for one day during intervention.
+fig 20: will show the monthly evolution through the beginning, during, and after the experiment. 
+
+EVALUATION (PERFORMANCE, QUALITY)
+New Figure
+one week of data before the intervention
+one week of data during the intervention
+one week of data after the intervention
+same weeks that you have used in AP Fig 8
+to show how many micro-clusters belong to a macro-cluster
+if it is too complicated, make a table.
+PURPOSE: With AP and DSAP: we found the same patterns or not???
+
+Combine the three tables:highlight the table with the results that we are going to discuss in detail
+Table 6.1 : one week before the intervention
+Table 6.2  : one week during
+Table 6.3 : one week after
+the same weeks that have been used for the figures
+PURPOSE: to know if get similar performance and quality results for the 3 weeks. = to prove that DSAP is robust
+
+
+
+
+
+
+
+
 In this chapter, data from the e-counter and WiFi Indoor Localization experiments are analyzed using the AP, K-means, and the DSAP clustering algorithms to gain insights into the measurements. We demonstrate the strengths and weaknesses of AP and discuss how DSAP provides potential solutions to these. Data stream clustering results are also compared with the results from the streaming K-means algorithm. 
 
-Both the experiments provide information regarding occupant's behaviour and movement within a confined space. The details of the experiments and the analysis tools have already been discussed in the last two Chapters. In the following sections, the datasets will be explained in detail, and the patterns identified by the clustering methods will be analyzed.
+Both the experiments provide information regarding occupant's behaviour and movement within a confined space. The details of the experiments and the analysis tools have already been discussed in the last two Chapters. In the following sections, the data sets will be explained in detail, and the patterns identified by the clustering methods will be analyzed.
 
  
-\section{E-counter Indoor Localization }
+\section{Behavioural Intervention Experiment} 
+
 
 \begin{figure}[!h]
     \includegraphics[width=\textwidth]{image/up.png}\hfill
@@ -45,7 +100,7 @@ Both the experiments provide information regarding occupant's behaviour and move
 
 The people counter sensors located at the stairs of the Tonsley building log several parameters. The most relevant parameters for the current study are the location of the sensors and the number of people passing through the sensors. These accurate integer-valued parameters not only indicate the number of people occupying any particular floor but also accurately determine the number of people using the stairs in any particular direction.
 
-The entire dataset split by the direction of stair use is shown in Figure \ref{updown}. The three periods of control, intervention, and post-intervention are highlighted with purple, blue, and yellow shaded regions. It is quite apparent that people prefer taking the stairs to go down rather than up. An expected periodic lower occupancy is also observed on the weekends. The mid-semester break from April 15-28 was excluded from the study as that represented anomalous behavior.
+The entire data set split by the direction of stair use is shown in Figure \ref{updown}. The three periods of control, intervention, and post-intervention are highlighted with purple, blue, and yellow shaded regions. It is quite apparent that people prefer taking the stairs to go down rather than up. An expected periodic lower occupancy is also observed on the weekends. The mid-semester break from April 15-28 was excluded from the study as that represented anomalous behavior.
 
 To gain further insights in to the data, the total number of people using the stairs (both up and down) over each month of the experiment are plotted in Figure \ref{3mon} to show daily variations in the stairs usage. No visible patterns in the daily variation of stair usage are observed.  Although a noticeable pattern in the hourly movement is consistently seen. The peak stair usage is around noon most probably during the lunch break. The people count is asymmetric on both sides of the peak, with more people using the stairs in the afternoon. But the presence of a higher number of people in the afternoon biasing the results can not be discounted. % these observations can also be made from the next figure.
 
@@ -78,7 +133,7 @@ The Spatio-temporal distribution of stair-usage at each level as shown in Figure
     \label{spa1}
 \end{figure}
 
-The aggregated weekly distribution of stair usage for the three periods is plotted in Figure \ref{spa2}. No discernible differences in the distribution are observed between each day of the week for all three months. However, just like the Spatio-temporal representation in the Figure. \ref{spa1} here, too a general increase on all days is observed during the intervention month. The typical daily usage pattern can be grouped into four zones as shown in Figure \ref{timegrup}. The peak activity is clearly around noon and 1 p.m., which show similar patterns. The pre-noon and post-noon activities at 11 a.m., 2 p.m., and 3 p.m. are the periods with the next highest activity. Most of the measurements were made during the late evening and early morning hours when the number of people inside the building was expectedly low. The last group consists of the hours with moderate activity seen at the start and end of the workday. 
+The aggregated weekly distribution of stair usage for the three periods is plotted in Figure \ref{spa2}. No discernible differences in the distribution are observed between each day of the week for all three months. However, just like the Spatio-temporal representation in the Figure. \ref{spa1} here, too a general increase on all days is observed during the intervention month. The typical daily usage pattern can be grouped into four zones as shown in Figure \ref{timegrup}. The peak activity is clearly around noon and 1 p.m., which show similar patterns. The pre-noon and post-noon activities at 11 a.m., 2 p.m., and 3 p.m. are the periods with the next highest activity. Most of the measurements were made during the late evening and early morning hours when the number of people inside the building was unexpectedly low. The last group consists of the hours with moderate activity seen at the start and end of the workday. 
 
 
 
@@ -111,9 +166,9 @@ The aggregated weekly distribution of stair usage for the three periods is plott
     % \end{figure}
 
 
-\subsection{Comparison of Clustering Algorithms}
+\subsection{Clustering Algorithms}
 
-The e-counter dataset is an example of spatially distributed measurements that could potentially be part of a continuous set of measurements. As the size of the dataset increases, it soon becomes prohibitively expensive to analyze the entire data at a time. To find patterns in the data, clustering techniques are frequently employed. The e-counter experiment was performed to identify if any change in people's behavior was observed due to the active educational interventions that were made over a period of a month. The computer used in this study could only handle data for a week while performing the calculations required for the AP algorithm. The standard K-means algorithm is a much lighter algorithm and hence can handle the entire dataset, but the cluster centers produced by K-means do not necessarily coincide with one of the data points. Hence for the sake of data interpretation, the K-means algorithm was not chosen as the primary tool for data analysis. Streaming K-means, in addition, needs an automatic estimation of the number of clusters which is not always straightforward in a data stream. In light of these issues, the streaming affinity propagation algorithm  DSAP was preferred for this study. But, for the sake of completeness and validation, the results from DSAP are compared with those from AP, k-means, and streaming K-means.    
+The e-counter dataset is an example of spatially distributed measurements that could potentially be part of a continuous set of measurements. As the size of the data set increases, it soon becomes prohibitively expensive to analyze the entire data at a time. To find patterns in the data, clustering techniques are frequently employed. The e-counter experiment was performed to identify if any change in people's behavior was observed due to the active educational interventions that were made over a period of a month. The computer used in this study could only handle data for a week while performing the calculations required for the AP algorithm. The standard K-means algorithm is a much lighter algorithm and hence can handle the entire data set, but the cluster centers produced by K-means do not necessarily coincide with one of the data points. Hence for the sake of data interpretation, the K-means algorithm was not chosen as the primary tool for data analysis. Streaming K-means, in addition, needs an automatic estimation of the number of clusters which is not always straightforward in a data stream. In light of these issues, the streaming affinity propagation algorithm  DSAP was preferred for this study. But, for the sake of completeness and validation, the results from DSAP are compared with those from AP, k-means, and streaming K-means.    
 
 
 
@@ -141,6 +196,7 @@ The bottom left panel of Figure \ref{1daystat} clearly shows that the maximum nu
     \label{1daystat}
 \end{figure}
 
+######## RESULts from AP only: hourly and weekly
 Data from May 1 were split in one hour landmark window time windows and analyzed using a divide and conquer approach with the AP algorithm to generate micro-clusters. The clusters obtained during each hour from 7 am to 7 pm along with the branch points of each cluster are shown in Figure \ref{AP1}. The evolution of people activity across all levels can be clearly seen from these plots. The clusters capture the increase in activity starting around 9-11 am xxxxxxx
 % \begin{figure}[!h]
 %     \includegraphics[width=.5\textwidth]{image/before_int.jpg}\hfill
@@ -274,7 +330,7 @@ The first week of intervention was also analyzed using a 4 hour landmark time wi
 \textbf{Processing time (s)}         & 23          & 0.28             & 0.66           & 0.6                       \\ \hline
 \textbf{Memory consumption (MB)}     & 517         & 580              & 212           & 313                        \\ \hline
 \textbf{Number of clusters}          & 7           & 7                & 7             & 7                          \\ \hline
-\textbf{Silhouette Coefficient}      & 0.7         & 0.6              & 0.5         & 0.7                       \\ \hline
+\textbf{Silhouette Index}      & 0.7         & 0.6              & 0.5         & 0.7                       \\ \hline
 \textbf{Caliński-Harabasz Index}     & 380         & 1237             & 87            & 150                         \\ \hline
 \textbf{Davies-Bouldin Index}        & 0.6         & 0.5              & 0.5          & 0.19                        \\ \hline\midrule
 \end{tabular}
@@ -345,7 +401,7 @@ The first week of intervention was also analyzed using a 4 hour landmark time wi
 \textbf{Processing time (s)}         & 26          & 0.3                                                             & 0.69          & 0.45                       \\ \hline
 \textbf{Memory consumption (MB)}     & 519         & 586                                                             & 212           & 213                        \\ \hline
 \textbf{Number of clusters}          & 14          & 6                                                               & 11            & 6                          \\ \hline
-\textbf{Silhouette Coefficient}      & 0.47        & 0.6                                                             & 0.4           & 0.7                       \\ \hline
+\textbf{Silhouette Index}      & 0.47        & 0.6                                                             & 0.4           & 0.7                       \\ \hline
 \textbf{Caliński-Harabasz Index}     & 1421        & 12341                                                            & 35            & 100                         \\ \hline
 \textbf{Davies-Bouldin Index}        & 0.57        & 0.68                                                            & 0.49          & 0.31                        \\ \hline\midrule
 \end{tabular}
@@ -523,7 +579,7 @@ Comparison table and closing inference..xx
     \includegraphics[width=.47\textwidth]{image/Chapters/Chapter6/DSAPBeforeMonthIntervention.png}
     \includegraphics[width=.51\textwidth]{image/Chapters/Chapter6/window10H.png}
     \includegraphics[width=.49\textwidth]{image/Chapters/Chapter6/DSAPAFTERmonthIntervention.png}
-    \caption{The clusters obtained by the DSAP algorithm from the e-counter data for one month periods before, during, and after intervention. Without expiration factor}
+    \caption{The clusters obtained by the DSAP algorithm from the e-counter data for one month periods before, during, and after intervention.}
     \label{dsap3mon}
 \end{figure}
 
@@ -680,7 +736,7 @@ Comparison table and closing inference..xx
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{WLAN Fingerprint-based Indoor Localization}
+\section{Indoor Occupant Behaviour Experiment}
 
 This experiment is located at three buildings of at the UJI university campus with three buildings and four to five floors. In this scenario, buildings are named with order from one to three which related to campus building T1, TD and TC which TC is the only building with five floors as shown in Figure \ref{nama} (a) and the 3D plot of all levels and buildings are plotted in Figure \ref{nama} (b), which colors are show different floor in all buildings. 
 
@@ -824,10 +880,24 @@ Figures \ref{alltogether} illustrate the movement of people during the experimen
 
 
 
-\subsection{Comparison of Data clustering Algorithms}
+% \subsection{Comparison of Data clustering Algorithms}
 
-The UJIIndoorLoc dataset is similarly happened as the e-counter dataset. To find a pattern in this data, first AP and K-means clustering algorithms were performed to find people activities in these three buildings during experiment period. As our computer used for this study could not handle the whole experience duration for clustering data by AP, one day of experiment with the total number of 14688 data points is selected. This day includes all people in the experiment but building T1 is not presented in this specific day. The K-means algorithm was able to handle to total amount of data points.
+The UJIIndoorLoc dataset is similarly happened as the e-counter dataset. To find a pattern in this data, first AP and K-means clustering algorithms were performed to find people activities in these three buildings during experiment period. As our computer used for this study could not handle the whole experience duration for clustering data by AP, the 20 of June is selected for our experiment . This day includes almost all people in the experiment but building T1 is not presented in this specific day. The statistic of this day shows in Figure \ref{static} The K-means algorithm was able to handle to total amount of data points.
 The streaming affinity propagation algorithm  DSAP was preferred for this study. But, for the sake of completeness and validation, the results from DSAP are compared with those from AP, k-means, and streaming K-means.
+
+
+\begin{figure}
+    \centering
+        \includegraphics[width = 7 cm]{image/Chapters/Chapter6/phoneTimejune20png.png}\hfill
+        \includegraphics[width = 8 cm, height =160]{image/Chapters/Chapter6/spaceidAccumulatjune20.png}\hfill
+        \includegraphics[width = 7 cm]{image/Chapters/Chapter6/floorTimejune20.png}\hfill
+        \includegraphics[width = 7 cm]{image/Chapters/Chapter6/buildingTimejun6.png}
+    \caption{Activities during one day : June 20, 2013 (a) Phone activity level. (b) Space activity level. (c) Floor activity. (d) Building activity level.}
+    \label{static}
+\end{figure}
+
+
+
 
 
 \begin{figure}[!h]
@@ -861,10 +931,36 @@ Figure \ref{elbowkwifi} shows the elbow method to find the optimal number of clu
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[width = 10 cm]{image/Chapters/Chapter6/DSAPJune20.png}
-    \caption{ DSAP for WiFi data during the experiment: June 20.}
+    \includegraphics[width = 7 cm]{image/Chapters/Chapter6/DSAPJune20.png}\hfill
+    \includegraphics[width = 7 cm]{image/Chapters/Chapter6/june20DoubK.png}
+    \\[\smallskipamount]    
+    \caption{ DSAP and Streaming K-means for WiFi data during the experiment: June 20.}
     \label{3}
 \end{figure}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+\begin{table}[]
+\small
+\caption{Comparison of AP, DSAP, K-means, and Streaming K-means Evaluation Metrics for the day June 6.}
+\label{Wificom}
+\begin{tabular}{l
+>{\columncolor[HTML]{DAE8FC}}c 
+>{\columncolor[HTML]{68CBD0}}c 
+>{\columncolor[HTML]{DAE8FC}}c 
+>{\columncolor[HTML]{68CBD0}}c }
+\hline
+\multicolumn{1}{c}{\textbf{Metrics}} & \textbf{AP} & {\color[HTML]{333333} \textbf{K-means}} & \textbf{DSAP} & \textbf{Streaming K-means} \\ \hline\midrule
+\textbf{Processing time (s)}         & 414         & 1.9                                     & 2.2             & 0.58                       \\ \hline
+\textbf{Memory consumption (MB)}     & 1933        & 412                                     & 290           & 238                        \\ \hline
+\textbf{Number of clusters}          & 5           & 6                                       & 6             & 6                          \\ \hline
+\textbf{Silhouette Coefficient}      & 0.3         & 0.5                                     & 0.55          &                            \\ \hline
+\textbf{Caliński-Harabasz Index}     & 7193        & 25330                                   & 365           &                            \\ \hline
+\textbf{Davies-Bouldin Index}        & 0.7         & 0.6                                     & 0.57          &                            \\ \hline\midrule
+\end{tabular}
+\end{table}
 
 
 

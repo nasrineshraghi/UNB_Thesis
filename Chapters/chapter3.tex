@@ -177,7 +177,7 @@ This approach works well when the data has a normal distribution. Otherwise, it 
 
 %IStrAP used KDD Cup 99 dataset and used the Page-Hinkley standard test to update the clustering model. The results show that the IStrAP has higher accuracy, lower time complexity, and better adaptability for stream data over than STRAP. With this dataset, they just chose 120 data points to show the result, and the result is poorly demonstrated with the percent of accuracy and time. FROM WHERE THIS INFORMATION COME FROM???
 
-Another attempt on improving the StrAP algorithm is towards inheriting its advantages but providing a better performance using a dynamic clustering scheme, which ensures that not only new emerging clusters can be detected, but disappeared and recurrent clusters are also timely detected and it is called STRAP \cite{sui2018dynamic}. Cluster disappearance refers to an existing cluster that is not visited by any recently arrived data points. Cluster re-occurrence occurs when a previously disappeared cluster reoccurs at timestamp $t$. 
+Another attempt on improving the StrAP algorithm is towards inheriting its advantages but providing a better performance using a dynamic clustering scheme, which ensures that not only new emerging clusters can be detected, but disappeared and recurrent clusters are also timely detected and it is called ISTRAP \cite{sui2018dynamic}. Cluster disappearance refers to an existing cluster that is not visited by any recently arrived data points. Cluster re-occurrence occurs when a previously disappeared cluster reoccurs at timestamp $t$. 
 
 Within ISTRAP, outdated clusters are removed and recurrent clusters are efficiently detected rather than being treated as novel clusters. To achieve that, ISTRAP defines the clusters as active and inactive. Active state means that a cluster is still valid at a current timestamp because at least one data point has been assigned to it during a time interval. Inactive state indicates the clusters that are expired because they have not gain any recent data point. Two reservoirs are proposed: an outlier reservoir for saving outliers and the remove reservoir for storing inactive clusters. The workflow of the ISTRAP algorithm is illustrated in Figure \ref{istrap}. The main steps are described as follows:
 
@@ -301,18 +301,6 @@ Also, APDenStream can remove outliers without upgrade potential noise points tim
 
 
 
-%\item[]\textbf{ISTRAP Algorithm:}
-
-
-
-
-
-
-
-
-% \section{K-means Stream Clustering}
-% For scalable and low-complexity way of transferring data from network to the mobile phones \ref{cramariuc2016clustering}.
-
 
 
 
@@ -344,7 +332,7 @@ Furthermore, the DSAP algorithm allows the user to decide to keep a number of la
 also missing: expiration parameter alph, beta, parameter to tune the updating, we can use only one the expirations???  treshold is usualy the mean, but in our case we update the treshold} 
 
 
-The DSAP algorithm is more efficient in terms of detecting the emergence, re-occurrence, and disappearance without extra cost and by having a time window repository. Every window can detect the emergence of new clusters while order clusters remove over time. By changing the expiration value, the old clusters can be re-appear without introducing new clusters or tuning several parameters and keep the algorithm more efficient. Moreover, updating the threshold in each window makes the algorithm more robust and improves clusters' quality instead of keeping it fixed. 
+The proposed DSAP algorithm is more efficient in terms of detecting the emergence, re-occurrence, and disappearance of clusters without adding any additional costs. It introduces the concept of time windows and dynamic threshold for the first time for an affinity propagation based stream clustering algorithm. Every window can detect the emergence of new clusters while clusters older than the expiration time are removed. Unlike some of the other methods that require tuning several parameters to capture the current state of the model, DSAP uses a simple combination of autonomously calculated dynamics threshold and expiration time to keep the algorithm more efficient. Moreover, updating the threshold value in each window makes the algorithm more robust and improves the quality of clusters. 
 
 
  
@@ -367,8 +355,7 @@ The DSAP algorithm is more efficient in terms of detecting the emergence, re-occ
 % Data Type Labeled Data
 % Criteria density
 % Evaluation Metrics   
-% Online   
-% OffLine
+
 
 % why we havent used this algorithm: our data is already densed 
 
