@@ -6,7 +6,7 @@
 
 %As the number of connected devices and applications that generate huge amount of data at very high speed increases, the need for faster data mining techniques is enhanced. This research work proposes a data stream clustering algorithm that builds upon the Affinity Propagation clustering algorithm. The concept of time windows that partition the data into manageable chunks is introduced in order to apply these algorithms for data stream clustering.
 
-This Chapter presents an overview of clustering by reviewing the concepts, methods, and underlying steps, focusing on the affinity propagation (AP) methods. Data stream clustering algorithms are also introduced with the existing time window models being used for computing stream clusters. 
+This Chapter presents an overview of clustering by reviewing the concepts, methods, and underlying steps, focusing on the affinity propagation (AP) method. Data stream clustering algorithms are also introduced with the existing time window models being used for computing stream clusters. 
 
 %Finally, indoor localization systems are described due to the potential wide range of services they can provide by leveraging Internet of Things (IoT) and ubiquitous connectivity. 
 
@@ -17,7 +17,7 @@ This Chapter presents an overview of clustering by reviewing the concepts, metho
 \section{Cluster Analysis}
 
 \subsection{Overview}
-Clustering refers to partitioning a set of data points (also referred to as observations or tuples) into groups according to a proximity measure. Distance functions are predominantly used to determine a proximity measure of dissimilarity/similarity between clusters.  This proximity measure directly affects the formation of the resulting clusters. Almost all clustering algorithms are explicitly or implicitly connected to some definition of distance function \cite{zumel2014practical}. The most commonly used distance functions for quantitative features are summarized in Table \ref{tabdis}. 
+Clustering refers to partitioning a set of data points (also referred to as observations or tuples) into groups according to a proximity measure. Distance functions are predominantly used to determine a proximity measure of dissimilarity/similarity between clusters.  This proximity measure directly affects the formation of the resulting clusters. Almost all clustering algorithms are explicitly or implicitly connected to some definition of distance function \cite{zumel2014practical}. The most commonly used distance functions for quantitative feature spaces are summarized in Table \ref{tabdis}. 
 
 
 
@@ -47,14 +47,14 @@ Figure \ref{clus} illustrates the results of a clustering process for a set of p
 \begin{figure}[!h]
     \centering
     \includegraphics[width = 8 cm]{image/Chapters/Chapter2/Blank diagram (1).png}
-    \caption{Clustering in 2D space}
+    \caption{Clustering in 2D feature space}
     \label{clus}
 \end{figure}
 
 
 Once a proximity measure is chosen, the construction of a clustering criterion function makes the partition of
 clusters an optimization problem, which is well defined
-mathematically, and has rich applications in the literature \cite{jain1999data}. 
+mathematically, and has rich applications in marketing, biomedical and geospatial fields \cite{jain1999data}. 
 
 \subsection{Clustering Methods}
 
@@ -106,7 +106,7 @@ Therefore, selecting a clustering method is an important step, as certain method
     %finding clusters with spherical shapes. %, and the noise can influence the results. A very famous algorithm in this group is K-means.
     K-means is the most recognized clustering algorithm in this category due to its robustness in finding clusters that have not been explicitly labeled in the data.
     
-    \item\textit{Hierarchical methods:} The aim is to build a tree-like nested structure from a set of data points \cite{swarndeep2016overview}. Initially each data point is considered as an individual cluster, and at each iteration, a proximity matrix is computed to merge similar clusters until one cluster or K clusters are formed. These methods are widely used to analyze social network data. The BIRCH algorithm is an example of a hierarchical method where every data point is equally important for clustering purposes. Moreover, the concept of Clustering Feature (CF) is fundamental for summarizing the information that needs to be maintained about a cluster.
+    \item\textit{Hierarchical methods:} The aim is to build a tree-like nested structure from a set of data points \cite{swarndeep2016overview}. Initially each data point is considered as an individual cluster, and at each iteration, a proximity matrix is computed to merge similar clusters until one cluster or $k$ clusters are formed. These methods are widely used to analyze social network data. The BIRCH algorithm is an example of a hierarchical method where every data point is equally important for clustering purposes. Moreover, the concept of Clustering Feature (CF) is fundamental for summarizing the information that needs to be maintained about a cluster.
     
     %The clusters are described in the form of dendrogram. %It can be analyzed with the help of statistical method. 
     
@@ -215,7 +215,7 @@ The main advantages and disadvantages of these different clustering methods are 
 \subsection{Affinity Propagation Clustering}
 
 % $O(N^2logN)$ where N is the number of data points. It can be imagined that if the number of data points is very huge, then it is impossible to do clustering using AP
-Affinity propagation (AP) is a partitioning-based clustering algorithm that was first introduced by Frey and Dueck in 2007 \cite{frey2006mixture}. AP is based on the concept of "message passing" between data points that plays an important role in finding the best candidate data point to become a cluster centroid \cite{jiang2019exemplar, frey2007clustering}. 
+Affinity propagation (AP) is a partitioning-based clustering algorithm that was first introduced by Frey and Dueck in 2007 \cite{frey2006mixture}. AP is based on the concept of "message passing" between data points that plays an important role in finding the best candidate data point to become a cluster centroid \cite{frey2007clustering, jiang2019exemplar}. 
 
 
 
@@ -235,7 +235,7 @@ Unlike clustering algorithms such as k-means, affinity propagation does not requ
 % \end{figure}
 
 
-The AP algorithm supports similarities that are not symmetric, and it is not dependent on initialization found in other clustering algorithms \cite{refianti2017time}. However, it has a significant speed problem, particularly for clustering large volume of data. Affinity Propagation needs $O(N^2T)$ time to update a message where N and T represent the number of data points and the number of iterations \cite{frey2007clustering}. Finally, applying AP for any data set requires to meet two conditions: no missing or null data in the inputs and the data should be numeric, not categorical.
+The AP algorithm supports similarities that are not symmetric, and it is not dependent on initialization found in other clustering algorithms \cite{refianti2017time}. However, it has a significant speed problem, particularly for clustering large volume of data. Affinity Propagation needs $O(N^2T)$ time to update a message where $N$ and $T$ represent the number of data points and the number of iterations \cite{frey2007clustering}. Finally, applying AP for any data set requires to meet two conditions: no missing or null data in the inputs and the feature space should contain only numeric, not categorical data.
 
 
 The AP algorithm is based on the computation of four matrices: similarity matrix, responsibility matrix, availability matrix, and criterion matrix. They can are described as follows:
@@ -306,7 +306,7 @@ The element with the highest criterion value in each row would be designated to 
 
 \end{itemize}
 
-The AP clustering algorithm that has been used in this thesis is described in Algorithm \ref{APo}. The Python code is available at https://scikit-learn.org/ open source repository. Four hyperparameters are used for tuning the clustering process. They are described as follows: 
+The AP clustering algorithm used in this thesis is described in Algorithm \ref{APo}. The Python code is available at https://scikit-learn.org/ open source repository. Four hyperparameters are used for tuning the clustering process. They are described as follows: 
 
 \begin{itemize}
 
@@ -545,7 +545,7 @@ The AP clustering algorithm that has been used in this thesis is described in Al
 
 In almost all clustering methods described in the previous section, the number of data points is considered fixed, and each data point is used multiple times for computing proximity measures and matrices in order to be assigned to a particular cluster. These methods are computationally high and require large data storage.
 
-However, with the advent of Internet of Things, and in particular indoor localization systems, a wide range of sensor technologies (e.g., e-counters, environmental, and motion sensors) and networking communication technologies (e.g., infrared, RFID, sensors, WiFi, and Bluetooth) are used for sensing and transporting large volume of data. The data is harvested as data streams that are a sequence of digitally encoded coherent signals (packets of data or data packets). These data packets arrive according to different data rates (i.e. bandwidth), which are often expressed in bytes per second (B/s).
+However, with the advent of Internet of Things, and in particular indoor localization systems, a wide range of sensor technologies (e.g., e-counters, environmental, and motion sensors) and networking communication technologies (e.g., infrared, RFID, sensors, WiFi, and Bluetooth) are being used for sensing and transporting large volume of data. The data is harvested as data streams that are a sequence of digitally encoded coherent signals (packets of data or data packets). These data packets arrive according to different data rates (i.e. bandwidth), which are often expressed in bytes per second (B/s).
 
 From a clustering perspective, a data stream $S$ is sequence of infinitive, ordered, and fast-changing stream data points $d_1, d_2, ..., d_3 $ $\xrightarrow S = {d_i}$ \cite{han2011data}. Therefore, clustering methods need to form clusters from a continuous flow of stream data points. The traditional set-up where an entire static data set is available for clustering can not be applied to data streams which continuously arrive at a rapid rate. The main issues can be summarized as follows \cite{toshniwal2013clustering}:
 
@@ -560,13 +560,13 @@ Four main types of time window models have been proposed in the literature \cite
 
 \begin{itemize}
 
-    \item\textit{Damped Time window:} It is also referred to as time-fading model. Each data point has a different weight based on its arrival time so new data point has a higher weight than the old ones. This time window model reduces the impact of old data. It is mostly applied using density-based clustering methods. The function $f(\delta t)$ = $\mu_{\delta t}$ (0 < $\mu$ < 1) is usually used for this model where $\delta t$ is the age of a data point which is equal to time differentiation between current time and arrival time. A fading parameter $\mu$ is in the range between 0 to 1 \cite{nguyen2015survey}. 
+    \item\textit{Damped Time window:} It is also referred to as time-fading model. Each data point has a different weight based on its arrival time so new data points have a higher weight than the old ones. This time window model reduces the impact of old data. It is mostly applied using density-based clustering methods. The function $f(\delta t)$ = $\mu_{\delta t}$ (0 < $\mu$ < 1) is usually used for this model where $\delta t$ is the age of a data point which is equal to time differentiation between current time and arrival time. A fading parameter $\mu$ is in the range between 0 to 1. 
     
     
     \item\textit{Landmark Time Window:} It is also known as the hopping model, is used when clustering starts from a starting point call landmark to the current time. When a new window comes, all data points from the previous landmark time window are removed. All data points are equally important.
 
     \item\textit{Sliding Time Window: } The most important data points are the most recent ones and old data points will be removed. The structure of the sliding time window is based on the FIFO (First-In-First-Out) principle, which a data point from the current time is used for clustering until a specific time is passed. The window has a size of $w$ in the current time $t$, will slide (s, sliding(w)) where s[t-w+1, t].
-    The window size can be set based on resources, and computational process \cite{silva2013data}. This model is efficient when most recent data points are relevant for the cluster analysis \cite{mansalis2018evaluation}.  
+    The window size can be set based on resources, and computational process \cite{silva2013data}. This model is efficient when most recent data points are relevant for the cluster analysis.  
     
     \item\textit{Pyramidal Time Window: } It is also known as tilted time window and focuses on recent data points without discarding old data points. It applies various time granularity levels based on how recent a data point is \cite{aggarwal2003framework, nguyen2015survey}. It stores almost all data points belonging to a specific time window, and after computes a balance between storage requirements and accuracy. The old data tuples are aggregated. %, and a generic representation is enough.
     
@@ -637,7 +637,7 @@ Figure   \ref{time1} illustrates how these time window models have been conceptu
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %\subsection{Data Stream Processing}
-Processing of data points using time window models can take two opposites views of the streaming problem as pointed out by Mansalis et al. (2018). The first view is to use a two-phase scheme which consists of an online component that processes stream data points and produces summary data (e.g., micro-clusters, core-micro-clusters, temporal CF, grids, and coreset tree) over time; and an offline component that uses the aggregated summary data to form the final clusters. In the literature of data stream clustering methods, a large number of algorithms use a two-phase scheme as shown in Figure \ref{2phase} . 
+Processing of data points using time window models can take two opposites views of the streaming problem as pointed out by Mansalis et al. (2018). The first view is to use a two-phase scheme which consists of an online component that processes stream data points and produces summary data  (e.g., micro-clusters, core-micro-clusters, temporal CF, grids, and coreset tree); and an offline component that uses the aggregated summary data to form the final clusters. In the literature of data stream clustering methods, a large number of algorithms use a two-phase scheme as shown in Figure \ref{2phase} . 
 
 \begin{figure}
 \centering
@@ -647,13 +647,9 @@ Processing of data points using time window models can take two opposites views 
 \label{2phase}
 \end{figure}
 
-In this thesis, this strategy was adopted, and final clusters have been named as macro-clusters, meanwhile the the centroids of micro-clusters were used as summary data. The online component requires a process for saving the summary data in a fast manner, and is not requested to support real-time processing, but rather a very low response delay.The offline phase uses the aggregated summary data to compute the macro-clusters. It is not time-related and can happen any time by user request.
-
-
-
-
 An alternative view is to generate final clusters without the need of an offline phase. A single-pass model is maintained over a stream, and clusters are updated as new data points arrive from the stream. One of the main disadvantages of this strategy is that the evolution of the clusters can not be analyzed at different time intervals, only a final snapshot is produced.     
 
+In this thesis, the online/offline strategy was adopted, and final clusters have been named as macro-clusters, meanwhile the the centroids of micro-clusters were used as summary data. The online component requires a process for saving the summary data in a fast manner, and is not requested to support real-time processing, but rather a very low response delay.The offline phase uses the aggregated summary data to compute the macro-clusters. It is not time-related and can happen any time by user request.
 
 
 
@@ -680,10 +676,11 @@ An alternative view is to generate final clusters without the need of an offline
 
 
 %\subsection{Time Window Models}
+\hspace{}
 
 \subsection{Stream Clustering Methods}
 
-Data stream clustering methods can be categorized into five leading groups according to the nature of their underlying clustering methods as previously described in Section 2.1.2. Figure \ref{method} provides an overview of the main methods developed within these categories. Table \ref{landmarkwin} provides a comprehensive overview of the data stream clustering methods and the most well-known algorithms previously described in Mansalis et al. (2018). 
+Data stream clustering methods can be categorized into five leading groups according to the nature of their underlying clustering methods as previously described in Section 2.1.2. Figure \ref{method} provides an overview of the main methods developed within these categories. Table \ref{landmarkwin} provides a comprehensive overview of the data stream clustering methods. 
 
 
 \begin{figure}
@@ -801,6 +798,7 @@ Data stream clustering methods can be categorized into five leading groups accor
     \end{tabular}
 \end{table}
 
+In this research work, the DSAP algorithm is proposed as a simplification of the previous streaming AP algorithms. This is further discussed in the next Chapter.
 
 
 % In particular, the online-offline processing for streaming K-means clustering has been applied to many algorithms such as CluStream, Olindda, SWClustering, and BICO. The open-source available DSC\_TwoStage in R version of streaming K-means using the 2-phase processing was used in this thesis, and is further discussed in Chapter 5.  

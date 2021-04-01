@@ -71,10 +71,10 @@ W_j = \begin{cases}
  %$x_i$ number of arriving data points should follow the following rules
 % will as shown in Equation \ref{landmarkcal}. 
  
-Data points in the same landmark window are treated as equally important. In practice, the landmark duration can be defined by using a landmark time interval (e.g. every hour) or by a landmark event (e.g. every 100 data points). Every time a new window is created, all the data points from the previous windows are discarded as illustrated in Figure \ref{land}. In this thesis, the landmark time interval was selected for clustering localization data streams as for these applications only the summary of the system state within a particular window was required. 
+Data points in the same landmark window are treated as equally important. In practice, the landmark duration can be defined by using a landmark time interval (e.g. every hour) or by a landmark event (e.g. every 100 data points). Every time a new window is created, all the data points from the previous windows are discarded as illustrated in Figure \ref{land}. In this thesis, the landmark time interval was selected for clustering localization data streams as for these applications only the summary of the system state within a particular window was required. This window model is suitable for our clustering process, since we are interested in the most recent data within the time frame. All data points within the window have the same weights, which make appropriate for comparing hourly, daily, or monthly summary comparisons. 
 
-\todo[inline]{do we have a reason to select the landmark time interval???}
-% This window model is suitable for our model, since we are interested in the most recent data within the time frame. All data points within the window have the same weightage, which makes more sense for our hourly summary comparisons.
+%\todo[inline]{do we have a reason to select the landmark time interval???}
+
 
 
    \begin{figure}[!h]
@@ -204,7 +204,8 @@ Figure \ref{thr} illustrates the previously described tasks by showing a sparse 
     \end{figure}
 
 The outputs of this step are the set of micro-clusters from the previous window, but now with new data points associated with some of the centroids, and an updated timestamp corresponding to the chosen centroids. Additionally, $n$ number of data points whose euclidean distance from the centroids was greater than $\epsilon_{W_j}$ are temporarily kept in the cache.
-\todo[inline]{write down what the the outcomes are of this step}
+
+%\todo[inline]{write down what the the outcomes are of this step}
     
     
     
@@ -231,9 +232,9 @@ The outputs of this step are the set of micro-clusters from the previous window,
     
     %These points potentially represent new clusters. By applying the AP algorithm once again, new micro-clusters $Cm'$ are generated. Then, these new clusters $Cm'$ are added to the micro-clusters $Cm$ obtained before, and the model is updated ($Cm = Cm' + Cm$). The tasks performed during these steps are listed in Algorithm \ref{alg1} for better understanding.
     
-  \todo[inline]{how to get rid of old centroids... as soon as the centroids are not longer significant to compute the E , they are disregarded using the  factor. HOw do you do that??? } 
+  %\todo[inline]{how to get rid of old centroids... as soon as the centroids are not longer significant to compute the E , they are disregarded using the  factor. HOw do you do that??? } 
 
-   In order to avoid the number of centroids to spread beyond control, old centroids that are no longer deemed relevant are removed. To do this, an expiration parameter $e_x$ is introduced. This value is applied to forget centroids that haven't been selected in the recent windows as quantified by $ex$. The $ex$ number can be chosen to include all the time windows from the start or just the last few windows, depending on the user requirements. All the clusters whose associated timestamps are older than $ex$ window lengths ($ex \times L$) from the current time are considered obsolete and hence discarded. 
+   In order to avoid the number of centroids to spread beyond control, old centroids that are no longer deemed relevant are removed. To do this, an expiration time parameter $e_x$ is introduced. This value is applied to forget centroids that haven't been selected in the recent windows as quantified by $ex$. The $ex$ number can be chosen to include all the time windows from the start or just the last few windows, depending on the user requirements. All the clusters whose associated timestamps are older than $ex$ window lengths ($ex \times L$) from the current time are considered obsolete and hence discarded. 
    %This value is obtained by subtracting the current time from the $ex$ number of time period. If any centroid in the previous time window seen in the current window, the timestamp associated to this centroid should be updated.
    
     % Increasing number of cluster usually lead to increasing time in processing the data, thus clustering process need to be broken down to prevent long process, this done by applying fading value to the process of clustering. 
@@ -264,7 +265,9 @@ The outputs of this step are the set of micro-clusters from the previous window,
 \subsection{Offline Macro-Cluster Phase}
 
 The offline macro-cluster phase in DSAP, starts after $N$ time windows have passed. In this phase, all the micro-clusters $C_m$ generated during the online micro-cluster phase are re-clustered using the AP algorithm to generate $k$ number of macro-clusters $C_M = (C_{M_1}, C_{M_2}, ..., C_{M_k})$. This process is usually not considered time-critical and the number of macro-clusters are expected to be less than the number of micro-clusters. The hyperparameters related to the AP algorithm such as the damping factor, the maximum number of iterations, and the convergence iteration are the same as in the online-micro phase. The only parameter that is different is the preference parameter which is set to the median of the similarity matrix of all the micro-clusters obtained from the online phase.
-\todo[inline]{Have you used the same hyperparameters??? Or they are changed??? e.g. number of interactions was the same for micro and macro clustering???} %Nasrin: No I don't change them. Just preference has been changed , which is the median of similarity matrix and I did not give it a number.
+
+
+%\todo[inline]{Have you used the same hyperparameters??? Or they are changed??? e.g. number of interactions was the same for micro and macro clustering???} %Nasrin: No I don't change them. Just preference has been changed , which is the median of similarity matrix and I did not give it a number.
 
 %The DSAP offline macro-clustering phase is composed of three steps. In the first step, the user requests for macro clusters from the online phase. Next, the list of micro clusters are retrieved from the online phase. The last step is to generate a set of macro clusters using the affinity-propagation clustering algorithm. AP gives macro clusters $[C_M]$ that summarizes all the micro clusters during the chosen interval. 
 
@@ -283,7 +286,7 @@ The offline macro-cluster phase in DSAP, starts after $N$ time windows have pass
 
 Intrinsic clustering validation uses the internal information of the clustering process to evaluate the goodness of a clustering structure when the ground truth labels are unknown. The well-known metrics silhouette index (S),  Caliński-Harabasz index (CH), and Davies-Bouldin index (DBI) were selected to validate the goodness of macro clusters found by the DSAP algorithm. Table \ref{comp} provides an overview of these metrics. They are further described in detail in the following sections.
 
-\todo[inline]{have you computed the metrics for micro and macro clusters??? or just macro clusters??} %Nasrin: Just Macro clusters
+%\todo[inline]{have you computed the metrics for micro and macro clusters??? or just macro clusters??} %Nasrin: Just Macro clusters
 
 % \begin{table}[htbp]\scriptsize
 % % \centering
@@ -398,11 +401,12 @@ The primary advantage of the silhouette index is its straightforward interpretat
 
 \subsection{Caliński-Harabasz Index}
 It is also known as the variance ratio criterion, which is used to score dense and well-separated clusters. A recent comparative study of available clustering indices demonstrated this index as one of the best cluster validity indices \cite{arbelaitz2013extensive}. 
-\todo[inline]{not sure if you have cited this paper}%Fixed it
+
+%\todo[inline]{not sure if you have cited this paper}%Fixed it
 
 Well defined clusters yield high values of this index. Therefore, the maximum value of the index is used to select the best partition. For \begin{math} n \end{math} data points, \begin{math} k \end{math} clusters  where \begin{math} B \end{math} and \begin{math} W \end{math} are the between within cluster scatter matrices, the index is computed as \cite{calinski1974dendrite}:
 
-\todo[inline]{not sure why the reference calinski1974dendrite is not being compiled}
+%\todo[inline]{not sure why the reference calinski1974dendrite is not being compiled}
 
 \begin{equation}
   CH =  \frac{traceB / (k - 1)} {traceW/ (n -k)}
@@ -538,11 +542,11 @@ In real-world applications, in addition to the time complexity, several other fa
 
 
 \subsection{Space Complexity} 
-Similar to the time complexity, the memory consumption quantifies the amount of space or memory taken by an algorithm to run as a function of the length of the input. That means how much memory, in the worst case, is needed at any point by the algorithm. The same big-O notation is used to describe the space complexity as well. This parameter represents the algorithm’s scalability and performance. In simple terms, it gives the worst-case scenario of an algorithm’s growth rate.
+Similar to the time complexity, the memory consumption quantifies the amount of memory taken by an algorithm to run as a function of the length of the input. That means how much memory, in the worst case, is needed at any point by the algorithm. The same big-O notation is used to describe the space complexity as well. This parameter represents the algorithm’s scalability and performance. In simple terms, it gives the worst-case scenario of an algorithm’s growth rate.
 
 To calculate space complexity, we need to know the value of memory used by different types of datatype variables, which generally vary for different operating systems. Hence it is not straightforward to provide generic formulations for the spatial complexity of any algorithm.
 
-To compare two different algorithms, we have to make sure that they have been suitably implemented since poor memory management can lead to a superior algorithm under-performing as compared with the superior implementation of a less efficient algorithm. Analogous to the execution time metric, it is necessary to test the algorithms on data sets of multiple sizes for an accurate assessment of the memory usage. 
+To compare different algorithms, we have to make sure that they have been suitably implemented since poor memory management can lead to a superior algorithm under-performing as compared with the superior implementation of a less efficient algorithm. Analogous to the time metric, it is necessary to test the algorithms on data sets of multiple sizes for an accurate assessment of the memory usage. 
 
 
 % \section{Comparison  Between  DSAP  and  Streaming  K-means Phase}

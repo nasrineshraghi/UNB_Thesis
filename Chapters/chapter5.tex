@@ -142,6 +142,7 @@ In the Initialization step, the AP algorithm is applied on all data points prese
 #(1) Initialization. AP on the first time window
 from sklearn.cluster import AffinityPropagation 
 # AP library needs to be added first
+preference = np.median(euclidean_distances(W0, squared=True))
 AP = AffinityPropagation(preference, damping).fit(W0)
 cluster_centers_indices = AP.cluster_centers_indices_
 labels = AP.labels_
@@ -201,7 +202,8 @@ In the next ActivateAP step, AP is applied on all the remaining data points in t
 
 \begin{lstlisting}
 #(3) ActivateAP step for the cached points
-cachedata = np.array(cache)        
+cachedata = np.array(cache)
+preference = np.median(euclidean_distances(cachedata, squared=True))
 AP_cache = AffinityPropagation(preference, damping).fit(cachedata)
 C`m = AP_cache.cluster_centers_
 AP_cache_label = AP_cache.labels_
@@ -243,6 +245,17 @@ tq = tq[remain_centers==1]
 
 
 The next phase of the DSAP algorithm is the offline macro-cluster phase which generates final clusters by applying the AP algorithm one more time to all the micro-cluster centroids accumulated during the online phase (\texttt{AffinityPropagation().fit ($Cm$)}). In the offline phase only the summary statistics represented by the micro-clusters centroids stored during the online phase is used and not the actual data set itself. The number of micro-clusters is a lot smaller than the total number of points in the data set that it represents. The number of macro-clusters obtained in this phase are less than the number of micro-clusters as they summarize the whole period of observation and not individual windows. The pseudo-code presented in Algorithm \ref{algSDAPi} shows the outline of the entire DSAP algorithm. 
+
+\begin{lstlisting}
+# Macro Clustering Phase
+preference = np.median(euclidean_distances(Cm, squared=True))
+AP_mac = AffinityPropagation(preference, damping).fit(Cm)
+cluster_centers_indices_mac = AP_mac.cluster_centers_indices_
+cluster_centers_mac = AP_mac.cluster_centers_
+mac_label = AP_mac.labels_
+
+\end{lstlisting}
+
 
 %\todo[inline]{ALGORITM HERE} 
 %%%%%%%%%%%%%%%%%%%%% DSAP  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -692,7 +705,7 @@ Motivational and educational interventions were made during the next month perio
      \textbf{Semester Weeks} & \textbf{Timeline} & \textbf{Date} \\
      \hline\midrule
     \rowcolor{green}
-     week 12 &  Baseline  &  3/18/2019 \\
+     week 12 &  Baseline(Before intervention)  &  3/18/2019 \\
      \hline
     \rowcolor{green}
      week 13 & Baseline  & 3/25/2019 \\
@@ -722,7 +735,7 @@ Motivational and educational interventions were made during the next month perio
       week 21  & Intervention  &  5/20/2019 \\
       \hline
      \rowcolor{yellow}
-     week 22 &  Follow-up  & 5/27/2019 \\
+     week 22 &  Follow-up(After Intervention)  & 5/27/2019 \\
      \hline
      \rowcolor{yellow}
      week 23 & Follow-up  & 6/3/2019 \\
