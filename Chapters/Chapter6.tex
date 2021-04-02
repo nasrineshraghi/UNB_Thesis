@@ -78,7 +78,7 @@ PURPOSE: to know if get similar performance and quality results for the 3 weeks.
 
 
 
-
+--------------------------
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -281,17 +281,16 @@ To interpret the results from the entire week or month more clearly, one needs t
 \label{APhourly}
 \end{figure}
 
-% Monica: Remove it
-% \begin{figure}[!h]
-%     \centering
+\begin{figure}[!h]
+    \centering
    
-%     \includegraphics[width=0.5\textwidth]{image/Chapters/Chapter6/onedayhourMay1.png}\hfill
-%     \includegraphics[width=0.5\textwidth]{image/Chapters/Chapter6/1day1monday1InterventionD.png}\hfill
-%     \includegraphics[width=0.5\textwidth]{image/Chapters/Chapter6/oneweekCountApril.png}\hfill 
-%     \includegraphics[width=0.5\textwidth]{image/Chapters/Chapter6/oneweek(Monday)Hist.png}
-%     \caption{One day data distribution. First Wednesday of intervention: May 1. Top left- The total count of people at all the levels during the entire day starting at 7 a.m. Top right- The measured count of people at each level for the day. Bottom left- Histogram of the people count registered at all levels. Bottom right- Histogram of the measurements made at each level for the day }
-%     \label{1daystat}
-% \end{figure}
+    \includegraphics[width=0.5\textwidth]{image/Chapters/Chapter6/onedayhourMay1.png}\hfill
+    \includegraphics[width=0.5\textwidth]{image/Chapters/Chapter6/1day1monday1InterventionD.png}\hfill
+    \includegraphics[width=0.5\textwidth]{image/Chapters/Chapter6/oneweekCountApril.png}\hfill 
+    \includegraphics[width=0.5\textwidth]{image/Chapters/Chapter6/oneweek(Monday)Hist.png}
+    \caption{One day data distribution. First Wednesday of intervention: May 1. Top left- The total count of people at all the levels during the entire day starting at 7 a.m. Top right- The measured count of people at each level for the day. Bottom left- Histogram of the people count registered at all levels. Bottom right- Histogram of the measurements made at each level for the day }
+    \label{1daystat}
+\end{figure}
 
 The data from each of the three periods of the experiment were analyzed using the DSAP algorithm with an expiration time representing a month. The resulting micro and macro clusters along with the number of branchpoints are shown in Figure. \ref{dsap3mon} .
 
@@ -299,9 +298,9 @@ we have all these figures, but the conclusion is that the campaign has not worke
 
 \begin{figure}[!t]
     \centering
-    \includegraphics[width=.47\textwidth]{image/Chapters/Chapter6/DSAPBeforeMonthIntervention.png}
-    \includegraphics[width=.51\textwidth]{image/Chapters/Chapter6/window10H.png}
-    \includegraphics[width=.49\textwidth]{image/Chapters/Chapter6/DSAPAFTERmonthIntervention.png}
+    \includegraphics[width=.47\textwidth]{image/Chapters/Chapter6/BeforeInte1month.png}
+    \includegraphics[width=.47\textwidth]{image/Chapters/Chapter6/duringInte1month.png}
+    \includegraphics[width=.47\textwidth]{image/Chapters/Chapter6/afterInte1month.png}
     \caption{The clusters obtained by the DSAP algorithm from the e-counter data for one month periods before, during, and after intervention.}
     \label{dsap3mon}
 \end{figure}
@@ -342,38 +341,51 @@ All the micro clusters generated during the week are plotted as blue circles whi
 % \end{figure}
 
 
-\begin{figure}[h!] % "[t!]" placement specifier just for this example
-\begin{minipage}{0.45\textwidth}
-\includegraphics[width=\linewidth]{image/Chapters/Chapter6/beforeInte1week.png}
-\end{minipage}
-\begin{minipage}{0.45\textwidth}
-\includegraphics[width=\linewidth]{image/Chapters/Chapter6/streamKbefore1.png}
-\end{minipage}
-\caption{Clustering results from DSAP and streaming K-means algorithms applied on the e-counter data for the first week before intervention. damping = 0.9.} \label{fig:b}
+% \begin{figure}[h!] % "[t!]" placement specifier just for this example
+% \begin{minipage}{0.45\textwidth}
+% \includegraphics[width=\linewidth]{image/Chapters/Chapter6/beforeInte1week.png}
+% \end{minipage}
+% \begin{minipage}{0.45\textwidth}
+% \includegraphics[width=\linewidth]{image/Chapters/Chapter6/streamKbefore1.png}
+% \end{minipage}
+% \caption{Clustering results from DSAP algorithm applied on the e-counter data for the first week before, during, and after the intervention period. Window size =1 hour, damping = 0.9.} \label{fig:b}
 
-\medskip
-\begin{minipage}{0.45\textwidth}
-\includegraphics[width=\linewidth]{image/Chapters/Chapter6/duringInte1week.png}
-\end{minipage}
-\begin{minipage}{0.45\textwidth}
-\includegraphics[width=\linewidth]{image/Chapters/Chapter6/StreamKDuring.png}
-\end{minipage}
-\caption{Clustering results from DSAP and streaming K-means algorithms applied on the e-counter data for the first week of intervention 29 April- 5 May. window size =1 hour, damping = 0.9.} \label{fig:d}
+% \medskip
+% \begin{minipage}{0.45\textwidth}
+% \includegraphics[width=\linewidth]{image/Chapters/Chapter6/duringInte1week.png}
+% \end{minipage}
+% \begin{minipage}{0.45\textwidth}
+% \includegraphics[width=\linewidth]{image/Chapters/Chapter6/StreamKDuring.png}
+% \end{minipage}
+% \caption{Clustering results from DSAP and streaming K-means algorithms applied on the e-counter data for the first week of intervention 29 April- 5 May. , damping = 0.9.} \label{fig:d}
 
-\medskip
-\begin{minipage}{0.45\textwidth}
-\includegraphics[width=\linewidth]{image/Chapters/Chapter6/afterInte1week.png}
-\end{minipage}
-\begin{minipage}{0.45\textwidth}
-\includegraphics[width=\linewidth]{image/Chapters/Chapter6/StreamKAfter.png}
-\end{minipage}
-\caption{Clustering results from DSAP and streaming K-means algorithms applied on the e-counter data for the first week after intervention.  size =1 hour, damping = 0.9.} \label{fig:f}
+% \medskip
+% \begin{minipage}{0.45\textwidth}
+% \includegraphics[width=\linewidth]{image/Chapters/Chapter6/afterInte1week.png}
+% \end{minipage}
+% \begin{minipage}{0.45\textwidth}
+% \includegraphics[width=\linewidth]{image/Chapters/Chapter6/StreamKAfter.png}
+% \end{minipage}
+% \caption{Clustering results from DSAP and streaming K-means algorithms applied on the e-counter data for the first week after intervention.  size =1 hour, damping = 0.9.} \label{fig:f}
 
+% \end{figure}
+
+
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=.47\textwidth]{image/Chapters/Chapter6/beforeInte1week.png}
+    \includegraphics[width=.47\textwidth]{image/Chapters/Chapter6/duringInte1week.png}
+    \includegraphics[width=.47\textwidth]{image/Chapters/Chapter6/afterInte1week.png}
+    \caption{Clustering results from DSAP algorithm applied on the e-counter data for the first week before, during, and after the intervention period. Window size =1 hour, damping = 0.9.}
+    \label{dsap3week}
 \end{figure}
 
 
-To compare the results from these three techniques, the internal and external evaluation metrics are compiled in Table \ref{all3tab}. The significant savings in time is immediately apparent between the DSAP algorithm and AP. For a real stream the calculation time for a window is expected to be lower in DSAP as the initial window calculation that is the most time intensive step is performed once and doesn't affect the current time window. The accuracy of the two methods is still similar as reported by the other metrics. 
 
+
+To compare the results from these three techniques, the internal and external evaluation metrics are compiled in Table \ref{all3tab}. The significant savings in time is immediately apparent between the DSAP algorithm and AP. For a real stream the calculation time for a window is expected to be lower in DSAP as the initial window calculation that is the most time intensive step is performed once and doesn't affect the current time window. The accuracy of the two methods is still similar as reported by the other metrics. 
+% How calculate macro micro numb
 The memory and time advantages offered by the DSAP algorithm is obvious from the comparisons shown with the data from the first week of intervention. The people counter experiment was performed in order to find any improvement in stair usage after some measures for educational interference were taken. In order to analyze this the DSAP algorithm was applied on each of the months before, during, and after intervention using a landmark time window of 1 hours. The resulting clusters are shown in Figure \ref{dsap3mon}. It shows ..xx
 For comparison, the clusters obtained by the streaming k-means method are plotted in Figure. xx
 
@@ -381,38 +393,81 @@ For comparison, the clusters obtained by the streaming k-means method are plotte
 Table : streaming k-means for external evaluation: does not include elbow method , it will increase the memory and processing time  
 Comparison table and closing inference..xx
 
+
+
 \begin{table}[!h]
-\small
-\caption{Comparison of AP, DSAP, and Streaming K-means Evaluation Metrics for the first week before, during, and after the intervention period }
+\centering
+\caption{Comparison of AP, and DSAP Evaluation Metrics for the first week before, during, and after the intervention period }
 \label{all3tab}
 \begin{tabular}{l
->{\columncolor[HTML]{DAE8FC}}c c
->{\columncolor[HTML]{DAE8FC}}c }
+>{\columncolor[HTML]{DAE8FC}}c c}
 \hline
-\multicolumn{1}{c}{\textbf{Metrics}} & \multicolumn{1}{l}{\cellcolor[HTML]{DAE8FC}\textbf{AP Algorithm}} & \multicolumn{1}{l}{\cellcolor[HTML]{68CBD0}\textbf{DSAP}}                                    & \multicolumn{1}{l}{\cellcolor[HTML]{DAE8FC}\textbf{StreamingK-means}} \\ \hline\midrule
-\multicolumn{4}{c}{\cellcolor[HTML]{FFCCC9}\textbf{Before Intervention Week (March 18 - March 24)}}                                                                                                                                                                   \\ \hline
-Processing Time (s)                     & 27                                                      & \cellcolor[HTML]{68CBD0}0.6                                                                  & 0.85                                                                  \\ \hline
-Memory Consumption (MB)              & 536                                                     & \cellcolor[HTML]{68CBD0}250                                                                  & 313                                                                   \\ \hline
-Number of Clusters                   & 9                                                       & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 11\\ macro =  5\end{tabular}      & \begin{tabular}[c]{@{}c@{}}micro= \\ macro=7\end{tabular}             \\ \hline
-Silhouette Index                     & 0.25                                                     & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 0.49\\ macro = 0.5\end{tabular}   & \begin{tabular}[c]{@{}c@{}}micro = \\ macro = 0.6\end{tabular}        \\ \hline
-Caliński-Harabasz Index              & 400                                                     & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro =  2308\\ macro = 87\end{tabular} & \begin{tabular}[c]{@{}c@{}}micro = \\ macro = 150\end{tabular}        \\ \hline
-Davies-Bouldin Index                 & 0.8                                                     & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 0.93\\ macro = 0.5\end{tabular}   & \begin{tabular}[c]{@{}c@{}}micro = \\ macro = 0.19\end{tabular}       \\ \hline
-\multicolumn{4}{c}{\cellcolor[HTML]{FFCCC9}\textbf{Intervention Week (April 29 - May 5)}}                                                                                                                                                                            \\ \hline
-Processing Time (s)                      & 26                                                      & \cellcolor[HTML]{68CBD0}0.6                                                                  & 0.45                                                                  \\ \hline
-Memory Consumption (MB)              & 519                                                     & \cellcolor[HTML]{68CBD0}256                                                                  & 230                                                                   \\ \hline
-Number of Clusters                   & 14                                                      & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro =  14\\ macro = 7\end{tabular}      & \begin{tabular}[c]{@{}c@{}}micro = \\ macro = 6\end{tabular}          \\ \hline
-Silhouette Index                     & 0.4                                                     & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 0.5\\ macro = 0.45\end{tabular}   & \begin{tabular}[c]{@{}c@{}}micro = \\ macro = 0.63\end{tabular}       \\ \hline
-Caliński-Harabasz Index              & 1421                                                    & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 1974\\ macro = 35\end{tabular}    & \begin{tabular}[c]{@{}c@{}}micro = \\ macro = 100\end{tabular}        \\ \hline
-Davies-Bouldin Index                 & 0.5                                                     & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 2.11\\ macro = 0.7\end{tabular}   & \begin{tabular}[c]{@{}c@{}}micro = \\ macro = 0.31\end{tabular}       \\ \hline
-\multicolumn{4}{c}{\cellcolor[HTML]{FFCCC9}\textbf{After Intervention Week (May 27 - June 2)}}                                                                                                                                                                        \\ \hline
-Processing Time (s)                     & 20                                                      & \cellcolor[HTML]{68CBD0}0.6                                                                  & 0.8                                                                   \\ \hline
-Memory Consumption (MB)              & 541                                                     & \cellcolor[HTML]{68CBD0}260                                                                  & 224                                                                   \\ \hline
-Number of Clusters                   & 19                                                      & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 14\\ macro = 6\end{tabular}       & \begin{tabular}[c]{@{}c@{}}micro = \\ macro = 6\end{tabular}          \\ \hline
-Silhouette Index                     & 0.14                                                    & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 0.58\\ macro = 0.4\end{tabular}   & \begin{tabular}[c]{@{}c@{}}micro = \\ macro = 0.61\end{tabular}       \\ \hline
-Caliński-Harabasz Index              & 278                                                     & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 3153\\ macro = 80\end{tabular}    & \begin{tabular}[c]{@{}c@{}}micro = \\ macro = 80\end{tabular}         \\ \hline
-Davies-Bouldin Index                 & 0.64                                                    & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 0.67\\ macro = 0.5\end{tabular}   & \begin{tabular}[c]{@{}c@{}}micro = \\ macro = 0.42\end{tabular}       \\ \hline\midrule
+\multicolumn{1}{c}{\textbf{Metrics}} & \textbf{AP  Algorithm} & \cellcolor[HTML]{68CBD0}\textbf{DSAP  Algorithm}                                           \\ \hline\midrule
+\multicolumn{3}{c}{\cellcolor[HTML]{FFCCC9}\textbf{Before Intervention Week (March 18 - March 24)}}                                                        \\ \hline
+Processing Time (s)                  & 28                     & \cellcolor[HTML]{68CBD0}0.6                                                                \\ \hline
+Memory Consumption (MB)              & 536                    & \cellcolor[HTML]{68CBD0}250                                                                \\ \hline
+Number of Clusters                   & 9                      & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 11\\ macro =  5\end{tabular}    \\ \hline
+Silhouette Index                     & 0.3                    & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 0.5\\ macro = 0.5\end{tabular}  \\ \hline
+Caliński-Harabasz Index              & 1009                   & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro =  2308\\ macro = 87\end{tabular} \\ \hline
+Davies-Bouldin Index                 & 0.5                    & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 0.9\\ macro = 0.5\end{tabular}  \\ \hline
+\multicolumn{3}{c}{\cellcolor[HTML]{FFCCC9}\textbf{Intervention Week (April 29 - May 5)}}                                                                  \\ \hline
+Processing Time (s)                  & 26                     & \cellcolor[HTML]{68CBD0}0.6                                                                \\ \hline
+Memory Consumption (MB)              & 519                    & \cellcolor[HTML]{68CBD0}256                                                                \\ \hline
+Number of Clusters                   & 14                     & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro =  14\\ macro = 7\end{tabular}    \\ \hline
+Silhouette Index                     & 0.4                    & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 0.5\\ macro = 0.5\end{tabular}  \\ \hline
+Caliński-Harabasz Index              & 1421                   & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 1974\\ macro = 35\end{tabular}  \\ \hline
+Davies-Bouldin Index                 & 0.5                    & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 2.1\\ macro = 0.7\end{tabular}  \\ \hline
+\multicolumn{3}{c}{\cellcolor[HTML]{FFCCC9}\textbf{After Intervention Week (May 27 - June 2)}}                                                             \\ \hline
+Processing Time (s)                  & 26                     & \cellcolor[HTML]{68CBD0}0.6                                                                \\ \hline
+Memory Consumption (MB)              & 541                    & \cellcolor[HTML]{68CBD0}260                                                                \\ \hline
+Number of Clusters                   & 12                     & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 14\\ macro = 5\end{tabular}     \\ \hline
+Silhouette Index                     & 0.4                    & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 0.6\\ macro = 0.5\end{tabular}  \\ \hline
+Caliński-Harabasz Index              & 1278                   & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 3153\\ macro = 80\end{tabular}  \\ \hline
+Davies-Bouldin Index                 & 0.5                    & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 0.7\\ macro = 0.5\end{tabular}  \\ \hline\midrule
 \end{tabular}
 \end{table}
+
+
+
+
+
+
+
+
+
+
+% \begin{table}[!h]
+% \small
+% \caption{Comparison of AP, DSAP, and Streaming K-means Evaluation Metrics for the first week before, during, and after the intervention period }
+% \label{all3tab}
+% \begin{tabular}{l
+% >{\columncolor[HTML]{DAE8FC}}c c
+% >{\columncolor[HTML]{DAE8FC}}c }
+% \hline
+% \multicolumn{1}{c}{\textbf{Metrics}} & \multicolumn{1}{l}{\cellcolor[HTML]{DAE8FC}\textbf{AP Algorithm}} & \multicolumn{1}{l}{\cellcolor[HTML]{68CBD0}\textbf{DSAP Algorithm}}     \\ \hline\midrule
+% \multicolumn{4}{c}{\cellcolor[HTML]{FFCCC9}\textbf{Before Intervention Week (March 18 - March 24)}}                                                                                                                                                                   \\ \hline
+% Processing Time (s)                     & 28                                                      & \cellcolor[HTML]{68CBD0}0.6                                                                  & 0.85                                                                  \\ \hline
+% Memory Consumption (MB)              & 536                                                     & \cellcolor[HTML]{68CBD0}250                                                                  & 313                                                                   \\ \hline
+% Number of Clusters                   & 9                                                       & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 11\\ macro =  5\end{tabular}      & \begin{tabular}[c]{@{}c@{}}micro= \\ macro=7\end{tabular}             \\ \hline
+% Silhouette Index                     & 0.25                                                     & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 0.49\\ macro = 0.5\end{tabular}   & \begin{tabular}[c]{@{}c@{}}micro = \\ macro = 0.6\end{tabular}        \\ \hline
+% Caliński-Harabasz Index              & 1009                                                     & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro =  2308\\ macro = 87\end{tabular} & \begin{tabular}[c]{@{}c@{}}micro = \\ macro = 150\end{tabular}        \\ \hline
+% Davies-Bouldin Index                 & 0.8                                                     & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 0.93\\ macro = 0.5\end{tabular}   & \begin{tabular}[c]{@{}c@{}}micro = \\ macro = 0.19\end{tabular}       \\ \hline
+% \multicolumn{4}{c}{\cellcolor[HTML]{FFCCC9}\textbf{Intervention Week (April 29 - May 5)}}                                                                                                                                                                            \\ \hline
+% Processing Time (s)                      & 26                                                      & \cellcolor[HTML]{68CBD0}0.6                                                                  & 0.45                                                                  \\ \hline
+% Memory Consumption (MB)              & 519                                                     & \cellcolor[HTML]{68CBD0}256                                                                  & 230                                                                   \\ \hline
+% Number of Clusters                   & 14                                                      & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro =  14\\ macro = 7\end{tabular}      & \begin{tabular}[c]{@{}c@{}}micro = \\ macro = 6\end{tabular}          \\ \hline
+% Silhouette Index                     & 0.4                                                     & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 0.5\\ macro = 0.45\end{tabular}   & \begin{tabular}[c]{@{}c@{}}micro = \\ macro = 0.63\end{tabular}       \\ \hline
+% Caliński-Harabasz Index              & 1421                                                    & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 1974\\ macro = 35\end{tabular}    & \begin{tabular}[c]{@{}c@{}}micro = \\ macro = 100\end{tabular}        \\ \hline
+% Davies-Bouldin Index                 & 0.5                                                     & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 2.11\\ macro = 0.7\end{tabular}   & \begin{tabular}[c]{@{}c@{}}micro = \\ macro = 0.31\end{tabular}       \\ \hline
+% \multicolumn{4}{c}{\cellcolor[HTML]{FFCCC9}\textbf{After Intervention Week (May 27 - June 2)}}                                                                                                                                                                        \\ \hline
+% Processing Time (s)                     & 26                                                      & \cellcolor[HTML]{68CBD0}0.6                                                                  & 0.8                                                                   \\ \hline
+% Memory Consumption (MB)              & 541                                                     & \cellcolor[HTML]{68CBD0}260                                                                  & 224                                                                   \\ \hline
+% Number of Clusters                   & 12                                                      & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 14\\ macro = 5\end{tabular}       & \begin{tabular}[c]{@{}c@{}}micro = \\ macro = 6\end{tabular}          \\ \hline
+% Silhouette Index                     & 0.4                                                    & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 0.58\\ macro = 0.4\end{tabular}   & \begin{tabular}[c]{@{}c@{}}micro = \\ macro = 0.61\end{tabular}       \\ \hline
+% Caliński-Harabasz Index              & 1278                                                     & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 3153\\ macro = 80\end{tabular}    & \begin{tabular}[c]{@{}c@{}}micro = \\ macro = 80\end{tabular}         \\ \hline
+% Davies-Bouldin Index                 & 0.64                                                    & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 0.67\\ macro = 0.5\end{tabular}   & \begin{tabular}[c]{@{}c@{}}micro = \\ macro = 0.42\end{tabular}       \\ \hline\midrule
+% \end{tabular}
+% \end{table}
 
 
 The performance and scaling of clustering algorithms can be related to the implementation of the underlying algorithm. How well an algorithm is written and how it implements it and access the data structures can have a large impact on the performance of the algorithms. The DSAP algorithm was run for various dataset sizes in order to quantify it's performance as the size of the data/window changes. Several runs are performed in order to obtain an average performance at each window size.
@@ -837,7 +892,8 @@ The performance and scaling of clustering algorithms can be related to the imple
 
 \section{Occupant Behaviour Experiment}
 
-This experiment is located at three buildings of at the UJI university campus with three buildings and four to five floors. In this scenario, buildings are named with order from one to three which related to campus building T1, TD and TC which TC is the only building with five floors as shown in Figure \ref{nama} (a) and the 3D plot of all levels and buildings are plotted in Figure \ref{nama} (b), which colors are show different floor in all buildings. 
+This experiment is located at the UJI university campus with three buildings and four to five floors. The most relevant parameters for current study are the location of people or spaceID and people's phone corresponding the location of each person. 
+In this scenario, buildings are named with order from one to three which related to campus building T1, TD and TC which TC is the only building with five floors as shown in Figure \ref{nama} (a) and the 3D plot of all levels and buildings are plotted in Figure \ref{nama} (b), which colors are show different floor in all buildings. 
 
 \begin{figure}[!h]
     \centering
