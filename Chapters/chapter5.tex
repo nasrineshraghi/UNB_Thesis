@@ -173,7 +173,7 @@ tq = tq.astype(int)
 
 The output of the initialization step are a set of micro-clusters with centroids ($C_m$) and an initial threshold value ($\epsilon_{W_0}$).
 
-The next step of the online micro-cluster phase is comparison. For the following windows from $W_1$ to $W_N$, all data points in each window are compared with the existing micro-clusters. The Euclidean distance of each new point $x_i$ in the window to its closest micro-cluster centroid is calculated. If the distance is less than the threshold $\epsilon_{W_j}$, $x_i$ is added to the micro-clusters and the timestamp associated to those specific centroids needs to be updated. Otherwise, it is kept temporarily in the cache until all data points in the window are being evaluated. 
+The next step of the online micro-cluster phase is comparison. For the following windows from $W_1$ to $W_N$, all data points in each window are compared with the existing micro-clusters. The Euclidean distance of each new point $x_i$ in the window to its closest micro-cluster centroid is calculated. If the distance is less than the threshold $\epsilon_{W_j}$, $x_i$ is added to the micro-clusters and the timestamp associated to those specific centroids needs to be updated. Otherwise, it is kept temporarily in the time-window repository until all data points in the window are being evaluated. 
 
 \begin{lstlisting}
 #(2) Comparison step.
@@ -181,7 +181,7 @@ The next step of the online micro-cluster phase is comparison. For the following
 windowsize = getWindowSize(start_time, L)
 start_time = start_time + L
 indx = 0
-cache = []
+repository = []
 for i in range(windowSize):
     d = distance.cdist(Cm,x,'Euclidean')
     ind = np.argmin(d)    
@@ -191,37 +191,37 @@ for i in range(windowSize):
          #Updating time associated to centroid met in this step
          tq[ind] = start_time
     else:
-        cache.append(x[i])       
+        repository.append(x[i])       
         indx = indx +1
 \end{lstlisting}
 
 %At the end, the AP will apply again to find new micro-clusters out of these data. If there is no data point is in the cache, the next window will come in the model.
 
-In the next ActivateAP step, AP is applied on all the remaining data points in the cache whose distance from the centroids are more than the adaptive threshold $\epsilon_{W_j}$ for the current time window. In the end, clusters obtained from this step are added to the updated micro-clusters.  
+In the next ActivateAP step, AP is applied on all the remaining data points in the time-window repository whose distance from the centroids are more than the adaptive threshold $\epsilon_{W_j}$ for the current time window. In the end, clusters obtained from this step are added to the updated micro-clusters.  
 
 
 \begin{lstlisting}
-#(3) ActivateAP step for the cached points
-cachedata = np.array(cache)
-preference = np.median(euclidean_distances(cachedata, squared=True))
-AP_cache = AffinityPropagation(preference, damping).fit(cachedata)
-C`m = AP_cache.cluster_centers_
-AP_cache_label = AP_cache.labels_
-X = np.concatenate((X , np.reshape(cachedata[i,:],(-1,2))))
-X_label = np.concatenate((X_label , np.reshape(AP_cache_label,(-1))))
+#(3) ActivateAP step for the time-window repository points
+repositorydata = np.array(repository)
+preference = np.median(euclidean_distances(repositorydata, squared=True))
+AP_crepository = AffinityPropagation(preference, damping).fit(crepositorydata)
+C`m = AP_repository.cluster_centers_
+AP_repository_label = AP_repository.labels_
+X = np.concatenate((X , np.reshape(repositorydata[i,:],(-1,2))))
+X_label = np.concatenate((X_label , np.reshape(AP_repository_label,(-1))))
 #C`m is the Cm prime, new micro-clusters
 Cm = np.append(C`m, Cm, axis = 0)
 # Assign timestamp to new micro-clusters
-cache_tq = np.ones(len(C`m))*start_time
-cache_tq = cache_tq.astype(int)
-tq = np.concatenate((tq, cache_tq), axis=0)
+repository_tq = np.ones(len(C`m))*start_time
+repository_tq = repository_tq.astype(int)
+tq = np.concatenate((tq, repository_tq), axis=0)
 \end{lstlisting}
 
 
 As new micro-clusters are generated at the end of the ActivateAP step, the threshold value needs to be recalculated based on the updated micro-clusters. Once again the adaptive threshold function is called upon to estimate new threshold values. This value is compared with the threshold $\epsilon_{W_j}$. If the value is greater than $\epsilon_{W_j}$ then a average of the two thresholds is selected as the new threshold otherwise the threshold remains unchanged. The decision to choose the average of the two numbers was taken to ensure that the threshold does not blow up in size due to a sparse cluster or noise.
 \begin{lstlisting}
 # Update the threshold value.
-epsilonC`m = getAdaptiveThreshold(C`m, cachedata)
+epsilonC`m = getAdaptiveThreshold(C`m, repositorydata)
 if epsilon < epsilonC`m:
     epsilon = (epsilonC`m + epsilon)/2  
 \end{lstlisting}
@@ -324,7 +324,7 @@ mac_label = AP_mac.labels_
         
         }
         {
-        \STATE $cache \leftarrow{x_i} $ 
+        \STATE $repository \leftarrow{x_i} $ 
         
         %\STATE $W_i \xrightarrow \mathrm{C_{m0}}$\;
         }
@@ -335,17 +335,17 @@ mac_label = AP_mac.labels_
         %  {                                  
          \SetKwFunction{FIROC}{AP}          
          \SetKwProg{Fn}{Function}{}{}
-         \Fn{\FIROC{Cache}}{}
+         \Fn{\FIROC{repository}}{}
          \KwResult{new micro-clusters:$[C'm]$\\
-                $\epsilon_{W_J}'$ = getAdaptiveThreshold($C'm,cache$)\\
-                $tq_{cache} = start\_time$
+                $\epsilon_{W_J}'$ = getAdaptiveThreshold($C'm,repository$)\\
+                $tq_{repository} = start\_time$
                 }
 
         %  }
         }
 
         Update micro\_clusters: $Cm = Cm + C'm$ \\
-        Updated timestamp $tq = tq + tq_{cache}$\\
+        Updated timestamp $tq = tq + tq_{repository}$\\
         Update Threshold : $\epsilon_{W_j}$
         
         
@@ -999,7 +999,7 @@ The UJIIndoorLoc data set generated includes three buildings with four or more f
 
 \begin{table}[!h]{}
 \centering
-\caption{ List of attributes of the UJIIndoorLoc dataset.}
+\caption{ List of attributes of the UJIIndoorLoc data set.}
 \small
     \begin{tabular}{ p{4cm} p{4.5cm} p{4.5cm} }
     \hline
@@ -1096,7 +1096,7 @@ A total of nineteen users with twenty-five different phones participated in the 
 \end{table}
 
 
-The data was collected From May to October 2013 as shown in Table \ref{udate}. The data collection duration was divided in two phases: training and validation. As shown with blue color in the table \ref{udate}, the training data was collected from 30th of May till 20th of June and the rest of the validation data were measured three months later. The number of data points show the distribution of measurements during each day. The data collection happened on 15 discrete days. The day when the most amount of data was collected was the 20th of June. This single day accounts for more than half the points in the entire dataset. Only the training dataset was used in this study as in the validation dataset the spaceid feature is not captured since this was originally meant to test the accuracy of localization from just the RSSI and WAP values.
+The data was collected From May to October 2013 as shown in Table \ref{udate}. The data collection duration was divided in two phases: training and validation. As shown with blue color in the table \ref{udate}, the training data was collected from 30th of May till 20th of June and the rest of the validation data were measured three months later. The number of data points show the distribution of measurements during each day. The data collection happened on 15 discrete days. The day when the most amount of data was collected was the 20th of June. This single day accounts for more than half the points in the entire data set. Only the training data set was used in this study as in the validation data set the spaceid feature is not captured since this was originally meant to test the accuracy of localization from just the RSSI and WAP values.
 %Two Android applications have been used to create the database by applying reference map services that are published in the ArcGIS. These services include geographic information inside the building. By using these services, the applications created show the maps to improve the user localization.
 
 
@@ -1179,11 +1179,11 @@ The data was collected From May to October 2013 as shown in Table \ref{udate}. T
 % \item\textbf{Data Pre-processing:}
 A set of pre-processing tasks were performed to improve the quality of the data set and make the measurements suitable for cluster analysis.
 %with the project scope and removed from the dataset.
-The timestamp was recorded in a linux-based time format, such as 1371714467 which corresponds to 06/20/2013 at 7:47am. All the time values were converted to the standard date-time format (dd/mm/yy hh:mm:ss) in Python and added as a new feature called Datetime in column 530 of the dataset.
+The timestamp was recorded in a linux-based time format, such as 1371714467 which corresponds to 06/20/2013 at 7:47am. All the time values were converted to the standard date-time format (dd/mm/yy hh:mm:ss) in Python and added as a new feature called Datetime in column 530 of the data set.
 
-The feature SpaceID contains values starting from 1 to 250, but there were gaps between numbers 50-100 and 150-200. These gaps were removed and the updated SpaceID numbers range from 1 to 122 now. During the validation part of the experiment a subset of the phones (PhoneID = 0,2,4,5,9,12,15,20, and 21) were not used. The remaining Phoneids were renamed to make the records sequential just like the SpaceIDs. The space identifiers, the SpaceID, BuildingID, Floor, and relative position together provide a unique label for a location. A new feature is added to the dataset in column 531 called SPACEID, that contains a unique spatial identifier for each location. The SPACEID was created by combining the space identifiers and then giving them a sequential numbers from 0-732.
+The feature SpaceID contains values starting from 1 to 250, but there were gaps between numbers 50-100 and 150-200. These gaps were removed and the updated SpaceID numbers range from 1 to 122 now. During the validation part of the experiment a subset of the phones (PhoneID = 0,2,4,5,9,12,15,20, and 21) were not used. The remaining Phoneids were renamed to make the records sequential just like the SpaceIDs. The space identifiers, the SpaceID, BuildingID, Floor, and relative position together provide a unique label for a location. A new feature is added to the data set in column 531 called SPACEID, that contains a unique spatial identifier for each location. The SPACEID was created by combining the space identifiers and then giving them a sequential numbers from 0-732.
 
-Two numerical variables were selected: the SPACEID and the Phone ID for this study as these provide the necessary information regarding the people present at any location with time. Finally, in order to remove bias due to the difference in range of the two variables the data was normalized. The normalization process is applied one level before clustering with the minmaxscaler normalization process under the preprocessing library. All these preceding steps provide a target dataset ready to be used by the stream simulation and the two-phase clustering algorithms. 
+Two numerical variables were selected: the SPACEID and the Phone ID for this study as these provide the necessary information regarding the people present at any location with time. Finally, in order to remove bias due to the difference in range of the two variables the data was normalized. The normalization process is applied one level before clustering with the minmaxscaler normalization process under the preprocessing library. All these preceding steps provide a target data set ready to be used by the stream simulation and the two-phase clustering algorithms. 
 
 
 

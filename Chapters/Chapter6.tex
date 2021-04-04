@@ -82,7 +82,8 @@ PURPOSE: to know if get similar performance and quality results for the 3 weeks.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-In this chapter, data from the e-counter and WiFi Indoor Localization experiments are analyzed using traditional and streaming clustering algorithms to gain insights into the measurements. We demonstrate the strengths and weaknesses of AP and discuss how DSAP provides potential solutions to these. Data stream clustering results are also compared with the results from the streaming K-means algorithm. 
+In this chapter, data from the e-counter and WiFi Indoor Localization experiments are analyzed using traditional and streaming clustering algorithms to gain insights into the measurements. We demonstrate the strengths and weaknesses of AP and discuss how DSAP provides potential solutions to these.
+% Data stream clustering results are also compared with the results from the streaming K-means algorithm. 
 
 Both the experiments provide information regarding occupant's behaviour and movement within a confined space. The details of the experiments and the analysis tools have already been discussed in the last two Chapters. In the following sections, the data sets will be explained in detail, and the patterns identified by the clustering methods will be analyzed.
 
@@ -92,7 +93,7 @@ Both the experiments provide information regarding occupant's behaviour and move
 
 The people counter sensors located at the stairs of the Tonsley building log several parameters. The most relevant parameters for the current study are the location of the sensors and the number of people passing through sensors. These accurate integer-valued parameters not only indicate the number of people occupying any particular floor but also accurately determine the number of people using the stairs in any particular direction.
 
-The entire dataset split by the direction of stair use represents daily activity based on the number of people is shown in Figure \ref{updown}. The three periods of before intervention, intervention, and after intervention are highlighted  purple, blue, and yellow shaded regions. It is quite apparent that more people prefer taking the stairs to go down rather than up. An expected periodic lower occupancy is also observed on the weekends. The mid-semester break from April 15-28 was excluded from the study as the measurements made during that period represented anomalous behavior.
+The entire dataset split by the direction of stair use represents daily activity based on the number of people is shown in Figure \ref{updown}. The three periods of before intervention, intervention, and after intervention are highlighted purple, blue, and yellow shaded regions. It is quite apparent that more people prefer taking the stairs to go down rather than up. An expected periodic lower occupancy is also observed on the weekends. The mid-semester break from April 15-28 was excluded from the study as the measurements made during that period represented anomalous behavior.
 
 \begin{figure}[b]
     \includegraphics[width=0.5\textwidth]{image/up.png}%\hfill
@@ -184,18 +185,18 @@ The typical daily usage pattern can be grouped into four zones as shown in the r
 \subsection{Insights from Cluster analysis}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The e-counter dataset is an example of spatially distributed measurements that is typically a continuous set of measurements needing continuous interpretation. As the size of the data set increases with time, it soon becomes prohibitively expensive to analyze the entire data at a time. To find patterns in the data, datamining techniques like clustering are frequently employed. The e-counter experiment was performed at the Tonsley building in Flinders university to identify if any change in people's behavior was observed due to active educational interventions that were made over a period of a month. In total more than three months of data was collected during the experiment. As part of the efforts to build a continuous monitoring system at the University of New Brunswick the robust unsupervised clustering technique of affinity propagation (AP) was chosen.
+The e-counter dataset is an example of spatially distributed measurements that is typically a continuous set of measurements needing continuous interpretation. As the size of the data set increases with time, it soon becomes prohibitively expensive to analyze the entire data at a time. To find patterns in the data, data mining techniques like clustering are frequently employed. The e-counter experiment was performed at the Tonsley building in Flinders university to identify if any change in people's behavior was observed due to active educational interventions made over a month. In total, more than three months of data were collected during the experiment. As part of the efforts to build a continuous monitoring system at the University of New Brunswick, the robust unsupervised clustering technique of affinity propagation (AP) was chosen.
 
-The computer used in this study could only handle data for a week from the e-counter dataset while performing the calculations required for the AP algorithm. The standard K-means algorithm is a much lighter algorithm and hence can handle the entire data set, but the cluster centers produced by K-means do not necessarily coincide with one of the data points that correspond to an actual physical location. Hence due to the difficulty in physical interpretation of the data, the K-means algorithm was not chosen as the primary tool for data analysis. Another popular way to analyze large datasets is by treating the data as a continuous stream. The development of the data-streaming affinity propagation algorithm (DSAP) algorithm was motivated by this purpose. Although many stream clustering algorithms have been reported in the literature, but the tuning of the number of hyper-parameters required for each algorithm is not a trivial issue. The simple streaming K-means algorithms, for example requires an automatic estimation of the number of clusters which can not be easily determined in a changing stream environment. In light of these issues, the DSAP algorithm was preferred for this study. But, for the sake of completeness and validation, the results from DSAP are compared with those from AP, and streaming K-means algorithms.   
+The computer used in this study could only handle data for a week from the e-counter dataset while performing the calculations required for the AP algorithm. The standard K-means algorithm is a much lighter algorithm and hence can handle the entire data set, but the cluster centers produced by K-means do not necessarily coincide with one of the data points that correspond to an actual physical location. Hence due to the difficulty in the physical interpretation of the data, the K-means algorithm was not chosen as the primary tool for data analysis. Another popular way to analyze large datasets is by treating the data as a continuous stream. The development of the data-streaming affinity propagation algorithm (DSAP) algorithm was motivated by this purpose. Although many stream clustering algorithms have been reported in the literature, but the tuning of the number of hyper-parameters required for each algorithm is not a trivial issue. The simple streaming K-means algorithms, for example, require an automatic estimation of the number of clusters that can not be easily determined in a changing stream environment. In light of these issues, the DSAP algorithm was preferred for this study. But, for the sake of completeness and validation, the results from DSAP are compared with those from AP algorithm.   
     
-Figure \ref{oneweek} shows the clusters generated by the AP algorithm for the first week of each of the three months of observation. The first week of the control month before the intervention period was 18 March - 24 March, 29 April - 5 May was the first week of intervention, and the first week after the removal of the educational aids was on 27 May - 2 June. The hyperparameter damping factor  chosen for the AP algorithm had the same value of 0.96 for these three weeks. But the other hyperparameter, preference was varied as that depends on the similarity matrix (before = -50, during = -4, and after= -7).
+Figure \ref{oneweek} shows the clusters generated by the AP algorithm for the first week of each of the three months of observation. The first week of the control month before the intervention period was 18 March - 24 March, 29 April - 5 May was the first week of intervention, and the first week after the removal of the educational aids was on 27 May - 2 June. The hyperparameter damping factor chosen for the AP algorithm had the same value of 0.9 for these three weeks. But the other hyperparameter, preference was varied as that depends on the similarity matrix.
 
 AP clustering algorithm, generally divided the data into clusters with high frequency of low count values and the few instances of high activity for all the three months. The cluster centres in Figure \ref{oneweek} are denoted by large colored circles. The numbers associated with each cluster is mentioned right next to it. All the branch points of each clusters are represented by points of the same color as the cluster centre. The number of points represented by each cluster help in discerning between the clusters denoting regular behavior from the potentially anomalous clusters that would have remained hidden otherwise. 
 
 \begin{figure}[!t]
 \centering
-\includegraphics[width=.41\textwidth]{image/Chapters/Chapter6/ApFirstWeekBeforeInt.png}
-    \includegraphics[width=.49\textwidth]{image/Chapters/Chapter6/ApFirstWeekIntervention1.png}\hfill\centering
+\includegraphics[width=.49\textwidth]{image/Chapters/Chapter6/ApFirstWeekBeforeInt.png}
+    \includegraphics[width=.49\textwidth]{image/Chapters/Chapter6/ApFirstWeekIntervention.png}\hfill\centering
     \includegraphics[width=.5\textwidth]{image/Chapters/Chapter6/ApFirstWeekAfterInt.png}
     \\[\smallskipamount]
 \caption{AP algorithm is applied on e-counter data for one week before, one week during and one week after intervention month. } 
@@ -206,7 +207,7 @@ AP clustering algorithm, generally divided the data into clusters with high freq
 Additional insights into these clusters can be deduced by looking at some statistics for each of the three weeks as shown in Figures. \ref{distbefore} - \ref{distafter}. Each of these three figures shows four plots that show the following features starting clockwise: top-left) hourly stair usage vs measured counts of people passing through, top-right) stair usage by each level vs measured count of people passing through. At the top of this plot the total number of people passing through each level is also provided, bottom right) Histogram of the measurements by each level, and bottom left) The number of instances of number of people recorded by the e-counters.
 
 
-Comparing Figures. \ref{oneweek} and \ref{distbefore}, we can confirm that the cluster centres with the most numerous points at levels 2-1, 4-3 north, 5-4 north, and 5-4 south  with value of 1 count are indeed consistent. The high count value of 30 measured around noon as seen in the top left plot was recorded only once (bottom left) at level 4-3 south (top right and Figure. \ref{oneweek}). Other general observations can be made for this week, for example the highest number of people (top right) and the highest frequency of measurements (bottom right) were made at level 2-1. Curiously a second peak in activity is seen around 15:00-16:00 with count values ranging from 10-15. This peak is statistically significant as many of these count values are recorded more than twice going as high as 10 times as seen in the bottom left plot of Figure \ref{distbefore}. This peak was also captured by the AP algorithm as part of the moderate sized cluster geographically placed in the middle at level 4-3 south as shown in figure \ref{oneweek}.
+Comparing Figures. \ref{oneweek} and \ref{distbefore} for the duration before intervention, we can confirm that the cluster centres with the most numerous points at levels 2-1, 3-2 central, 4-3 south, and 5-4 south with value of 1 count are indeed consistent. The high count value of 30 measured around noon as seen in the top left plot was recorded only once (bottom left) at level 4-3 south (top right and Figure. \ref{oneweek}). Figure \ref{distbefore} button left has two peaks which is shown in the AP result on level 4-3 south. Other general observations can be made for this week, for example the highest number of people (top right) and the highest frequency of measurements (bottom right) were made at level 2-1. Curiously a second peak in activity is seen around 15:00-16:00 with count values ranging from 10-15. This peak is statistically significant as many of these count values are recorded more than twice going as high as 10 times as seen in the bottom left plot of Figure \ref{distbefore}. This peak was also captured by the AP algorithm as part of the moderate sized cluster geographically placed in the middle at level 4-3 south as shown in figure \ref{oneweek}.
 \begin{figure}[t]
     \centering
       \includegraphics[width=0.42\textwidth]{image/Chapters/Chapter6/oneWeekBeforehourly.png}%\hfill
@@ -235,17 +236,17 @@ Comparing Figures. \ref{oneweek} and \ref{distbefore}, we can confirm that the c
     \includegraphics[width=0.47\textwidth]{image/Chapters/Chapter6/oneweekCountDistributonAfter.png}%\hfill 
     \includegraphics[width=0.47\textwidth]{image/Chapters/Chapter6/oneweekafterPositionDistributon.png}
     \caption{One week data distribution. First week after intervention from May 27- June 2.}
-    \label{distafter}
+    \label{1dayact}
 \end{figure}
 
-The first week of intervention from April 29- May 5 contrary to expectations recorded lower overall activity during the week as shown in Figure \ref{distduring}. This pattern is consistent for almost all the weeks during the intervention month. The month before the intervention period consistently recorded higher activity as compared with the intervention month excluding the anomalous day of May 10th as shown earlier in Figure \ref{3mon}. This week recorded peak activity around noon and the frequency of recorded counts reduced exponentially from a single count to a high of 12 counts that was recorded only once. The high density clusters corresponding to this week have their cluster centers located at levels 2-1, 3-2 central, and 5-4 south which are the levels with the highest frequency and number of people. The first week after the end of the intervention period has statistics similar to the intervention week. The frequency of recorded values as shown in the bottom right of Figure \ref{distafter} have similar features like the histogram of the week during intervention. The peak around noon is a lot more spread across hours as shown in the bottom left and top left plots of the Figure.
+The first week of intervention from April 29- May 5 contrary to expectations recorded lower overall activity during the week as shown in Figure \ref{distduring}. This pattern is consistent for almost all the weeks during the intervention month. The month before the intervention period consistently recorded higher activity as compared with the intervention month excluding the anomalous day of May 10th as shown earlier in Figure \ref{3mon}. This week recorded peak activity around noon and the frequency of recorded counts reduced exponentially from a single count to a high of 12 counts that was recorded only once. The high density clusters corresponding to this week have their cluster centers located at levels 2-1, 3-2 central, 4-3 south, and 5-4 south which are the levels with the highest frequency and number of people. The first week after the end of the intervention period has statistics similar to the intervention week. The frequency of recorded values as shown in the bottom right of Figure \ref{distafter} have similar features like the histogram of the week during intervention. The peak around noon is a lot more spread across hours as shown in the bottom left and top left plots of the Figure.
 
-
+The first week after intervention from May 27-June 2 has the same pattern for level 4-3 north and  5-4 north as shown in Figure \ref{distafter} bottom left. Additionally, during this week, the number of people moving in level 4-3 south and 5-4 south are almost identical. In this period, the number of people for levels 2-1 and 3-2 are very high as similar to the previous weeks. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{DSAP cluster evolution}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-In order to analyze streaming data or large datasets, batch processing or stream clustering techniques are generally applied. A one hour landmark time window was chosen for the DSAP algorithm to analyze the e-counter dataset from the behavioral intervention experiment DSAP streaming algorithm. It was found that using a one hour window gave optimum cluster values since this guaranteed that the first time window has enough number of points to initialize the process stream clustering process. The hyper-parameters for the AP in the DSAP algorithm are kept fixed at the default values except for the preference value which was equal to the mean of the similarity matrix. The damping value was kept at 0.99 for the entire experiment.The expiration value was varied from 1 to values corresponding to a week or month depending on the length of the dataset under analysis.% 163.
+In order to analyze streaming data or large datasets, batch processing or stream clustering techniques are generally applied. A one hour landmark time window was chosen for the DSAP algorithm to analyze the e-counter dataset from the behavioral intervention experiment DSAP streaming algorithm. It was found that using a one hour window gave optimum cluster values since this guaranteed that the first time window has enough number of points to initialize the process stream clustering process. The hyper-parameters for the AP in the DSAP algorithm are kept fixed at the default values except for the preference value which was equal to the median of the similarity matrix. The damping value was kept at 0.9 for the entire experiment.The expiration value was varied from 1 to values corresponding to a week or month depending on the length of the dataset under analysis.% 163.
  
 To interpret the results from the entire week or month more clearly, one needs to understand the evolution of clusters during a day. DSAP algorithm was used to analyze the first Wednesday, May 1 of the intervention period whose recorded activity at all levels is shown in Figure \ref{1dayact}. The expiration time was chosen as 1 that ensured that only the datapoints within the one hour window are used for finding clusters. This is equivalent to analyzing one hour window of data using the AP algorithm in a batch processing manner. The clusters obtained during each hour from 7 am to 7 pm along with the branch points of each cluster are shown in Figure \ref{APhourly}. The evolution of people activity across all levels can be clearly seen from these plots. The clusters capture the increase in activity starting around 9-11 am. At the peak around noon the clusters correctly to represent the dense and high activity clusters. As the day progresses the clusters too faithfully track the gradual decrease in activity. Figure. \ref{APhourly} demonstrates that the DSAP algorithm is capable of accurately finding and tracking the patterns in a dynamic dataset.
 
@@ -292,7 +293,7 @@ To interpret the results from the entire week or month more clearly, one needs t
     \label{1daystat}
 \end{figure}
 
-The data from each of the three periods of the experiment were analyzed using the DSAP algorithm with an expiration time representing a month. The resulting micro and macro clusters along with the number of branchpoints are shown in Figure. \ref{dsap3mon} .
+The data from each of the three periods of the experiment were analyzed using the DSAP algorithm with an expiration time representing a month. The resulting micro and macro clusters along with the number of branch points are shown in Figure. \ref{dsap3mon} .
 
 we have all these figures, but the conclusion is that the campaign has not worked, not motivated people to take the stairs... time of the experiment was the end of the semester??
 
@@ -313,7 +314,7 @@ we have all these figures, but the conclusion is that the campaign has not worke
 
 The first week of each of the three months under study analyzed earlier are analyzed again by the DSAP algorithm using a one hour landmark time window. 
 
-All the micro clusters generated during the week are plotted as blue circles while the macro clusters are shown as red crosses. (Explain clusters XX). These results can be compared with the clusters generated by AP and K-means for the same week shown earlier in Figures. \ref{oneweek} and \ref{elbkmean}. 
+All the micro clusters generated during the week are plotted as blue circles while the macro clusters are shown as red crosses. (Explain clusters XX). These results can be compared with the clusters generated by AP for the same week shown earlier in Figures. \ref{oneweek} and \ref{elbkmean}. 
 
 %  \begin{figure}[tbh]
 %     \centering
@@ -384,14 +385,45 @@ All the micro clusters generated during the week are plotted as blue circles whi
 
 
 
+
+
+
+
+\begin{table}[]
+\small
+\centering
+\caption{Table of Macro clusters}
+\label{mactab}
+\begin{tabular}{clcc}
+\hline
+\textbf{Macro cluster} & \textbf{Location} & \textbf{\begin{tabular}[c]{@{}c@{}}number of \\ micro cluster\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}total number of \\ data points cluster\end{tabular}} \\ \hline\midrule
+\multicolumn{4}{c}{\cellcolor[HTML]{ECF4FF}\textbf{Before Intervention (March 18 - March 24)}}                                                                                                                     \\ \hline
+\textbf{1}             & (1,1)             & 1                                                                           & 1603                                                                                    \\ \hline
+\textbf{2}             & (1,9)             & 3                                                                           & 64                                                                                      \\ \hline
+\textbf{3}             & (4,1)             & 6                                                                           & 4520                                                                                    \\ \hline
+\textbf{4}             & (4,22)            & 2                                                                           & 13                                                                                      \\ \hline
+\textbf{5}             & (6,5)             & 3                                                                           & 82                                                                                      \\ \hline
+\multicolumn{4}{c}{\cellcolor[HTML]{ECF4FF}\textbf{Intervention Week (April 29 - May 5)}}                                                                                                                          \\ \hline
+\textbf{1}             & (1,5)             & 3                                                                           & 109                                                                                     \\ \hline
+\textbf{2}             & (2,1)             & 5                                                                           & 4388                                                                                    \\ \hline
+\textbf{3}             & (2,11)            & 3                                                                           & 6                                                                                       \\ \hline
+\textbf{4}             & (6,1)             & 3                                                                           & 1664                                                                                    \\ \hline
+\multicolumn{4}{c}{\cellcolor[HTML]{ECF4FF}\textbf{After Intervention Week (May 27 - June 2)}}                                                                                                                     \\ \hline
+\textbf{1}             & (1,3)             & 4                                                                           & 3269                                                                                    \\ \hline
+\textbf{2}             & (2,15)            & 3                                                                           & 11                                                                                      \\ \hline
+\textbf{3}             & (4,1)             & 1                                                                           & 1810                                                                                    \\ \hline
+\textbf{4}             & (4,8)             & 4                                                                           & 36                                                                                      \\ \hline
+\textbf{5}             & (6,3)             & 4                                                                           & 1207                                                                                    \\ \hline\midrule
+\end{tabular}
+\end{table}
+
+
+
+
 To compare the results from these three techniques, the internal and external evaluation metrics are compiled in Table \ref{all3tab}. The significant savings in time is immediately apparent between the DSAP algorithm and AP. For a real stream the calculation time for a window is expected to be lower in DSAP as the initial window calculation that is the most time intensive step is performed once and doesn't affect the current time window. The accuracy of the two methods is still similar as reported by the other metrics. 
 % How calculate macro micro numb
 The memory and time advantages offered by the DSAP algorithm is obvious from the comparisons shown with the data from the first week of intervention. The people counter experiment was performed in order to find any improvement in stair usage after some measures for educational interference were taken. In order to analyze this the DSAP algorithm was applied on each of the months before, during, and after intervention using a landmark time window of 1 hours. The resulting clusters are shown in Figure \ref{dsap3mon}. It shows ..xx
-For comparison, the clusters obtained by the streaming k-means method are plotted in Figure. xx
 
-
-Table : streaming k-means for external evaluation: does not include elbow method , it will increase the memory and processing time  
-Comparison table and closing inference..xx
 
 
 
@@ -404,26 +436,26 @@ Comparison table and closing inference..xx
 \hline
 \multicolumn{1}{c}{\textbf{Metrics}} & \textbf{AP  Algorithm} & \cellcolor[HTML]{68CBD0}\textbf{DSAP  Algorithm}                                           \\ \hline\midrule
 \multicolumn{3}{c}{\cellcolor[HTML]{FFCCC9}\textbf{Before Intervention Week (March 18 - March 24)}}                                                        \\ \hline
-Processing Time (s)                  & 28                     & \cellcolor[HTML]{68CBD0}0.6                                                                \\ \hline
+Processing Time (s)                  & 22                     & \cellcolor[HTML]{68CBD0}0.6                                                                \\ \hline
 Memory Consumption (MB)              & 536                    & \cellcolor[HTML]{68CBD0}250                                                                \\ \hline
-Number of Clusters                   & 9                      & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 11\\ macro =  5\end{tabular}    \\ \hline
-Silhouette Index                     & 0.3                    & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 0.5\\ macro = 0.5\end{tabular}  \\ \hline
-Caliński-Harabasz Index              & 1009                   & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro =  2308\\ macro = 87\end{tabular} \\ \hline
-Davies-Bouldin Index                 & 0.5                    & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 0.9\\ macro = 0.5\end{tabular}  \\ \hline
+Number of Clusters                   & 13                      & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 15\\ macro =  4\end{tabular}    \\ \hline
+Silhouette Index                     & 0.4                    & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 0.7\\ macro = 0.4\end{tabular}  \\ \hline
+Caliński-Harabasz Index              & 2009                   & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro =  4872\\ macro = 87\end{tabular} \\ \hline
+Davies-Bouldin Index                 & 0.5                    & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 1\\ macro = 0.8\end{tabular}  \\ \hline
 \multicolumn{3}{c}{\cellcolor[HTML]{FFCCC9}\textbf{Intervention Week (April 29 - May 5)}}                                                                  \\ \hline
-Processing Time (s)                  & 26                     & \cellcolor[HTML]{68CBD0}0.6                                                                \\ \hline
-Memory Consumption (MB)              & 519                    & \cellcolor[HTML]{68CBD0}256                                                                \\ \hline
-Number of Clusters                   & 14                     & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro =  14\\ macro = 7\end{tabular}    \\ \hline
-Silhouette Index                     & 0.4                    & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 0.5\\ macro = 0.5\end{tabular}  \\ \hline
-Caliński-Harabasz Index              & 1421                   & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 1974\\ macro = 35\end{tabular}  \\ \hline
-Davies-Bouldin Index                 & 0.5                    & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 2.1\\ macro = 0.7\end{tabular}  \\ \hline
+Processing Time (s)                  & 25                     & \cellcolor[HTML]{68CBD0}0.6                                                                \\ \hline
+Memory Consumption (MB)              & 536                    & \cellcolor[HTML]{68CBD0}256                                                                \\ \hline
+Number of Clusters                   & 11                     & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro =  16\\ macro = 4\end{tabular}    \\ \hline
+Silhouette Index                     & 0.5                    & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 0.5\\ macro = 0.4\end{tabular}  \\ \hline
+Caliński-Harabasz Index              & 2421                   & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 6292\\ macro = 35\end{tabular}  \\ \hline
+Davies-Bouldin Index                 & 0.7                    & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 1.9\\ macro = 0.8\end{tabular}  \\ \hline
 \multicolumn{3}{c}{\cellcolor[HTML]{FFCCC9}\textbf{After Intervention Week (May 27 - June 2)}}                                                             \\ \hline
 Processing Time (s)                  & 26                     & \cellcolor[HTML]{68CBD0}0.6                                                                \\ \hline
 Memory Consumption (MB)              & 541                    & \cellcolor[HTML]{68CBD0}260                                                                \\ \hline
-Number of Clusters                   & 12                     & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 14\\ macro = 8\end{tabular}     \\ \hline
-Silhouette Index                     & 0.4                    & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 0.6\\ macro = 0.5\end{tabular}  \\ \hline
-Caliński-Harabasz Index              & 1278                   & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 3153\\ macro = 80\end{tabular}  \\ \hline
-Davies-Bouldin Index                 & 0.5                    & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 0.7\\ macro = 0.5\end{tabular}  \\ \hline\midrule
+Number of Clusters                   & 12                     & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 16\\ macro = 4\end{tabular}     \\ \hline
+Silhouette Index                     & 0.4                    & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 0.6\\ macro = 0.4\end{tabular}  \\ \hline
+Caliński-Harabasz Index              & 1278                   & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 4381\\ macro = 40\end{tabular}  \\ \hline
+Davies-Bouldin Index                 & 0.5                    & \cellcolor[HTML]{68CBD0}\begin{tabular}[c]{@{}c@{}}micro = 0.7\\ macro = 0.7\end{tabular}  \\ \hline\midrule
 \end{tabular}
 \end{table}
 
@@ -529,7 +561,7 @@ The performance and scaling of clustering algorithms can be related to the imple
 % \begin{figure}[!h]
 %     \centering
 %     \includegraphics[width = 11 cm]{image/Chapters/Chapter6/ApFirstWeekBeforeInt.png}
-%     \caption{AP algorithm is applied on e-counter data for one week. The first week before intervention. with the damping = 0.96 and preference(np.median(similarity matrix) = -4 }
+%     \caption{AP algorithm is applied on e-counter data for one week. The first week before intervention. with the damping = 0.9 and preference(np.median(similarity matrix) = -4 }
 %     \label{befA}
 % \end{figure}
 
@@ -548,8 +580,8 @@ The performance and scaling of clustering algorithms can be related to the imple
 % \begin{figure}[!h]
 %     \centering
 %     \includegraphics[width = 11 cm]{image/Chapters/Chapter6/ApFirstWeekIntervention1.png}
-%     % \includegraphics[width = 11 cm]{image/Chapters/Chapter6/17ap.966Y.png}%ecounter_time data
-%     \caption{AP algorithm is applied on e-counter data for one week. The first week of intervention: 29 April- 5 May. with the damping = 0.96 and preference(np.median(similarity matrix) = -50 }
+%     % \includegraphics[width = 11 cm]{image/Chapters/Chapter6/17ap.96Y.png}%ecounter_time data
+%     \caption{AP algorithm is applied on e-counter data for one week. The first week of intervention: 29 April- 5 May. with the damping = 0.9 and preference(np.median(similarity matrix) = -50 }
 %     \label{oneweek}
 % \end{figure}
 
@@ -558,7 +590,7 @@ The performance and scaling of clustering algorithms can be related to the imple
 % \begin{figure}[!h]
 %     \centering
 %     \includegraphics[width = 11 cm]{image/Chapters/Chapter6/ApFirstWeekBeforeInt.png}
-%     \caption{AP algorithm is applied on e-counter data for one week. The first week before intervention. with the damping = 0.96 and preference(np.median(similarity matrix) = -4 }
+%     \caption{AP algorithm is applied on e-counter data for one week. The first week before intervention. with the damping = 0.9 and preference(np.median(similarity matrix) = -4 }
 %     \label{befA}
 % \end{figure}
 
@@ -566,7 +598,7 @@ The performance and scaling of clustering algorithms can be related to the imple
 % \begin{figure}[!h]
 %     \centering
 %     \includegraphics[width = 11 cm]{image/Chapters/Chapter6/ApFirstWeekAfterInt.png}
-%     \caption{AP algorithm is applied on e-counter data for one week. The first week after intervention. with the damping = 0.96 and preference(np.median(similarity matrix)=.7  }
+%     \caption{AP algorithm is applied on e-counter data for one week. The first week after intervention. with the damping = 0.9 and preference(np.median(similarity matrix)=.7  }
 %     \label{apaft}
 % \end{figure}
 
@@ -593,7 +625,7 @@ The performance and scaling of clustering algorithms can be related to the imple
 % Caliński-Harabasz Index              & 380                                            & 87                                                        & 150                                                                   \\ \hline
 % Davies-Bouldin Index                 & 0.6                                            & 0.5                                                       & 0.19                                                                  \\ \hline
 % \multicolumn{4}{c}{\cellcolor[HTML]{FFCCC9}\textbf{Intervention Week (April 29 - May 5)}}                                                                                                                                 \\ \hline
-% Processing Time (s)                      & 26                                             & 0.6                                                       & 0.96                                                                  \\ \hline
+% Processing Time (s)                      & 26                                             & 0.6                                                       & 0.9                                                                  \\ \hline
 % Memory Consumption(MB)              & 519                                            & 256                                                       & 230                                                                   \\ \hline
 % Number of Clusters                   & 14                                             & -                                                         & -                                                                     \\ \hline
 % Number of Macro Clusters             & -                                              & 7                                                         & 6                                                                     \\ \hline
@@ -646,7 +678,7 @@ The performance and scaling of clustering algorithms can be related to the imple
 
 % \begin{table}[!h]
 % \small
-% \caption{Comparison of AP, DSAP, K-means, and Streaming K-means Evaluation Metrics for the first week of intervention (Apr 29 - May 5).AP: Damping=0.96 and preference is the median value of the similarity matrix.}
+% \caption{Comparison of AP, DSAP, K-means, and Streaming K-means Evaluation Metrics for the first week of intervention (Apr 29 - May 5).AP: Damping=0.9 and preference is the median value of the similarity matrix.}
 % \label{all3}
 % \begin{tabular}{l
 % >{\columncolor[HTML]{CBCEFB}}c 
@@ -920,7 +952,7 @@ Over the one month of experience, data collected in six days from May 30 until J
 
 
 
-The total number of people with their phones participated in this experiment is shown in Figure \ref{userphone}. Phones number 8 and 9 have more activity than other phones. phone number 8 belongs to user number 11, and phone number 9 used by three users with the number 1, 9, and 16.
+The total number of people with their phones who participated in this experiment is shown in Figure \ref{userphone}. Phones number 8 and 9 have more activity than other phones. Phone number 8 belongs to user number 11, and phone number 9 used by three users with the numbers 1, 9, and 16.
 
 \begin{figure}[!h]
     \centering
@@ -960,9 +992,6 @@ As shown in Figure \ref{bdd}, the TC has significantly more number of data point
 
 
 
-%%%% NEMODAR ZAman tanha
-
-
 \begin{figure}
     \centering
     \includegraphics[width = 12 cm]{image/Chapters/Chapter6/floors.png}
@@ -982,63 +1011,24 @@ As shown in Figure \ref{bdd}, the TC has significantly more number of data point
 \end{figure}
 
 
-
-
-
-
-Figures \ref{alltogether} illustrate the movement of people during the experiment period. 
-
-
-
-
-
-
-
-\begin{figure}
-    \centering
-        \includegraphics[width = 7 cm]{image/Chapters/Chapter6/phoneTime.png}\hfill
-        \includegraphics[width = 7 cm]{image/Chapters/Chapter6/spaceidAccumulat.png}\hfill
-        \includegraphics[width = 7 cm]{image/Chapters/Chapter6/floorTime.png}\hfill
-        \includegraphics[width = 7 cm]{image/Chapters/Chapter6/buildingTime.png}
-    \caption{(a) Phone activity level during the entire experiment time. (b) Space activity level during the entire experiment time. (c) Floor activity during the entire experiment time. (d) Building activity level during the entire experiment time.}
-    \label{alltogether}
-\end{figure}
-
-
-
+% Figures \ref{alltogether} illustrate the movement of people during the experiment period. 
 
 % \begin{figure}
 %     \centering
-%     \includegraphics[width = 15 cm]{image/Chapters/Chapter6/phoneTime.png}
-%     \caption{Phone activity level during the entire experiment time. }
-%     \label{phonetime}
-% \end{figure}
-
-
-% \begin{figure}
-%     \centering
-%     \includegraphics[width = 15 cm]{image/Chapters/Chapter6/buildingTime.png}
-%     \caption{Building activity level during the entire experiment time. }
-%     \label{buildtime}
-% \end{figure}
-
-
-
-% \begin{figure}
-%     \centering
-%     \includegraphics[width = 15 cm]{image/Chapters/Chapter6/floorTime.png}
-%     \caption{Floor activity during the entire experiment time. }
-%     \label{floract}
+%         \includegraphics[width = 7 cm]{image/Chapters/Chapter6/phoneTime.png}\hfill
+%         \includegraphics[width = 7 cm]{image/Chapters/Chapter6/spaceidAccumulat.png}\hfill
+%         \includegraphics[width = 7 cm]{image/Chapters/Chapter6/floorTime.png}\hfill
+%         \includegraphics[width = 7 cm]{image/Chapters/Chapter6/buildingTime.png}
+%     \caption{(a) Phone activity level during the entire experiment time. (b) Space activity level during the entire experiment time. (c) Floor activity during the entire experiment time. (d) Building activity level during the entire experiment time.}
+%     \label{alltogether}
 % \end{figure}
 
 
 
 
+\subsection{ Insights from Cluster analysis}
+The UJIIndoorLoc dataset is similarly happened as the e-counter dataset. To find a hidden pattern in this data, first AP clustering algorithms were performed for this experiment period. As the computer used for this study could not handle the whole experience duration for clustering data by AP, a one day of data, 20 of June, is selected for our experiment . This day is the busiest day and the most number of data points as shown in Figure \ref{timeline}. Besides, this day includes almost all participant in the experiment, the only matter is building T1 is not presented in this specific day but TD and TC are presented. The statistic of this day shows in Figure \ref{static}. The first plot on the top left shows the activity of each phone during this day. 
 
-% \subsection{Comparison of Data clustering Algorithms}
-
-The UJIIndoorLoc dataset is similarly happened as the e-counter dataset. To find a pattern in this data, first AP and K-means clustering algorithms were performed to find people activities in these three buildings during experiment period. As our computer used for this study could not handle the whole experience duration for clustering data by AP, the 20 of June is selected for our experiment . This day includes almost all people in the experiment but building T1 is not presented in this specific day. The statistic of this day shows in Figure \ref{static} The K-means algorithm was able to handle to total amount of data points.
-The streaming affinity propagation algorithm  DSAP was preferred for this study. But, for the sake of completeness and validation, the results from DSAP are compared with those from AP, k-means, and streaming K-means.
 
 
 \begin{figure}
@@ -1066,69 +1056,56 @@ The streaming affinity propagation algorithm  DSAP was preferred for this study.
 Figure \ref{APUjoneday} shows the clusters generated by the AP algorithm for June 20, 2013. AP clustering algorithm, divided the data in to five clusters.
 
 
-Figure \ref{elbowkwifi} shows the elbow method to find the optimal number of clusters for K-means algorithm and seems to be six for this day. The corresponding clusters using k-means are shown in the right of this figure. %Explain clusters
-
-
-% \begin{figure}[!h]
-%     \centering
-%     \includegraphics[width = 7.5 cm]{image/Chapters/Chapter6/elbowDay20.png}\hfill
-%      \includegraphics[width = 7.5 cm]{image/Chapters/Chapter6/kmeansJun20.png}
-%     \\[\smallskipamount]    
-%     \caption{Kmeans for WiFi data : June 20.}
-%     \label{elbowkwifi}
-% \end{figure}
 
 
 
+
+
+\subsection{DSAP cluster evolution}
+In order to analyze indoor localization streaming data, DSAP streaming clustering algorithm is applied. A 10 minutes landmark time window was chosen to analyze the WiFi data. It was found that using 10 minutes window gave optimum number of cluster and it has enough data point in every window, specially the first window to start the model. Moreover, number of people every minutes recorded is high, and choosing a large window size make the DSAP a bit slow. The hyperparameters for the AP in the DSAP algorithm are consistent and fix for the entire experiment. The damping value is equal to 0.9, maximum iteration is 100, and preference is equal to the median of the similarity matrix. 
+
+To compare the results of DSAP algorithm with the AP, the same day data applied AP was chosen once again and result is shown in Figure \ref{dsapjun20}.
 
 
 
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[width = 7 cm]{image/Chapters/Chapter6/DSAPJune20.png}\hfill
+    \includegraphics[width = 9 cm]{image/Chapters/Chapter6/DSAPJune20.png}\hfill
     % \includegraphics[width = 7 cm]{image/Chapters/Chapter6/june20DoubK.png}
     % \\[\smallskipamount]    
     \caption{ DSAP  for WiFi data during the experiment: June 20.}
-    \label{3}
+    \label{dsapjun20}
 \end{figure}
 
 
-% Please add the following required packages to your document preamble:
-% \usepackage[table,xcdraw]{xcolor}
-% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+
+
+
+
+
+
+
 \begin{table}[]
+\centering
 \small
-\caption{Comparison of AP, DSAP, K-means, and Streaming K-means Evaluation Metrics for the day June 6.}
-\label{Wificom}
 \begin{tabular}{l
->{\columncolor[HTML]{DAE8FC}}c 
->{\columncolor[HTML]{68CBD0}}c 
 >{\columncolor[HTML]{DAE8FC}}c 
 >{\columncolor[HTML]{68CBD0}}c }
 \hline
-\multicolumn{1}{c}{\textbf{Metrics}} & \textbf{AP} & {\color[HTML]{333333} \textbf{K-means}} & \textbf{DSAP} \\ \hline\midrule
-\textbf{Processing time (s)}         & 414         & 1.9                                     & 2.2             & 0.58                       \\ \hline
-\textbf{Memory consumption (MB)}     & 1933        & 412                                     & 290           & 238                        \\ \hline
-\textbf{Number of clusters}          & 5           & 6                                       & 6             & 6                          \\ \hline
-\textbf{Silhouette Index}      & 0.3         & 0.5                                     & 0.55          &                            \\ \hline
-\textbf{Caliński-Harabasz Index}     & 7193        & 25330                                   & 365           &                            \\ \hline
-\textbf{Davies-Bouldin Index}        & 0.7         & 0.6                                     & 0.57          &                            \\ \hline\midrule
+\multicolumn{1}{c}{\textbf{Metrics}} & \textbf{AP  Algorithm} & \textbf{DSAP  Algorithm}                                           \\ \hline\midrule
+\multicolumn{3}{c}{\cellcolor[HTML]{FFCCC9}\textbf{June 20, 2013}}                                                                 \\ \hline
+\textbf{Processing Time (s)}         & 414                    & 5                                                                  \\ \hline
+\textbf{Memory Consumption (MB)}     & 1933                   & 271                                                                \\ \hline
+\textbf{Number of Clusters}          & 5                      & \begin{tabular}[c]{@{}c@{}}micro = 101\\ macro =  8\end{tabular}    \\ \hline
+\textbf{Silhouette Index}            & 0.3                    & \begin{tabular}[c]{@{}c@{}}micro = 0.85\\ macro = 0.8\end{tabular}  \\ \hline
+\textbf{Caliński-Harabasz Index}     & 7193                   & \begin{tabular}[c]{@{}c@{}}micro =  2308\\ macro = 87\end{tabular} \\ \hline
+\textbf{Davies-Bouldin Index}        & 0.7                    & \begin{tabular}[c]{@{}c@{}}micro = 0.9\\ macro = 0.5\end{tabular}  \\ \hline\midrule
 \end{tabular}
 \end{table}
 
 
 
-
-
-\begin{figure}[!h]
-    \centering
-    \includegraphics[width = 7.5 cm]{image/Chapters/Chapter6/elbowWholeWifiNormalize.png}\hfill
-     \includegraphics[width = 7.5 cm]{image/Chapters/Chapter6/kmeanswifiAllDays.png}
-    \\[\smallskipamount]    
-    \caption{Kmeans for WiFi data during the experiment: May 30 - June 20.}
-    \label{2}
-\end{figure}
 
 
 
@@ -1143,7 +1120,65 @@ Figure \ref{elbowkwifi} shows the elbow method to find the optimal number of clu
 \end{figure}
 
 
+
+
+
+
+
+
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+% \begin{table}[]
+% \small
+% \caption{Comparison of AP and DSAP evaluation metrics for the day June 6.}
+% \label{Wificom}
+% \begin{tabular}{l
+% >{\columncolor[HTML]{DAE8FC}}c 
+% >{\columncolor[HTML]{68CBD0}}c 
+% >{\columncolor[HTML]{DAE8FC}}c 
+% >{\columncolor[HTML]{68CBD0}}c }
+% \hline
+% \multicolumn{1}{c}{\textbf{Metrics}} & \textbf{AP} & {\color[HTML]{333333} \textbf{K-means}} & \textbf{DSAP} \\ \hline\midrule
+% \textbf{Processing time (s)}         & 414         & 1.9                                     & 2.2             & 0.58                       \\ \hline
+% \textbf{Memory consumption (MB)}     & 1933        & 412                                     & 290           & 238                        \\ \hline
+% \textbf{Number of clusters}          & 5           & 6                                       & 6             & 6                          \\ \hline
+% \textbf{Silhouette Index}      & 0.3         & 0.5                                     & 0.55          &                            \\ \hline
+% \textbf{Caliński-Harabasz Index}     & 7193        & 25330                                   & 365           &                            \\ \hline
+% \textbf{Davies-Bouldin Index}        & 0.7         & 0.6                                     & 0.57          &                            \\ \hline\midrule
+% \end{tabular}
+% \end{table}
+
+
+
+
+
+
+
+
  
+% Figure \ref{elbowkwifi} shows the elbow method to find the optimal number of clusters for K-means algorithm and seems to be six for this day. The corresponding clusters using k-means are shown in the right of this figure. %Explain clusters
+
+% \begin{figure}[!h]
+%     \centering
+%     \includegraphics[width = 7.5 cm]{image/Chapters/Chapter6/elbowDay20.png}\hfill
+%      \includegraphics[width = 7.5 cm]{image/Chapters/Chapter6/kmeansJun20.png}
+%     \\[\smallskipamount]    
+%     \caption{Kmeans for WiFi data : June 20.}
+%     \label{elbowkwifi}
+% \end{figure}
+
+
+% \begin{figure}[!h]
+%     \centering
+%     \includegraphics[width = 7.5 cm]{image/Chapters/Chapter6/elbowWholeWifiNormalize.png}\hfill
+%      \includegraphics[width = 7.5 cm]{image/Chapters/Chapter6/kmeanswifiAllDays.png}
+%     \\[\smallskipamount]    
+%     \caption{Kmeans for WiFi data during the experiment: May 30 - June 20.}
+%     \label{2}
+% \end{figure}
 
 
 % \begin{table}[h]
@@ -1183,6 +1218,29 @@ Figure \ref{elbowkwifi} shows the elbow method to find the optimal number of clu
 
 
 
+% \begin{figure}
+%     \centering
+%     \includegraphics[width = 15 cm]{image/Chapters/Chapter6/phoneTime.png}
+%     \caption{Phone activity level during the entire experiment time. }
+%     \label{phonetime}
+% \end{figure}
+
+
+% \begin{figure}
+%     \centering
+%     \includegraphics[width = 15 cm]{image/Chapters/Chapter6/buildingTime.png}
+%     \caption{Building activity level during the entire experiment time. }
+%     \label{buildtime}
+% \end{figure}
+
+
+
+% \begin{figure}
+%     \centering
+%     \includegraphics[width = 15 cm]{image/Chapters/Chapter6/floorTime.png}
+%     \caption{Floor activity during the entire experiment time. }
+%     \label{floract}
+% \end{figure}
 
 
 
