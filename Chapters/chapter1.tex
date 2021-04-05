@@ -10,18 +10,18 @@
 %\pagestyle{myheadings} \pagenumbering{arabic} \rhead{\thepage}
 %\setcounter{page}{1}
 
-#####################
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Good summary for the introduction
 %Data stream affinity propagation algorithm has been chosen for indoor localization data in this research work. For this algorithm, every data point is a centroid, and it means they have equal importance and there is no prior reason. Also, the AP algorithm does not require the number of clusters as an input which makes our work more robust, especially if it uses for the cloud side. AP's main issue is the computation efficiency that we make it possible by applying the time window model and making it a stream approach. This algorithm is applied in many scientific research and different datasets such as intrusion detection, energy, gene expression, psychology, business, physical science, social science, etc. However, to the best of our knowledge AP model has not yet been applied for any people counting data ,and streaming AP has been never used for any indoor localization dataset.
-
-#########################################
+%%%%%%%%%%%%%%%%%%%%%%%
 
 Indoor positioning technologies have been a critical enabler for advancing the usefulness of the Internet of Things in biomedical and health care applications. Many positioning technologies have been explored for generating positioning information of people in indoor spaces, including Wi-Fi, BLE beacons, RFID tags, visible light wave, and ultra-wide band \cite{namiot2015indoor, jeon2018ble}. In particular, infra-red, optical (e.g., RGB videos or flat images), break beam, thermal, and ultrasonic sensors have been used for counting people in indoor spaces \cite{mautz2012indoor}. There has not been very research work using stream clustering methods for analyzing indoor localization data especially stream affinity propagation clustering algorithm \cite{dueck2009affinity} which, to our best of knowledge, there is not any research work available. Affinity propagation suffers from memory complexity, and it means it cannot handle massive data sets. To solve this problem, a stream clustering algorithm with the implementation of a time window model is presented in this work. 
 
 
 Previous research has proven that partitioning-based model is suited for problems where the optimal number of micro-clusters is a-priori unknown by optimizing a representative cluster-head for each micro-cluster. Cluster-heads of micro-clusters have been previously explored for improving indoor fingerprinting using Wi-Fi RSS data\cite{hu2015improving, subedi2019improving}. They have also been successful applied for improving routing schemes for multi-level heterogeneous Wireless Sensor Networks, saving energy consumption \cite{wang2019affinity}. To the best of our knowledge,  streaming AP models have not yet been applied for computing micro-clusters using people counting data streams in indoor spaces.  
 
-Moreover, data stream AP models usually suffer from a quadratic computational complexity in the number N of items. The time complexity of AP is $O(n^2*T)$, where $n$ is the number of samples and $T$ is the number of iterations until convergence happens\cite{refianti2017time}. This computational performance might become an issue for computing macro-clusters using large volumes of people counting data. Strategies are important to be developed to improve the performance of AP models. 
+Moreover, data stream AP models usually suffer from a quadratic computational complexity in the number N of items. %The time complexity of AP is $O(n^2*T)$, where $n$ is the number of samples and $T$ is the number of iterations until convergence happens\cite{refianti2017time}. 
+This computational performance might become an issue for computing macro-clusters using large volumes of people counting data. Strategies are important to be developed to improve the performance of AP models. 
 
 Time window models can be used within the stream clustering algorithms, including sliding, damped, landmark, and pyramidal \cite{nguyen2015survey}. These models aim to handle the evolution of the distribution of the data stream over time. Applying a time window makes it possible to analyze and store a stream within a specific time frame and discard the previous historical data \cite{mansalis2018evaluation}.
 
@@ -34,11 +34,25 @@ To the best of our knowledge, streaming AP algorithms have not yet been applied 
 The experimental results on the localization data sets validate the effectiveness of our method in handling
 dynamically evolving data streams. Also, we study the execution time and memory usage of the DSAP algorithm, which are important efficiency factors for streaming algorithms.
 %*********
+Data streaming involves two main issues. First, how to process the data quickly.
+Secondly, how to deal with the changes over the time.
 
 
 
-
-
+% A data stream is a real-time, continuous, ordered (implicitly by arrival time or explicitly by timestamp) sequence of items arriving at a very high speed [Golab and ¨Ozsu, 2003].
+% Data streaming involves two main issues [Aggarwal, 2007]. The first one
+% is processing the fast incoming data; because of its amount and pace, there
+% is no way to store the data and analyze it offline. From its inception data
+% streaming faces large scale issues and new algorithms to achieve e.g., clustering,
+% classification, frequent pattern mining, are required.
+% The second issue is to deal with the changes in the underlying data distribution,
+% due to the evolution of the phenomenon under study (the traffic, the
+% users, the modes of usage, and so forth, can evolve). The proposed approach
+% aims at solving both issues, by maintaining a model of the data coupled with
+% a change detection test: as long as no change in the underlying data distribution
+% is detected, the model is seamlessly updated; when the change detection
+% test is triggered, the model is rebuilt from the current one and the stored
+% outliers.
 
 
 
@@ -53,8 +67,6 @@ dynamically evolving data streams. Also, we study the execution time and memory 
 % \label{dataclu}
 % \end{figure}
 
-Data streaming involves two main issues. First, how to process the data quickly.
-Secondly, how to deal with the changes over the time.
 
 
 
@@ -80,7 +92,7 @@ The objectives can be described as follows.
 
 \begin{itemize}
     %\item The proposed method is based on unsupervised learning, and data clustering. Affinity Propagation (AP) is a clustering message passing algorithm proposed by Frey and Dueck. This algorithm is selected for its properties of stability and of the way it represented each data cluster. The consequence of using AP is quadratic computational complexity, especially on large scale datasets.
-    \item Develop the data stream AP model for uncovering evolutionary patterns with two-stage, online and offline phases.
+    \item Develop the data stream AP model for uncovering evolutionary patterns with two-stage, online micro and offline macro phases.
      \item Applying landmark time window model to find the latest data point in the stream.
    
     % \item Apply the online-offline phases of such a model to analysing indoor positioning stream data.  
@@ -88,7 +100,7 @@ The objectives can be described as follows.
     \item Analyze the behavioral pattern in indoor localization experiments.
     %has certainly not been applied 
     \item demonstrate the potential of analysing people counting data to understand staircase behavioural changes in indoor spaces before, during, and after a health motivated intervention.
-    \item Apply streaming K-means clustering framework to compare the proposed model and evaluate our model.
+    \item Apply streaming AP clustering algorithm to compare the proposed model and evaluate our model.
     \item Evaluate the clustering results to find the accuracy of the proposed algorithm.
 
 
