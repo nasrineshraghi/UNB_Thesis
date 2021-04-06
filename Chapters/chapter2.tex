@@ -700,103 +700,160 @@ Data stream clustering methods can be categorized into five leading groups accor
 
 
 
-
-
-\begin{table}[h]
-    \centering
-    \caption{ Overview of data stream clustering methods \protect\cite{mansalis2018evaluation}}
-    \label{landmarkwin}
-    \small
-    \begin{tabular}{c c c c c}
-    \hline
-      \normalsize{\textbf{Algorithms} & \textbf{Year} & \textbf{ Approach } & \textbf{Processing} & \textbf{ Time Window}}  \\
-     \hline \midrule
-      \rowcolor{lightgray}& &\rowcolor{lightgray}\centering \textbf{Partitioning-based }  & &  \\
-      \hline 
-      \hline
-      Stream             &   2000    &   k-median     &  Single-pass       & Landmark \\
-     \hline
-      StreamLSearch      &   2002    &   k-median     &   Single-pass      & Landmark \\
-    \hline
-     CluStream           &   2003    &  k-means       &  Online-Offline    & Pyramidal \\
-    \hline   
-     HCluStream         &    2006   &    k-means     & Online-Offline      & Pyramidal \\
-    \hline
-     Olindda            &   2007    &   k-means      &   Online-Offline    & Landmark  \\
-    \hline    
-     SWClustering        &    2008   &    k-means     &  Online-offline    & Sliding   \\
-       \hline
-      StreamKM++         &    2012   &   k-means++    & Online-Offline     & Landmark   \\
-    \hline 
-      BICO               &    2013   &    k-means     &  Online-Offline    & Landmark  \\
-      \hline
-      StreamXM           &    2015   &    X-means     &  Merge-reduce    & Landmark  \\
-        \hline
-      \hline
-       \rowcolor{lightgray}&& \rowcolor{lightgray}\centering\textbf{Hierarchical-based }  & &  \\
-      \hline 
-      \hline 
-      BIRCH             &    1996        &     CF-tree           &  Single-pass    & Landmark \\
-     \hline
-      TS-Stream         &     2015       &    Decision Tree      & Single-pass     & Sliding  \\
-      \hline
-      \hline
-     \rowcolor{lightgray}& &\rowcolor{lightgray}\centering \textbf{Density-based}  & &  \\
-      \hline 
-      \hline
-    DenStream            &    2006     &    DBSCAN       & Online-offline  &   Damped   \\
-     \hline
-     SDStream            &    2009     &    DBSCAN       & Online-offline  &   Sliding \\
-      \hline
-      HDenStream         &     2009    &    DBSCAN       &  Online-offline &   Damped  \\
-        \hline
-      FlockStream        &     2009    &    Swarms       &  Single-pass    &   Damped  \\
-        \hline 
-      rDenStream         &    2009     &     DBSCAN      & Online-offline  &   Damped  \\
-        \hline 
-      C-DenStream        &    2009     &     C-DBSCAN    &Online-offline   &   Damped \\
-          \hline 
-      PreDeConStream     &    2012     &     DBSCAN      & Online-offline  &   Damped \\
-          \hline 
-      HDDStream          &    2012     &     DBSCAN      & Online-offline  &   Damped   \\
-          \hline 
-      MuDi-Stream        &    2016     &       DBSCAN    & Online-offline  &   Damped\\
-      \hline          
-      EDDS               &    2017     &     DBSCAN      & Online-offline  &   Damped \\
-      \hline
-      \hline
-     \rowcolor{lightgray}& &\rowcolor{lightgray}\centering \textbf{Grid-based}  & &  \\
-      \hline 
-      \hline      
-     DUstream            &    2005        &      Dense-unit       &     Single-pass    &  Landmark\\
-      \hline
-      D-stream           &     2007       &    Dense-region       &  Online-offline    &   Damped\\
-    \hline 
-      DDStream           &    2008        &    DCQ-means          &     Online-offline & Damped \\
-    \hline 
-      MR-Stream          &    2009        &     Dense-region      &  Online-offline    & Damped\\
-    \hline 
-      PKS-Stream         &    2011        &    Dense-region       &  Online-offline    & Damped\\
-    \hline 
-      DENGRIS            &    2012        &   Dense-region        &  Single-pass       & Sliding\\
-      \hline 
-      \hline
-     \rowcolor{lightgray}& &\rowcolor{lightgray}\centering\textbf{Model-based}  & &  \\
-      \hline 
-      \hline
-      COBWEB             &    1987        &   tree-based      &    Online-offline   & Landmark \\
-     \hline
-      SWEM               &    2009        &  EM Algorithm     &  Online-offline     & Sliding\\
-     \hline
-     pcStream            &    2015        &    SIMCA          &   Single-pass       & Damped  \\
-    \hline 
-      SNCStream          &    2015        &    Network        &   Online            & Damped  \\
-    \hline 
-    SNCStream+      &    2016        &       Network     &    Online           & Damped  \\
-      
-\bottomrule
-    \end{tabular}
+\begin{table}[]
+\centering
+\small
+\caption{Overview of data stream clustering methods \protect\cite{mansalis2018evaluation}}
+\label{landmarkwin}
+\begin{tabular}{lllll}
+\hline
+\textbf{Algorithms} & \textbf{Year} & \textbf{Approach} & \textbf{Processing} & \textbf{Time Window} \\ \hline \midrule
+\multicolumn{5}{c}{\cellcolor[HTML]{C0C0C0}\textbf{Partitioning-based}}                              \\ \hline
+Stream              & 2000          & k-median          & Single-pass         & Landmark             \\ \hline
+StreamLSearch       & 2002          & k-median          & Single-pass         & Landmark             \\ \hline
+CluStream           & 2003          & k-means           & Online-Offline      & Pyramidal            \\ \hline
+HCluStream          & 2006          & k-means           & Online-Offline      & Pyramidal            \\ \hline
+Olindda             & 2007          & k-means           & Online-Offline      & Landmark             \\ \hline
+SWClustering        & 2008          & k-means           & Online-Offline      & Sliding              \\ \hline
+StreamKM++          & 2012          & k-means++         & Online-Offline      & Landmark             \\ \hline
+BICO                & 2013          & k-means           & Online-Offline      & Landmark             \\ \hline
+StreamXM            & 2015          & x-means           & Merge-reduce        & Landmark             \\ \hline
+\multicolumn{5}{c}{\cellcolor[HTML]{C0C0C0}\textbf{Hierarchical-based}}                              \\ \hline
+BIRCH               & 1996          & CF-tree           & Single-pass         & Landmark             \\ \hline
+TS-Stream           & 2015          & Decision Tree     & Single-pass         & Sliding              \\ \hline
+\multicolumn{5}{c}{\cellcolor[HTML]{C0C0C0}\textbf{Density-based}}                                   \\ \hline
+DenStream           & 2006          & DBSCAN            & Online-Offline      & Damped               \\ \hline
+SDStream            & 2009          & DBSCAN            & Online-Offline      & Sliding              \\ \hline
+HDenStream          & 2009          & DBSCAN            & Online-Offline      & Damped               \\ \hline
+FlockStream         & 2009          & Swarms            & Single-pass         & Damped               \\ \hline
+rDenStream          & 2009          & DBSCAN            & Online-Offline      & Damped               \\ \hline
+C-DenStream         & 2009          & C-DBSCAN          & Online-Offline      & Damped               \\ \hline
+PreDeConStream      & 2012          & DBSCAN            & Online-Offline      & Damped               \\ \hline
+HDDStream           & 2012          & DBSCAN            & Online-Offline      & Damped               \\ \hline
+MuDi-Stream         & 2016          & DBSCAN            & Online-Offline      & Damped               \\ \hline
+EDDS                & 2017          & DBSCAN            & Online-Offline      & Damped               \\ \hline
+\multicolumn{5}{c}{\cellcolor[HTML]{C0C0C0}\textbf{Grid-based}}                                      \\ \hline
+DUstream            & 2005          & Dense-unit        & Online-Offline      & Landmark             \\ \hline
+D-stream            & 2007          & Dense-region      & Online-Offline      & Damped               \\ \hline
+DDStream            & 2008          & DCQ-means         & Online-Offline      & Damped               \\ \hline
+MR-Stream           & 2009          & Dense-region      & Online-Offline      & Damped               \\ \hline
+PKS-Stream          & 2011          & Dense-region      & Online-Offline      & Damped               \\ \hline
+DENGRIS             & 2012          & Dense-region      & Single-pass         & Sliding              \\ \hline
+\multicolumn{5}{c}{\cellcolor[HTML]{C0C0C0}\textbf{Model-based}}                                     \\ \hline
+COBWEB              & 1987          & Tree-based        & Online-Offline      & Landmark             \\ \hline
+SWEM                & 2009          & EM Algorithm      & Online-Offline      & Sliding              \\ \hline
+pcStream            & 2015          & SIMCA             & Single-pass         & Damped               \\ \hline
+SNCStream           & 2015          & Network           & Online              & Damped               \\ \hline
+SNCStream+          & 2016          & Network           & Online              & Damped               \\ \hline \midrule
+\end{tabular}
 \end{table}
+
+
+
+
+
+
+
+
+
+
+
+
+% \begin{table}[h]
+%     \centering
+%     \caption{ Overview of data stream clustering methods \protect\cite{mansalis2018evaluation}}
+%     \label{landmarkwin}
+%     \small
+%     \begin{tabular}{c c c c c}
+%     \hline
+%       \normalsize{\textbf{Algorithms} & \textbf{Year} & \textbf{ Approach } & \textbf{Processing} & \textbf{ Time Window}}  \\
+%      \hline \midrule
+%       \rowcolor{lightgray}& &\rowcolor{lightgray}\centering \textbf{Partitioning-based }  & &  \\
+%       \hline 
+%       \hline
+%       Stream             &   2000    &   k-median     &  Single-pass       & Landmark \\
+%      \hline
+%       StreamLSearch      &   2002    &   k-median     &   Single-pass      & Landmark \\
+%     \hline
+%      CluStream           &   2003    &  k-means       &  Online-Offline    & Pyramidal \\
+%     \hline   
+%      HCluStream         &    2006   &    k-means     & Online-Offline      & Pyramidal \\
+%     \hline
+%      Olindda            &   2007    &   k-means      &   Online-Offline    & Landmark  \\
+%     \hline    
+%      SWClustering        &    2008   &    k-means     &  Online-offline    & Sliding   \\
+%       \hline
+%       StreamKM++         &    2012   &   k-means++    & Online-Offline     & Landmark   \\
+%     \hline 
+%       BICO               &    2013   &    k-means     &  Online-Offline    & Landmark  \\
+%       \hline
+%       StreamXM           &    2015   &    X-means     &  Merge-reduce    & Landmark  \\
+%         \hline
+%       \hline
+%       \rowcolor{lightgray}&& \rowcolor{lightgray}\centering\textbf{Hierarchical-based }  & &  \\
+%       \hline 
+%       \hline 
+%       BIRCH             &    1996        &     CF-tree           &  Single-pass    & Landmark \\
+%      \hline
+%       TS-Stream         &     2015       &    Decision Tree      & Single-pass     & Sliding  \\
+%       \hline
+%       \hline
+%      \rowcolor{lightgray}& &\rowcolor{lightgray}\centering \textbf{Density-based}  & &  \\
+%       \hline 
+%       \hline
+%     DenStream            &    2006     &    DBSCAN       & Online-offline  &   Damped   \\
+%      \hline
+%      SDStream            &    2009     &    DBSCAN       & Online-offline  &   Sliding \\
+%       \hline
+%       HDenStream         &     2009    &    DBSCAN       &  Online-offline &   Damped  \\
+%         \hline
+%       FlockStream        &     2009    &    Swarms       &  Single-pass    &   Damped  \\
+%         \hline 
+%       rDenStream         &    2009     &     DBSCAN      & Online-offline  &   Damped  \\
+%         \hline 
+%       C-DenStream        &    2009     &     C-DBSCAN    &Online-offline   &   Damped \\
+%           \hline 
+%       PreDeConStream     &    2012     &     DBSCAN      & Online-offline  &   Damped \\
+%           \hline 
+%       HDDStream          &    2012     &     DBSCAN      & Online-offline  &   Damped   \\
+%           \hline 
+%       MuDi-Stream        &    2016     &       DBSCAN    & Online-offline  &   Damped\\
+%       \hline          
+%       EDDS               &    2017     &     DBSCAN      & Online-offline  &   Damped \\
+%       \hline
+%       \hline
+%      \rowcolor{lightgray}& &\rowcolor{lightgray}\centering \textbf{Grid-based}  & &  \\
+%       \hline 
+%       \hline      
+%      DUstream            &    2005        &      Dense-unit       &     Single-pass    &  Landmark\\
+%       \hline
+%       D-stream           &     2007       &    Dense-region       &  Online-offline    &   Damped\\
+%     \hline 
+%       DDStream           &    2008        &    DCQ-means          &     Online-offline & Damped \\
+%     \hline 
+%       MR-Stream          &    2009        &     Dense-region      &  Online-offline    & Damped\\
+%     \hline 
+%       PKS-Stream         &    2011        &    Dense-region       &  Online-offline    & Damped\\
+%     \hline 
+%       DENGRIS            &    2012        &   Dense-region        &  Single-pass       & Sliding\\
+%       \hline 
+%       \hline
+%      \rowcolor{lightgray}& &\rowcolor{lightgray}\centering\textbf{Model-based}  & &  \\
+%       \hline 
+%       \hline
+%       COBWEB             &    1987        &   tree-based      &    Online-offline   & Landmark \\
+%      \hline
+%       SWEM               &    2009        &  EM Algorithm     &  Online-offline     & Sliding\\
+%      \hline
+%      pcStream            &    2015        &    SIMCA          &   Single-pass       & Damped  \\
+%     \hline 
+%       SNCStream          &    2015        &    Network        &   Online            & Damped  \\
+%     \hline 
+%     SNCStream+      &    2016        &       Network     &    Online           & Damped  \\
+      
+% \bottomrule
+%     \end{tabular}
+% \end{table}
 
 In this research work, the DSAP algorithm is proposed as a simplification of the previous streaming AP algorithms. This is further discussed in the next Chapter.
 

@@ -228,28 +228,35 @@ if epsilon < epsilonC`m:
     epsilon = (epsilonC`m + epsilon)/2  
 \end{lstlisting}
 
-In order to keep the number of micro-clusters under control and avoid obsolete clusters, cluster centroids that are older than the expiration number $ex$ times the time period (older than a specific number of landmark) are removed periodically. The oldest relevant time is calculated by subtracting the $ex$ number of time periods from the current timestamp (\texttt{start\_time}). The centroids with timestamps greater than this value are retained in the updated centroids along with their updated associated timestamps. Based on the duration of interest this expiration value is set by the user at the start of the stream clustering process. 
+In order to keep the number of micro-clusters under control and avoid obsolete clusters, cluster centroids that are older than the expiration number $e_x$ times the time period (older than a specific number of landmark) are removed periodically. The oldest relevant time is calculated by subtracting the $e_x$ number of time periods from the current timestamp (\texttt{start\_time}). The centroids with timestamps greater than this value are retained in the updated centroids along with their updated associated timestamps. Based on the duration of interest this expiration value is set by the user at the start of the stream clustering process. 
 
 
 
 \begin{lstlisting}
 # Remove old micro-clusters
 # Number is an integer value defines by the user
-ex = Number
+ex = int Number
 remain_centers = np.ones(len(tq))
 for i in range(len(tq)):
-    # Remove the centroids with the time more than the ex
+    # Remove the centroids with time more than the ex
     if tq[i] < start_time - ex * L:
         remain_centers[i] = 0
+indx_remain= np.where(remain_centers==0) 
 Cm  = Cm[remain_centers==1]
 tq = tq[remain_centers==1]
+a = indx_remain[0]
+for j in range(len(a)):
+    indx = np.where(X_label == a[j])
+    # Remove the labels with time more than ex
+    X_label= np.delete(X_label, indx)
+
 \end{lstlisting}
 
 
 The next phase of the DSAP algorithm is the offline macro-cluster phase which generates final clusters by applying the AP algorithm one more time to all the micro-cluster centroids accumulated during the online phase (\texttt{AffinityPropagation().fit ($Cm$)}). In the offline phase only the summary statistics represented by the micro-clusters centroids stored during the online phase is used and not the actual data set itself. The number of micro-clusters is a lot smaller than the total number of points in the data set that it represents. The number of macro-clusters obtained in this phase are less than the number of micro-clusters as they summarize the whole period of observation and not individual windows. The pseudo-code presented in Algorithm \ref{algSDAPi} shows the outline of the entire DSAP algorithm. 
 
 \begin{lstlisting}
-# Macro Clustering Phase
+# Offline Macro-clustering Phase
 preference = np.median(euclidean_distances(Cm, squared=True))
 AP_mac = AffinityPropagation(preference, damping).fit(Cm)
 cluster_centers_indices_mac = AP_mac.cluster_centers_indices_
@@ -447,7 +454,6 @@ mac_label = AP_mac.labels_
 %     \caption{ .}
 %     \label{dsc}
 % \end{figure}
-
 
 
 
