@@ -666,9 +666,7 @@ Tonsley Building is a six-story building populated by students and staff with en
 \label{laay}
 \end{figure*}
 
-E-counter sensors were deployed at all stairs. They are made by the International Road Dynamics company and consist of a pair of transmitter and receiver(transmitter: PTx20-1 and receiver: PRx20W1). The transmitter sends an infrared message to the receiver, when the infrared light is interrupted by someone passing through it, a count is registered. If no one passes, then these sensors log a count value of zero every 10 minutes. Each stair has two sensors, UP/DOWN that determine a person's direction of travel up and down the stairs. Signals from the sensors are sent to wireless hubs in real-time and then from the hubs to the server. 
-
-The specification of all the sensors from this company are shown in Table \ref{sensor}. The maximum count value for each direction is about 1,000,000.
+E-counter sensors were deployed at all stairs. They are made by the International Road Dynamics company and consist of a pair of transmitter and receiver(transmitter: PTx20-1 and receiver: PRx20W1). The transmitter sends an infrared message to the receiver, when the infrared light is interrupted by someone passing through it, a count is registered. If no one passes, then these sensors log a count value of zero every 10 minutes. Each stair has two sensors, UP/DOWN that determine a person's direction of travel up and down the stairs. Signals from the sensors are sent to wireless hubs in real-time and then from the hubs to the server. The specification of all the sensors from this company are shown in Table \ref{sensor}. The maximum count value for each direction is about 1,000,000.
 
 \begin{table}[!h]{}
  \small
@@ -813,7 +811,7 @@ Furthermore, if no one passes through the beam of sensors, the sensors indicate 
 
 The e-counters save the position values as a string character combination of numbers and strings. Hence, it was also necessary to convert the string format of the position values into the integer format in order to allow us to use them as an input for the DSAP algorithm. 
 %or fire alarm went to alarm for evacuation. This leads to having missing data points during data stream.%In addition, on May 7, printer level 5 broken and people had to use the stairs to get printer level 4.
-Finally, the feature selection task was performed to provide a target data set ready to be used by the simulation and clustering. The Position and Count features were selected for computing the clusters.% and are illustrated in Table \ref{variab}
+Finally, the feature selection task was performed to provide a target data set ready to be used by the simulation and clustering. The Position and Count features were selected for computing the clusters. The hyperparameters for the AP in the DSAP algorithm are consistent and fixed for the entire experiment. The damping value is equal to 0.96, maximum iteration is 100, and preference is equal to the median of the similarity matrix.
 
 
 
@@ -1022,7 +1020,7 @@ The UJIIndoorLoc data set generated includes three buildings with four or more f
     \\\hline
     Building ID            &    0,1,2     &  Each of the three buildings TI,TD, and TC          
     \\\hline
-    Space ID               &    integer   & Identification of a particular space            
+    Space ID               &    integer   & Identification of a coverage area of a particular WiFi antenna            
     \\\hline
     Relative Position      &    1= inside 2=outside       & Outside means in front of the door of the space \\\hline
     User ID                &    0,1,2,...,18    &  Unique code for users who participated in the experiment           \\\hline
@@ -1192,8 +1190,19 @@ The timestamp was recorded in a linux-based time format, such as 1371714467 whic
 
 The feature SpaceID contains values starting from 1 to 250, but there were gaps between numbers 50-100 and 150-200. These gaps were removed and the updated SpaceID numbers range from 1 to 122 now. During the validation part of the experiment a subset of the phones (PhoneID = 0,2,4,5,9,12,15,20, and 21) were not used. The remaining Phoneids were renamed to make the records sequential just like the SpaceIDs. The space identifiers, the SpaceID, BuildingID, Floor, and relative position together provide a unique label for a location. A new feature is added to the data set in column 531 called SPACEID, that contains a unique spatial identifier for each location. The SPACEID was created by combining the space identifiers and then giving them a sequential numbers from 0-732.
 
-Two numerical variables were selected: the SPACEID and the Phone ID for this study as these provide the necessary information regarding the people present at any location with time. Finally, in order to remove bias due to the difference in range of the two variables the data was normalized. The normalization process is applied one level before clustering with the minmaxscaler normalization process under the preprocessing library. All these preceding steps provide a target data set ready to be used by the stream simulation and the two-phase clustering algorithms. 
+% Two numerical variables were selected: the SPACEID and the Phone ID for this study as these provide the necessary information regarding the people present at any location with time. Finally, in order to remove bias due to the difference in range of the two variables the data was normalized. The normalization process is applied one level before clustering with the minmaxscaler normalization process under the preprocessing library. All these preceding steps provide a target data set ready to be used by the stream simulation and the two-phase clustering algorithms. 
 
+The UJIIndoorLoc data was collected in 6 days and the days are non-uniformly distributed over 2 month as shown in table \ref{udate} earlier. The data collection during those six days was not continuous but collected at a much higher cadence. For these reasons a smaller landmark time window of 10 minutes was applied on this dataset. Moreover, The hyperparameters for the AP in the DSAP algorithm are consistent and fixed for the entire experiment. The damping value is equal to 0.9, maximum iteration is 100, and preference is equal to the median of the similarity matrix.
+
+% \begin{itemize}
+%     \item A constant damping factor equal to 0.9 for AP algorithm.
+%     \item The maximum iteration for AP is the predefined value and it is equal to 100.
+%     \item The preference hyper-parameter for AP is the median value of the similarity matrix.
+%     \item The expiration value equal to the last 5 landmark window is chosen. 
+%     \item The time frame for this data is every 10 minutes.
+
+    
+% \end{itemize}
 
 
 %\item\textbf{Data Stream Simulation:}
@@ -1229,23 +1238,14 @@ Two numerical variables were selected: the SPACEID and the Phone ID for this stu
 
 
 % \subsubsection{Data Stream Clustering} 
-% The UJIIndoorLoc dataset is quite different from the e-counter dataset. The data was collected in 6 days (training data) and the days are non-uniformly distributed over 2 month as shown in table \ref{udate} earlier. The data collection during those six days was not continuous but collected at a much higher cadence. For these reasons a smaller landmark time window of 10 minutes was applied on this dataset.
-
-% \begin{itemize}
-%     \item A constant damping factor equal to 0.9 for AP algorithm.
-%     \item The maximum iteration for AP is the predefined value and it is equal to 100.
-%     \item The preference hyper-parameter for AP is the median value of the similarity matrix.
-%     \item The expiration value equal to the last 5 landmark window is chosen. 
-%     \item The time frame for this data is every 10 minutes.
-
-    
-% \end{itemize}
+% 
 
 
 
 
 %Processing time is calculated by subtract the end time from starting time with the  $time()$ method. Memory usage obtained from $psutil$ library in Python for processes and system utilization as same as $memory$ in R programming language. Outlier Detection, Processing Time, and Memory Consumption. 
 
+% \hspace{9 cm}
 
 \section{System and Software}
 

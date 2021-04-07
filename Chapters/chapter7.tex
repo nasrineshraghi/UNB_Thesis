@@ -4,8 +4,12 @@
 % \begin{document}
 \chapter{Conclusions and Future Work}
 
-This research work was proposed a novel affinity propagation data stream clustering algorithm called DSAP with the implementation of the landmark time window model for keeping the updated data points from the stream. The DSAP model is capable of handling any form of streaming data. It is specially useful for extracting summery information from a large number of indoor localization and internet of things sensors which they have not been applied on AP stream clustering models.
+This research work was proposed a data stream affinity propagation clustering algorithm called DSAP with the implementation of the landmark time window model with the two stage, online-micro and offline-macro clustering. The DSAP model is capable of handling any form of streaming data. It is specially useful for extracting summery information from a large number of indoor localization and internet of things sensors which they have not been applied on AP stream clustering models.
 The proposed DSAP algorithm is validated the clustering results based on the intrinsic clustering validation and performance evaluation metrics.  
+
+Our preliminary results demonstrate the impact they have on finding meaningful patterns and provide insight into indoor localization data based on number of people and their locations. The first data, e-counter, is an experiment performed in Flinders university to capture the impact of motivational intervention on the physical activity of people. The clustering results shows the patter of people movement during three month, before, during and after intervention. This experiment was not successful to motivate people using stairs.
+
+The second implementation of DSAP was on the WiFi indoor localization data to show the concept-drift and people movement from one building to another and how DSAP can detect this pattern.  
 
 Future research will explore other time window models such as sliding, damped and pyramidal models for the DSAP algorithm. Moreover, adding weight to macro cluster to show more accurate representation of all micro cluster with the importance would be the next step.  
 
