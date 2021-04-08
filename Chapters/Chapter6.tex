@@ -23,7 +23,8 @@
 % \begin{document}
 \chapter{Discussion of the Results}
 
-In this Chapter, the main clustering results from applying stream clustering using the data streams generated from both experiments are presented to discuss the strengths and weaknesses of the proposed DSAP algorithm. %of AP and discuss how DSAP provides potential solutions to these.
+In this Chapter, the main clustering results from applying stream clustering using the data streams generated from both experiments are presented to discuss the strengths and weaknesses of the proposed DSAP algorithm. 
+%of AP and discuss how DSAP provides potential solutions to these.
 %\subsubsection{Comparison between DSAP and streaming K-means Phase}: The aim is to demonstrate the relevance of the proposed DSAP approach compared to streaming K-means algorithm. very important to explain why streaming kemans: - difficult to find available source code from previusouly proposed stream AP, etc...online)no offline) - no window
 % \section{Validation of DSAP Algorithm}
 % \section{Experimentation on Dataset}
@@ -91,14 +92,14 @@ In this Chapter, the main clustering results from applying stream clustering usi
  
 \section{Behavioural Intervention Experiment} 
 
-The streaming cluster analysis was aimed at finding any evolutionary patterns in stair usage due to an educational intervention campaign. The clustering results were generated using three months of the experiment, which were named as before, during, and after intervention.
+The streaming cluster analysis was aimed at finding any evolutionary patterns in stair usage due to an educational intervention campaign. The clustering results were generated using three months of the experiment, which were named as before, during, and after the intervention.
 
 
-\subsection{Spatio-temporal data patterns}
+\subsection{Spatio-temporal Data Patterns}
 
 %The people counter sensors located at the stairs of the Tonsley building log several parameters.
 
-The most relevant measurements for this cluster analysis were the location of people counter sensors at the Tonsley building and the number of people passing through these sensors. The landmark time window of one hour was used to accumulate the data streams. Figure \ref{updown} illustrates the daily stair usage patterns. The three months named as before intervention, during intervention, and after intervention are highlighted in purple, blue, and yellow shaded regions respectively. It is quite apparent that more people preferred taking the stairs to go down rather than up. An expected low usage of stairs is also observed on the weekends. The mid-semester break from April 15-28 was excluded from the analysis as the measurements made during this period represented anomalous behavior. 
+The most relevant measurements for this cluster analysis were the location of people counter sensors at the Tonsley building and the number of people passing through these sensors. The landmark time window of one hour was used to accumulate the data streams. Figure \ref{updown} illustrates the daily stair usage patterns. The three months named as before intervention, during the intervention, and after intervention are highlighted in purple, blue, and yellow shaded regions, respectively. It is quite apparent that more people preferred taking the stairs to go down rather than up. An expected low usage of stairs is also observed on the weekends. The mid-semester break from April 15-28 was excluded from the analysis as the measurements made during this period represented anomalous behavior. 
 
 \begin{figure}[b]
     \includegraphics[width=0.5\textwidth]{image/Chapters/Chapter6/up.png}%\hfill
@@ -112,7 +113,9 @@ The most relevant measurements for this cluster analysis were the location of pe
 
 %The entire dataset split by the direction of stair use represents 
 
-To gain further insights into the data, Figure \ref{3mon} shows the number of people using the stairs (both up and down) for each month of the experiment. No discernible differences could be found in the these patterns that were observed between the weekdays for one month of data collected before, after, and during intervention. The weekends as expected reported count values orders of magnitude smaller than the weekdays. Although the overall trend of the number of people using the stairs at each level remains consistent for the three months, one peak of stair usage occurred on Monday April 1, before in the intervention, another peak occurred on Friday May 10 during the intervention, and happened again on Tuesday June 11 after the intervention campaign has ended. No particular event was found to justify these peaks. Finally, after a closer inspection of the data, it was found that on May 10 a group of students went up around 12:06 pm and presumably the same group came down at 12:23 pm. This led to an increase in the measured count across many levels, whether this alone accounts for the increase in the accumulated count values for the entire month after the intervention. 
+To gain further insights into the data, Figure \ref{3mon} shows the number of people using the stairs (both up and down) for each month of the experiment. No discernible differences could be found in these patterns that were observed between the weekdays for one month of data collected before, after, and during the intervention. The weekends as expected, reported count values orders of magnitude smaller than the weekdays. Although the overall trend of the number of people using the stairs at each level remains consistent for the three months, one peak of stair usage occurred on Monday April 1, before the intervention, another peak occurred on Friday May 10, during the intervention and happened again on Tuesday June 11 after the intervention campaign has ended.
+After a closer inspection of the data, it was found that on May 10, a group of students went up around 12:06 pm, and presumably, the same group came down at 12:23 pm. This led to an increase in the measured count across many levels, whether this alone accounts for the increase in the accumulated count values for the entire month after the intervention. No particular event was found to justify other peaks. 
+
 
 \begin{figure}[!htbp]
 \centering
@@ -128,7 +131,7 @@ To gain further insights into the data, Figure \ref{3mon} shows the number of pe
 
 %\todo[inline]{Nasrin: write down the exact dates when the peaks have occured } 
 
-A dynamic pattern behaviour was also observed in a hourly basis for each month of the experiment as shown in Figure \ref{spa2}. The usage peak is around noon for most of the weekdays, most probably due to the lunch break. The people count is asymmetric on both sides of the peak, with more people using the stairs on Tuesday afternoons during all months of the experiment. Overall the month before the intervention campaign seems to have recorded the highest usage than the following months. By looking at this trend, our preliminary hypothesis is that the intervention campaign has not generated the expected impact on motivating people to take the stairs. Therefore, the clustering results play a significant role in testing this hypothesis.  % these observations can also be made from the next figure.
+A dynamic pattern behaviour was also observed on an hourly basis for each month of the experiment, as shown in Figure \ref{spa2}. The usage peak is around noon for most of the weekdays, most probably due to the lunch break. The people count is asymmetric on both sides of the peak, with more people using the stairs on Tuesday afternoons during all months of the experiment. Overall the month before the intervention campaign seems to have recorded the highest usage than the following months. By looking at this trend, our preliminary hypothesis is that the intervention campaign has not generated the expected impact on motivating people to take the stairs. Therefore, the clustering results play a significant role in testing this hypothesis.  % these observations can also be made from the next figure.
 
 \begin{figure}[tbp]
     \includegraphics[width=.49\textwidth]{image/Chapters/Chapter6/aggWeekPre.jpg}%\hfill
@@ -148,9 +151,6 @@ A dynamic pattern behaviour was also observed in a hourly basis for each month o
 % \todo[inline]{Nasrin: write down the exact dates when the peaks have occured }
 %but an increase at each level is observed during the month of intervention which warrants further study.NOT SURE WHAT IS MEANT HERE
 
-The spatio-temporal patterns found in Figure \ref{spa1} were generated by aggregating the number of people at each level of the building using the three months under analysis. It is clear from the graphs on the left of Figure \ref{spa1} that the Level 2-1 stairs were frequently used meanwhile levels 4-3 North and 5-4 North were used the least. This could be due to fewer people using the north entrances since the north entrance leads to a low capacity parking lot (refer to Figure \ref{tons} for the Tonsley building layout). These aggregated plots also confirm that the usage peak was around noon. The asymmetry in people count on both sides of the peak is seen in these plots as well. This signifies that consistently people have used the stairs in the afternoon rather than in the morning. 
-
-Finally, Figure \ref{spa1} shows the clustering results that were generated by applying the K-means clustering algorithm on the total number of people found at each hour across all levels. Four bins are used to distinguish the hourly cluster results. The usage peak occurred between 12 pm and 1 pm at Level 2-1 for both during and after intervention months. The stair usage at 11 am, 2 pm, and 3 pm. shows the highest values. During the late evening and early morning hours is expected that the number of people inside the building was low. The last bin consists of the hours with moderate activity seen at the start and end of the workdays. 
 
 \begin{figure}[htb]
 \centering
@@ -177,6 +177,11 @@ Finally, Figure \ref{spa1} shows the clustering results that were generated by a
     \caption{Spatio-temporal patterns during the experiment. \textit{Left}: Hourly stair usage patterns per building level. \textit{Right}: Similar bins of hourly cluster patterns}
     \label{spa1}
 \end{figure}
+
+The spatio-temporal patterns found in Figure \ref{spa1} were generated by aggregating the number of people at each level of the building using the three months under analysis. It is clear from the graphs on the left of Figure \ref{spa1} that the Level 2-1 stair were frequently used; meanwhile, levels 4-3 North and 5-4 North were used the least. This could be due to fewer people using the north entrances since the north entrance leads to a low capacity parking lot (refer to Figure \ref{tons} for the Tonsley building layout). These aggregated plots also confirm that the usage peak was around noon. The asymmetry in people count on both sides of the peak is seen in these plots as well. This signifies that consistently people have used the stairs in the afternoon rather than in the morning. 
+
+Finally, Figure \ref{spa1} shows the clustering results that were generated by applying the K-means clustering algorithm on the total number of people found at each hour across all levels. Four bins are used to distinguish the hourly cluster results. The usage peak occurred between 12 pm and 1 pm at Level 2-1 for both during and after intervention months. The stair usage at 11 am, 2 pm, and 3 pm. shows the highest values. During the late evening and early morning hours is expected that the number of people inside the building was low. The last bin consists of the hours with moderate activity seen at the start and end of the workdays. 
+
 
 
 
@@ -261,16 +266,14 @@ Finally, Figure \ref{spa1} shows the clustering results that were generated by a
 
 % The first week after intervention from May 27-June 2 has the same pattern for level 4-3 south and  5-4 south as shown in Figure \ref{distafter}. Additionally, during this week, the number of people moving in level 4-3 north and 5-4 north are almost identical. In this period, the number of people at levels 2-1 and 3-2 was the highest  amongst the three weeks. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Micro-cluster evolution}
+\subsection{Micro-cluster Evolution}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %DISCUSS FIGURE 6.10
 %In order to analyze streaming data or large datasets, batch processing or stream clustering techniques are generally applied. A one hour landmark time window was chosen for the DSAP algorithm to analyze the e-counter dataset. It was found that using a one hour window gave optimum cluster values since this guaranteed that the first time window has enough number of points to initialize the stream clustering process. The hyper-parameters for the AP in the DSAP algorithm are kept fixed at the default values except for the preference value which was set to the median of the similarity matrix. The damping value was kept at 0.9 for the entire experiment.The expiration value was varied from 1 to values corresponding to a week or month depending on the length of the dataset under analysis.% 163. THIS PARAGRAPH TALKS ABOUT IMPLEMENTATION, MOVE THIS CHAPTER IF NEEDED TO THE IMPLEMENTATION.
  
-The evolution of micro-clusters was interesting to be analyzed in order to interpret the results produced by clustering the data points accumulated for each landmark time window. In this Section we discuss the results generated on Wednesday May 1 that were observed between 7 am to 7 pm. Figure \ref{APhourly} shows the centroids of the micro-clusters and their respective data points that are connected using straight lines. The one hour expiration time was chosen to ensure that only the data points within the one hour window were used for finding clusters. 
+The evolution of micro-clusters was interesting to be analyzed in order to detect any concept drift during the clustering process. In this Section, we discuss the results generated on Wednesday May 1, which were observed between 7 am to 7 pm. Figure \ref{APhourly} shows the centroids of the micro-clusters and their respective data points that are connected using straight lines. The one-hour expiration time was chosen to ensure that only the data points within the one-hour window were used for finding clusters. 
 
-The changes in stair usage across all levels can be clearly seen in Figure \ref{APhourly}. The micro-clusters show an increase in activity starting around 9-11 am. At the peak around noon, the micro-clusters become more dense occurring at different levels of the building. As the day progresses, the number of micro-clusters gradually decreases. These generated patterns were observed throughout the experiment, demonstrating the potential of using the DSAP approach for finding and tracking meaningful micro-clusters over space and time.
- 
-
+The changes in stair usage across all levels can be clearly seen in Figure \ref{APhourly}. The micro-clusters show an increase in activity starting around 9-11 am. At the peak around noon, the micro-clusters become more dense occurring at different levels of the building. As the day progresses, the number of micro-clusters gradually decreases. These generated patterns were observed throughout the experiment, demonstrating the potential of using the DSAP approach for finding and tracking meaningful micro-clusters over space and time. The strength of DSAP lies in its ability to continuously find micro-clusters by responding quickly to any changes in the stream data.
 
 % \begin{figure}[!h]
 %     \centering
@@ -316,13 +319,14 @@ The changes in stair usage across all levels can be clearly seen in Figure \ref{
 \label{APhourly}
 \end{figure}
 
-\subsection{Generated micro and macro-clusters}
+\subsection{Generated Micro and Macro-clusters}
 
-The clustering results are presented by visualizing all the centroids of the micro-clusters as blue circles while the centroids of the macro-clusters are represented as red crosses. The data points are visualized as black dots. The numbers of data points associated with each micro-cluster is mentioned right next to it. Searching for meaningful clusters have been achieved by evaluating weekly and monthly patterns.
+The DSAP clustering results are presented by visualizing all the centroids of the micro-clusters as blue circles while the centroids of the macro-clusters are represented as red crosses. The data points are visualized as black dots. The numbers of data points associated with each micro-cluster are mentioned right next to it. Searching for meaningful clusters has been achieved by evaluating weekly and monthly patterns.
+
 
 \textbf{Weekly Patterns}
 
-The first week of each of the three months under study were selected to interpret the clustering results. The first week of 18 March - 24 March before the intervention, the first week of 29 April - 5 May during the intervention, and the first week after the removal of the educational aids was from 27 May - 2 June. The selected expiration time equals to 160 was used for generating weekly patterns that are summarized in Table \ref{mactab}. Five macro-clusters have been found for each week, having a variety of density values ranging from 11 up to 4520. This overall trend of high density clusters with low counts was consistently present in data. It is also interesting to point out that the same macro-cluster (4,1) has happened during the three weeks of the analysis, but having different number of micro-clusters containing a large number of data points. 
+The first week of each of the three months under study was selected to interpret the clustering results. The first week of 18 March - 24 March before the intervention, the first week of 29 April - 5 May during the intervention, and the first week after the removal of the educational aids was from 27 May - 2 June. The selected expiration time equals to 168 was used for generating weekly patterns that are summarized in Table \ref{mactab}. Five macro-clusters have been found for each week, having a variety of density values ranging from 11 up to 4520. This overall trend of high-density clusters with low counts was consistently present in data. It is also interesting to point out that the same macro-cluster (4,1) has happened during the three weeks of the analysis, but having a different number of micro-clusters containing a large number of data points. 
 
 \begin{table}[]
 \small
@@ -332,19 +336,19 @@ The first week of each of the three months under study were selected to interpre
 \begin{tabular}{clcc}
 \hline
 \textbf{Macro-Cluster} & \textbf{\begin{tabular}[c]{@{}l@{}}Coordinates\\ in the Plot\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Number of \\ Micro-Cluster\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Total Number of \\ Data Points \end{tabular}} \\ \hline\midrule
-\multicolumn{4}{c}{\cellcolor[HTML]{ECF4FF}\textbf{First week before intervention (March 18 - March 24)}}                                                                                                                                                                   \\ \hline
+\multicolumn{4}{c}{\cellcolor[HTML]{ECF4FF}\textbf{First Week Before Intervention (March 18 - March 24)}}                                                                                                                                                                   \\ \hline
 \textbf{1}             & (1,1)                                                                      & 1                                                                           & 1603                                                                                    \\ \hline
 \textbf{2}             & (1,9)                                                                      & 3                                                                           & 64                                                                                      \\ \hline
 \textbf{3}             & (4,1)                                                                      & 6                                                                           & 4520                                                                                    \\ \hline
 \textbf{4}             & (4,22)                                                                     & 2                                                                           & 13                                                                                      \\ \hline
 \textbf{5}             & (6,5)                                                                      & 3                                                                           & 82                                                                                      \\ \hline
-\multicolumn{4}{c}{\cellcolor[HTML]{ECF4FF}\textbf{First week during intervention (April 29 - May 5)}}                                                                                                                                                                      \\ \hline
+\multicolumn{4}{c}{\cellcolor[HTML]{ECF4FF}\textbf{First Week During Intervention (April 29 - May 5)}}                                                                                                                                                                      \\ \hline
 \textbf{1}             & (1,5)                                                                      & 3                                                                           & 109                                                                                     \\ \hline
 \textbf{2}             & (2,1)                                                                      & 5                                                                           & 4388                                                                                    \\ \hline
 \textbf{3}             & (2,11)                                                                     & 3                                                                           & 6                                                                                       \\ \hline
 \textbf{4}             & (4,1)                                                                      & 1                                                                           & 921                                                                                     \\ \hline
 \textbf{5}             & (6,1)                                                                      & 3                                                                           & 1664                                                                                    \\ \hline
-\multicolumn{4}{c}{\cellcolor[HTML]{ECF4FF}\textbf{First week after intervention (May 27 - June 2)}}                                                                                                                                                                        \\ \hline
+\multicolumn{4}{c}{\cellcolor[HTML]{ECF4FF}\textbf{First Week After Intervention (May 27 - June 2)}}                                                                                                                                                                        \\ \hline
 \textbf{1}             & (1,3)                                                                      & 4                                                                           & 3269                                                                                    \\ \hline
 \textbf{2}             & (2,15)                                                                     & 3                                                                           & 11                                                                                      \\ \hline
 \textbf{3}             & (4,1)                                                                      & 1                                                                           & 1810                                                                                    \\ \hline
@@ -420,7 +424,7 @@ The expiration time value of 670 was used to compute the monthly patterns as sho
 
 %The first week of each of the three months under study and analyzed earlier are selected again to evaluate the efficiency and robustness of the DSAP algorithm using a one hour landmark time window. 
 
-\subsection{Evaluation of Results}
+\subsection{Performance and Validation Metrics}
 
 For the DSAP evaluation, the AP model was used as a baseline to compare the performance and validation metrics. The same weeks used for computing the macro-clusters shown in Figure \ref{dsap3week} were used in this evaluation.
 
@@ -436,7 +440,7 @@ For the DSAP evaluation, the AP model was used as a baseline to compare the perf
 
 %\textbf{Performance and Validation Metrics}
 
-The results for each of the metrics along with the number of clusters, processing time, and memory consumption are summarized in Table \ref{all3tab}. A significant saving in processing time is immediately apparent between the DSAP algorithm and AP. The processing time here includes the time taken for all the phases and steps of the DSAP algorithm as it analyzes the entire data using time windows. For a real stream the execution time of interest would be the time taken to execute one window and is expected to be much lower as in DSAP the initial window calculation is the most time intensive step but is performed only once and doesn't affect the current time window. The accuracy of the two methods are similar but the micro-clusters generated by the DSAP shows slightly better values as reported by the metric values. It should be noted that the number of points represented by a cluster greatly affects some of these metrics and hence internal evaluation metric numbers need to be carefully interpreted.
+The results for each of the metrics along with the number of clusters, processing time, and memory consumption are summarized in Table \ref{all3tab}. A significant saving in processing time is immediately apparent between the DSAP algorithm and AP. The processing time here includes the time taken for all the phases and steps of the DSAP algorithm as it analyzes the entire data using time windows. For a real stream the execution time of interest would be the time taken to execute one window and is expected to be much lower as in DSAP the initial window calculation is the most time intensive step but is performed only once and doesn't affect the current time window. The accuracy of the two methods are similar but the micro-clusters generated by DSAP shows slightly improved values as shown by the validation metric values. It should be noted that the number of points represented by a cluster greatly affects some of these metrics and hence internal evaluation metric numbers need to be carefully interpreted.
 
 
 \begin{table}[!h]
@@ -580,7 +584,7 @@ Davies-Bouldin Index                 & 0.5                    & \cellcolor[HTML]
 
 \section{Occupant Behaviour Experiment}
 %This experiment was performed at the Universitat Jaume I campus, in Valencia, Spain across three buildings with four to five floors. 
-The streaming cluster analysis was carried out to reveal occupancy patterns in different buildings at the Universitat Jaume I campus, in Valencia, Spain. The clustering results were generated from analyzing data streams gathered during one day of the experiment. The experiment lasted for six days from May 30 to June 20, but June 20 was selected for the streaming cluster analysis due to a vast number of data points that was collected as shown in Figure \ref{timeline}. The first five days from May 30 until June 12, data streams were only available for building 1, but on June 20, data streams were available for both buildings 2 and 3. Finally, the only day that all users were participating in the experiment was June 20.
+The streaming cluster analysis was carried out to reveal occupancy patterns in different buildings at the Universitat Jaume I campus, in Valencia, Spain. The clustering results were generated from analyzing data streams generated by 16 participants during one day of the experiment. The experiment lasted for six days from May 30 to June 20, but June 20 was selected for the streaming cluster analysis due to a vast number of data points that was collected as shown in Figure \ref{timeline}. The first five days from May 30 until June 12, data streams were only available for building T1, but on June 20, data streams were available for both buildings TD and TC. Finally, the only day that all users were participating in the experiment was June 20.
 
 \begin{figure}
     \centering
@@ -591,22 +595,39 @@ The streaming cluster analysis was carried out to reveal occupancy patterns in d
 
 \subsection{Spatio-temporal Data Patterns}
 
-The most relevant observations for this study were the location of the user (spaceID) and user's phone (phoneID). A 10-minute landmark time window was chosen to analyze the UJIIndoorLoc data. The assumption was that the time interval of 10 minutes would accumulate sufficient number of data points for computing the micro-clusters without having issues with overflowing the time-based repository. Mainly because in this experiment the number of data points every minute was approximately ??? rather than saying it was high. CAN YOU PROVIDE AN ESTIMATE???  
+The most relevant observations for this study were the location of the user (spaceID) and user's phone (phoneID). A 10-minute landmark time window was chosen to analyze the UJIIndoorLoc data. The assumption was that the time interval of 10 minutes would accumulate sufficient number of data points for computing the micro-clusters without having issues with overflowing the time-based repository. Mainly because in this experiment a large number of data points were generated every minute.
 
-Figure \ref{nama} shows all the data points generated in the three buildings named as T1, TD and TC, all of which have four floors except TC that has five floors.
-
-#########I stopped here#################
-
-All the measurements were made within these three buildings as can be seen in the latitudes and longitudes of the measurements which align quite well with the shape of the buildings as shown in Figure \ref{nama} (a) with three different colors. The buildings are  A 3D plot showing the levels at which the measurements were made and their physical locations is shown in  Figure \ref{nama} (b), where the colors show the different floors. 
+Figure \ref{nama} shows an overview of the spatial distribution of all data points according to the indoor spaces of the three buildings named as T1, TD and TC, including their four floors except the TC  building that has a 5th floor. 
 
 \begin{figure}[!h]
     \centering
     \includegraphics[width = 7 cm]{image/Chapters/Chapter6/LatLong.png}\hfill
     \includegraphics[width = 8 cm]{image/Chapters/Chapter6/LatLongFloor.png}
     \\[\smallskipamount]    
-    \caption{(a) 2D view of the location of all data points according to their buildings. (b) 3D view of the l.}
+    \caption{ 2D and and 3D views of the location of all data points generated during the experiment}
     \label{nama}
 \end{figure}
+
+In Table \ref{bdd} the total number of data points generated for each each building is provided. In fact, the TC building has contributed to 47\% of the whole data.
+This could have occurred because of the additional 5th floor. Moreover, the total number of data points gathered at different floors of all buildings was very similar, (i.e. just over 20\%), with the exception of the 5th floor of the TC building (i.e. 5.7\%) as shown in Figure \ref{Pfloor}. 
+
+\begin{table}[]
+\centering
+\caption{Total number of data points generated per building}
+\label{bdd}
+\begin{tabular}{
+>{\columncolor[HTML]{ECF4FF}}c c}
+\hline
+\textbf{Building} & \cellcolor[HTML]{ECF4FF}\textbf{Total Number of Data Points} \\ \hline\midrule
+\textbf{T1}       & 5249                                                   \\ \hline
+\textbf{TD}       & 5196                                                   \\ \hline
+\textbf{TC}       & 9492                                                   \\ \hline\midrule
+\end{tabular}
+\end{table}
+
+%All the measurements were made within these three buildings as can be seen in the latitudes and longitudes of the measurements which align quite well with the shape of the buildings as shown in Figure \ref{nama} (a) with three different colors. The buildings are  A 3D plot showing the levels at which the measurements were made and their physical locations is shown in  Figure \ref{nama} (b), where the colors show the different floors. 
+
+
 
 % Data was collected on six days spread across May 30 to June 20, but the maximum number of measurements were made on June 20 as shown in Figure \ref{timeline}. 
 
@@ -619,7 +640,24 @@ All the measurements were made within these three buildings as can be seen in th
 %     \label{timeline}
 % \end{figure}
 
-The distribution of the total number of measurements made by the phones is shown in Figure \ref{userphone}. Phones with phoneIDs 8 and 9 were used the most in the entire experiment. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width = 12 cm]{image/Chapters/Chapter6/floors.png}
+    \caption{Percentage of data points generated for a each floor of all buildings}
+    \label{Pfloor}
+\end{figure} 
+
+For the stream cluster analysis, the space identifier was used as a proxy to represent the indoor space that a participant was occupying during the experiment. The spaceID provides a unique identification for indoor spaces such as rooms, classes, lab, and offices. It has a number ranging from 0 to 732 for  buildings T1, TD, and TC. SpaceID from 0 to 255 belongs to building T1, numbers between 256 to 416 belong to building TD, and the remaining numbers (417 to 732) belong to building TC. The total number of data points generated at each indoor space is illustrated in Figure \ref{spaceiduniq }. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width = 16 cm]{image/Chapters/Chapter6/uniqspaceid.png}
+    \caption{ Total number of data points generated in indoor spaces of the T1 (green), TD (blue), and TC (pink) buildings}
+    \label{spaceiduniq }
+\end{figure}
+
+The analysis was carried out using the data streams generated by 16 participants using their respective phones. Figure \ref{userphone} illustrates the overall distribution of the total data points collected by individual participants. The participants 8 and 9 generated most of the data during the experiment.  
 
 % The distribution of the total number of measurements made by the users and the phones is shown in Figure \ref{userphone}. Phones with phoneIDs 8 and 9 were used the most while the users with userID 11 and 1 were the highest contributors. Phone number 8 was used exclusively by user number 11, but the phone number 9 shared between three users with numbers 1, 9, and 16.
 
@@ -628,7 +666,7 @@ The distribution of the total number of measurements made by the phones is shown
     % \includegraphics[width=.5\textwidth]{image/Chapters/Chapter6/userID_data.png}\hfill
     \includegraphics[width=.7\textwidth]{image/Chapters/Chapter6/phoneID_data.png}
     \\[\smallskipamount]    
-    \caption{Phones usage during this experiment.}
+    \caption{Data distribution of the total number of data points generated by the participants of the experiment}
     \label{userphone}
 \end{figure}
 
@@ -644,7 +682,11 @@ The distribution of the total number of measurements made by the phones is shown
 % \end{figure}
 
 
-In Table \ref{bdd} the total numbers of measurements made in each building is shown. It can be clearly seen that the TC building has significantly more number of data point as compared with the other two buildings. This could be due to it's additional floor that required additional measurements or maybe most of the users were present in the third building. Also, the pie chart in Figure \ref{Pfloor} shows that almost all building floors were equally occupied by the users with the exception of level five, which as mentioned before, is only present in the TC building. The number of measurements made at each spaceID location is depicted in Figure \ref{spaceiduniq }. The spaceID provides a unique identification for the rooms, classes, lab, offices etc., has a number ranging from 0 to 732 for  buildings T1, TD, and TC. SpaceID from 0 to 255 belongs to building T1, numbers between 256 to 416 belong to building TD, and the rest of it (417 to 732) belong to building TC.
+
+%Also, the pie chart in Figure \ref{Pfloor} shows that almost all building floors were equally occupied by the users with the exception of level five, which as mentioned before, is only present in the TC building. 
+
+
+
 
 
 %change to table*******************
@@ -657,40 +699,17 @@ In Table \ref{bdd} the total numbers of measurements made in each building is sh
 
 
 
-\begin{table}[]
-\centering
-\caption{Buildings data distribution during experiment for all days.}
-\label{bdd}
-\begin{tabular}{
->{\columncolor[HTML]{ECF4FF}}c c}
-\hline
-\textbf{Building} & \cellcolor[HTML]{ECF4FF}\textbf{Total Number of Data Points} \\ \hline\midrule
-\textbf{T1}       & 5249                                                   \\ \hline
-\textbf{TD}       & 5196                                                   \\ \hline
-\textbf{TC}       & 9492                                                   \\ \hline\midrule
-\end{tabular}
-\end{table}
-
-Occupancy measured in terms of how many data points were collected was similar to all floors, except for the 5th floor, 
 
 
-\begin{figure}
-    \centering
-    \includegraphics[width = 12 cm]{image/Chapters/Chapter6/floors.png}
-    \caption{Occupancy measured at different floor levels of all 3 buildings. In the text, we need to explain that building 3 is the only one that has a 5th floor.}
-    \label{Pfloor}
-\end{figure}
+%Occupancy measured in terms of how many data points were collected was similar to all floors, except for the 5th floor, 
 
 
 
 
 
-\begin{figure}
-    \centering
-    \includegraphics[width = 16 cm]{image/Chapters/Chapter6/uniqspaceid.png}
-    \caption{spaceid data distribution during the entire experiment. Each color related to one building.}
-    \label{spaceiduniq }
-\end{figure}
+
+
+
 
 
 % Figures \ref{alltogether} illustrate the movement of people during the experiment period. 
@@ -708,9 +727,14 @@ Occupancy measured in terms of how many data points were collected was similar t
 
 
 \subsection{Micro-cluster Evolution}
-Although the UJIIndoorLoc dataset has primarily been used to test models for indoor location prediction, but for this study, it is treated as an extension of the e-counter study with a lot more levels (spaceIDs) and potentially drifting dataset. 
+%Although the UJIIndoorLoc dataset has primarily been used to test models for indoor location prediction, but for this study, it is treated as an extension of the e-counter study with a lot more levels (spaceIDs) and potentially drifting dataset. 
 
-The strength of DSAP lies in its speed of execution and the ability to analyze data as they arrive in a stream. Any concept drift present in the data is accurately identified in the micro-clustering phase, and the algorithm responds quickly to any change in the dataset.  In this Section, we discuss the results generated on June 20, the last day of the experiment. As part of this experiment, the limited number of users moved across several locations; hence it is important that the algorithm is able to find representative micro-clusters that reflect the change in the users' position. This process can be seen in action in Figure. \ref{drift} for a 10-minute window with an expiration time of one window. It is seen that rarely do two or more users occupy the same physical space hence the micro-clusters here just provide the summary of the movement of any active users within the current time window. It is obvious that DSAP can detect and track people's movements showing micro-clusters over time.
+%The strength of DSAP lies in its speed of execution and the ability to analyze data as they arrive in a stream. Any concept drift present in the data is accurately identified in the micro-clustering phase, and the algorithm responds quickly to any change in the dataset.  
+
+%In this Section, we discuss the results generated on June 20, the last day of the experiment. 
+
+A limited number of participants have moved around several indoor spaces; hence it is important that the algorithm is able to find representative micro-clusters that reflect the changes in the occupants behaviour. This evolutionary process can be seen in Figure \ref{drift} for a 10-minute window with an expiration time of one window. The patterns show that two or more users rarely occupy the same indoor space. They also show how the micro-clusters provide an overview of the movement in the buildings. Therefore, the strength of the DSAP model is the ability to detect and track people's movements over a short period of time, in this example 90 minutes.
+
 
 %It should be noted that the x and y axes are not of the same scale and rarely do two or more users occupy the same physical space hence the micro-clusters here just provide the summary of the movement any active users within the current time window.
 
@@ -732,25 +756,26 @@ The strength of DSAP lies in its speed of execution and the ability to analyze d
 
 
 \subsection{Generated Micro and Macro-clusters}
-The DSAP clustering algorithm is applied for the UJIIndoorLoc data to find meaningful clusters out of one day and the entire experiment. Blue circles are represented by the micro-clusters, while macro-clusters are visualized by red crosses. The data points are depicted as grey dots. 
 
-\textbf{The June 20 Pattern}
-
-The DSAP clustering result for the day June 20 is presented in Figure \ref{dsapjun20}. The second plot is a summary of this day. DSAP successfully finds the clusters for each building. It too finds clusters centered around 400, 500, and 659, but in addition, find another set of clusters around spaceID 300. It should be noted that the x and y axes are not of the same scale; hence even though the branches of the clusters might seem like that they are far apart, but they, in fact, belong to similar physical locations.
+%The DSAP clustering algorithm is applied for the UJIIndoorLoc data to find meaningful clusters out of one day and the entire experiment. 
 
 
+%\textbf{The June 20 Pattern}
 
-This day is the busiest of the six days and contains the most number of data points as shown in Figure \ref{timeline}. Besides, this day includes almost all the participants that were part of the experiment. The only issue is that the building T1 measurements were not made on this specific day but TD and TC are presented. The phone and space occupancy of this day are shown in Figure \ref{jun20datw} along with time. The first plot shows the activity of each 16 phones during the day. The phone numbers one, two, six, and ten are less active than the others. The right plot shows the activity of all spaceIDs the 20 of June. 
+The DSAP clustering results for the day June 20 are presented in Figure \ref{dsapjun20}. In the first plot, micro-clusters are represented by blue circles, meanwhile macro-clusters are visualized by red crosses. The data points are depicted as grey dots. The numbers of data points associated with each micro-cluster is mentioned right next to it. The second plot is a summary of this day. DSAP successfully found macro-clusters centered in the indoor spaces 400, 500, and 659, but in addition, it has also found another set of clusters in spaceID 300. It should be noted that the x and y axes are not of the same scale; hence even though the branches of the clusters might seem like that they are far apart, but they, in fact, belong to similar indoor spaces.
+
+
+% This day is the busiest of the six days and contains the most number of data points as shown in Figure \ref{timeline}. Besides, this day includes almost all the participants that were part of the experiment. The only issue is that the building T1 measurements were not made on this specific day but TD and TC are presented. The phone and space occupancy of this day are shown in Figure \ref{jun20datw} along with time. The first plot shows the activity of each 16 phones during the day. The phone numbers one, two, six, and ten are less active than the others. The right plot shows the activity of all spaceIDs the 20 of June. 
  
-\begin{figure}[!h]
-    \centering
-    \includegraphics[width=.48\textwidth]{image/Chapters/Chapter6/june20timephone.PNG}
-        \includegraphics[width=.48\textwidth]{image/Chapters/Chapter6/june20timespace.PNG}
-    \\[\smallskipamount]    
+% \begin{figure}[!h]
+%     \centering
+%     \includegraphics[width=.48\textwidth]{image/Chapters/Chapter6/june20timephone.PNG}
+%         \includegraphics[width=.48\textwidth]{image/Chapters/Chapter6/june20timespace.PNG}
+%     \\[\smallskipamount]    
   
-    \caption{Phones activities (left) and space occupancy (right) for the day, June 20 along with time.  }
-    \label{jun20datw}
-\end{figure}
+%     \caption{Phones activities (left) and space occupancy (right) for the day, June 20 along with time.  }
+%     \label{jun20datw}
+% \end{figure}
  
  
 
@@ -774,10 +799,9 @@ This day is the busiest of the six days and contains the most number of data poi
 
 
 
-\textbf{The Entire Data Pattern}
 
 
-
+NASRIN: EXPLAIN FIGURE 6.15, ITS VERY IMPORTANT THIS FIGURE
 
 
 \begin{figure}
@@ -786,25 +810,24 @@ This day is the busiest of the six days and contains the most number of data poi
         \includegraphics[width = 7.5 cm]{image/Chapters/Chapter6/DSAPalldays2000fad.png}\hfill
         \includegraphics[width = 7.5 cm]{image/Chapters/Chapter6/DSAPalldays1000fad.png}\hfill
         \includegraphics[width = 7.5 cm]{image/Chapters/Chapter6/DSAPalldays200fad.png}\hfill
-    \caption{Four different expiration time for the total number of data points. These numbers are 20000, 2000, 1000, and 200 respectively.}
+    \caption{Four different expiration time for the total number of data points. These numbers are 20000, 2000, 1000, and 200 respectively.(We can use to for concept-drift).}
     \label{expirationchang}
 \end{figure}
 
 
 
 
-\subsection{Evaluation of Results}
-To find hidden patterns in this data, first AP clustering algorithm was applied as a baseline to compare the performance and validation metrics. The computer used for this study could not handle the data from the whole experiment duration for clustering by AP, hence only one day of data, the 20 of June, is selected for this evaluation.
+\subsection{Performance and Validation Metrics}
 
+The AP model was also applied as a baseline to compare the performance and validation metrics. The clustering results found on June 20 were selected for this evaluation. The results for DSAP and AP of each metrics along with the number of cluster, processing time and memory consumption are summarized in Table \ref{onedayevaluate}.
 
-\textbf{Performance and Validation Metrics}
-The results for DSAP and AP of each metrics along with the number of cluster, processing time and memory consumption are summarized in Table \ref{onedayevaluate}.
+NASRIN: PLEASE DISCUSS THE RESULTS OF THE TABLE. YOU CAN USE THE DISCUSSION I WROTE IN THE PREVIOUS SECTION AS AN EXAMPLE.
 
 
 
 
 \begin{table}[]
-\caption{Comparison of AP and DSAP evaluation metrics for June 20, 2013. }
+\caption{Overall results from the performance evaluation and clustering validation}
 \label{onedayevaluate}
 \centering
 \small
@@ -827,8 +850,6 @@ The results for DSAP and AP of each metrics along with the number of cluster, pr
 
 
 
-\textbf{Comparing the clustering results from AP and DSAP}
-
 
 %  This day is the busiest of the six days and contains the most number of data points as shown in Figure \ref{timeline}. Besides, this day includes almost all the participants that were part of the experiment. The only issue is that the building T1 measurements were not made on this specific day but TD and TC are presented. The statistics of this day are shown in Figure \ref{static} by plotting data points related to each feature via time with respect to the activity level. The first plot on the top left shows the accumulated activity of each 16 phones during the day. The phone numbers one, two, six, seven, ten, and thirteen are less active than the others. The left bottom plot shows the activity of all floors across buildings for the 20 of June. Floor five has the least amount of activity from others and floors two and four are the most active floors. The last figure of \ref{static} shows the building activity during this day. Building TD is the most populated building rather than building TC. Also, we can understand that when TC is more active, the TD building is less active at that specific time.
 
@@ -847,20 +868,20 @@ The results for DSAP and AP of each metrics along with the number of cluster, pr
 
 
 
-\begin{figure}[!h]
-    \centering
-    \includegraphics[width = 10 cm]{image/Chapters/Chapter6/APJune20.png}
-    \caption{ AP for UJIIndoorLoc data during the experiment: June 20.}
-    \label{APUjoneday}
-\end{figure}
+% \begin{figure}[!h]
+%     \centering
+%     \includegraphics[width = 10 cm]{image/Chapters/Chapter6/APJune20.png}
+%     \caption{ AP for UJIIndoorLoc data during the experiment: June 20.}
+%     \label{APUjoneday}
+% \end{figure}
 
 
 
 
 
 
-Figure \ref{APUjoneday} shows the clusters generated by the AP algorithm for June 20, 2013. The AP clustering algorithm, divided the data in to five clusters. %The two buildings are represented by their own set of clusters. 
-The clusters imply that the most measurements were made around around spaceIDs 400, 500, and 659. 
+% Figure \ref{APUjoneday} shows the clusters generated by the AP algorithm for June 20, 2013. The AP clustering algorithm, divided the data in to five clusters. %The two buildings are represented by their own set of clusters. 
+% The clusters imply that the most measurements were made around around spaceIDs 400, 500, and 659. 
 
 
 
@@ -894,10 +915,11 @@ The clusters imply that the most measurements were made around around spaceIDs 4
 
 
 
-\subsection{DSAP evaluation}
-In order to analyze the indoor localization data as a stream, a DSAP streaming clustering algorithm is applied. A 10 minutes landmark time window was chosen to analyze the UJIIndoorLoc data. It was found that using a 10 minutes window gave a sufficient number of clusters as it had enough data points in every window, especially the first window to start the model. Moreover, the number of people recorded every minute is high, and choosing a large window size makes the DSAP a bit slow. The hyperparameters for the AP in the DSAP algorithm are consistent and fixed for the entire experiment. The damping value is equal to 0.9, the maximum iteration is 100, and preference is equal to the median of the similarity matrix, and the expiration value is chosen so longer than a day. 
+% %\subsection{DSAP evaluation}
 
-To compare the results of DSAP algorithm with the AP, the same day June 20 chosen once again and the results are shown in Figure \ref{dsapjun20}. DSAP successfully finds the clusters for each building. It too finds clusters centred around 400, 500, and 659, but in addition, finds another set of clusters around spaceID 300. It should be noted that the x and y axes are not of the same scale hence even though the branches of the clusters might seem like that they are far apart, but they in fact belong to similar physical locations.
+% In order to analyze the indoor localization data as a stream, a DSAP streaming clustering algorithm is applied. A 10 minutes landmark time window was chosen to analyze the UJIIndoorLoc data. It was found that using a 10 minutes window gave a sufficient number of clusters as it had enough data points in every window, especially the first window to start the model. Moreover, the number of people recorded every minute is high, and choosing a large window size makes the DSAP a bit slow. The hyperparameters for the AP in the DSAP algorithm are consistent and fixed for the entire experiment. The damping value is equal to 0.9, the maximum iteration is 100, and preference is equal to the median of the similarity matrix, and the expiration value is chosen so longer than a day. 
+
+% To compare the results of DSAP algorithm with the AP, the same day June 20 chosen once again and the results are shown in Figure \ref{dsapjun20}. DSAP successfully finds the clusters for each building. It too finds clusters centred around 400, 500, and 659, but in addition, finds another set of clusters around spaceID 300. It should be noted that the x and y axes are not of the same scale hence even though the branches of the clusters might seem like that they are far apart, but they in fact belong to similar physical locations.
 
 
 

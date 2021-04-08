@@ -19,26 +19,26 @@
 %Many real-world applications require the knowledge of the user location in order to provide relevant services. Hence, many research efforts are being made to develop automatic user localization tools. The studies conducted in this work are another step in the direction. The user's position and attributes are estimating by using measurements from electronic devices or sensors. 
 
 
-A data stream is a real-time, continuous, ordered (implicitly by arrival time or explicitly by timestamp) series of data points coming at a very high speed. Data streaming involves two main issues. The first one is processing the fast incoming data. Because of its infinite nature and rate, it is impossible to store the data and analyze it in an offline mode. From its inception, data streaming faces large-scale issues, and new algorithms to achieve, e.g., clustering, classification is required.
+A data stream is a real-time, continuous, ordered (implicitly by arrival time or explicitly by timestamp) series of data points coming at a very high speed. Data streaming involves two main issues. The first one is processing the fast incoming data. Because of its infinite nature and rate, it is impossible to store the data and analyze it in an offline mode. From its inception, data streaming faces large-scale issues, and new algorithms to interpret them, e.g., clustering, classification are required.
 The second concern is to deal with the variations in the underlying data distribution due to the evolution of the phenomenon.
 
-Clustering is one of the most important unsupervised learning methods which partition a given set of data points into subsets called clusters, such that data points in the same cluster are similar and data points in different clusters are dissimilar. Clustering data stream continuously produces and maintains the clustering structure from the data stream.
+Clustering is one of the most important unsupervised learning methods which partitions a given set of data points into subsets called clusters, such that data points in the same cluster are similar and data points in different clusters are dissimilar. Clustering data stream continuously produces and maintains the clustering structure from the data stream.
 
-Time window models can be used within the stream clustering algorithms, including sliding, damped, landmark, and pyramidal \cite{nguyen2015survey}. These models aim to handle the evolution of the distribution of the data stream over time. Applying a time window makes it possible to analyze and store a stream within a specific time frame and discard the previous historical data \cite{mansalis2018evaluation}.
+Time window models including sliding, damped, landmark, and pyramidal can be used within the stream clustering algorithms  \cite{nguyen2015survey}. These models aim to handle the evolution of the distribution of the data stream over time. Applying a time window makes it possible to analyze and store a stream within a specific time frame and discard the previous historical data \cite{mansalis2018evaluation}.
 
-Previous research has proven that partitioning-based clustering model is suited for problems where the optimal number of micro-clusters is a-priori unknown by optimizing a representative cluster-head for each micro-cluster. Cluster-heads of micro-clusters have been previously explored for improving indoor fingerprinting using Wi-Fi RSS data\cite{hu2015improving, subedi2019improving}. They have also been successful applied for improving routing schemes for multi-level heterogeneous Wireless Sensor Networks, saving energy consumption \cite{wang2019affinity}.. 
+Previous research has proven that partitioning-based clustering models are suited for problems where the optimal number of micro-clusters is a-priori unknown. The data processing is optimized by representative a cluster-head for each micro-cluster. Cluster-heads of micro-clusters have been previously explored for improving indoor fingerprinting using Wi-Fi RSS data\cite{hu2015improving, subedi2019improving}. They have also been successfully applied for improving routing schemes for multi-level heterogeneous Wireless Sensor Networks, reducing energy consumption \cite{wang2019affinity}. 
 
-Data stream affinity propagation algorithm has been chosen for indoor localization data in this research work. Affinity propagation \cite{dueck2009affinity} clustering algorithm is a partitioning-based message passing clustering algorithm which means every data point is a centroid, and they have equal importance. Also, the AP algorithm does not require the number of clusters as an input which makes our work more robust, especially if it uses for the cloud side. This algorithm is applied in many scientific research and different datasets such as intrusion detection, energy, gene expression, psychology, business, physical science, social science, etc. There has not been very research work using stream clustering methods for analyzing indoor localization data especially stream affinity propagation clustering algorithm \cite{dueck2009affinity} which, to our best of knowledge, there is not any research work available.
-Affinity propagation suffers from memory complexity, and it means it cannot handle massive data sets. To solve this problem, a stream clustering algorithm with the implementation of a time window model is presented in this work. 
+Affinity propagation algorithm has been chosen for indoor localization data in this research work. Affinity propagation (AP) clustering algorithm is a partitioning-based message passing algorithm that treats every data point as a potential centroid, and each point is given equal importance \cite{dueck2009affinity}. Also, the AP algorithm does not require the number of clusters as an input which makes any continuously operating automated operation more robust, especially if it used on a cloud. It has been successfully applied in many scientific research and for different datasets such as intrusion detection, energy estimation, gene expression, psychology, business, physical science, social science, etc. 
+Affinity propagation unfortunately also suffers from high memory complexity, and hence it's ability to handle large datasets diminishes rapidly with size and cannot handle massive data sets. To solve this problem, a stream clustering algorithm is developed using a time window model in this work. There has not been a lot of research work using stream clustering methods for analyzing indoor localization data, especially affinity propagation. No research work on indoor localization data streams using AP algorithm has been reported previously to the best of our knowledge.
 
-This thesis proposes a novel DSAP (Data Stream Affinity Propagation) algorithm using the landmark time window model for clustering indoor localization data streams obtained from two experiments deployed in indoor spaces. DSAP Algorithm capable of supporting the online-offline phases. In the online phase, micro-clusters are continuously computed using a landmark time window model to handle the recent past of data streams and continuously maintained to follow the changing distribution of data. The offline phase is then performed, and micro-clusters are computed to deliver the overall clustering results. During offline phase, AP algorithm is adopted to deliver the final clustering without any need for user intervention.
+This thesis proposes a novel Data Stream Affinity Propagation (DSAP) algorithm using the landmark time window model for clustering indoor localization data streams obtained from two experiments deployed in indoor spaces. DSAP Algorithm is capable of supporting the online-offline phases. In the online phase, micro-clusters are constantly computed using a landmark time window model to handle the most recent data in the stream and to continuously follow the changing data distribution. The offline phase is then performed, and the micro-clusters themselves are clustered to provide the overall clustering results. The entire online and offline phases that deliver the final clusters are performed without any user intervention.
 
-Indoor positioning and occupancy models are an emerging area of interest. An exponential growth in the usage of indoor non-intrusive sensors and data interpretation algorithms has been reported in the last few years. The experimental results on the localization data sets validate the effectiveness of our method in handling dynamically evolving data streams. The DSAP algorithm is performed to find patterns out of indoor localization data.
+Indoor positioning and occupancy models are an emerging area of interest. An exponential growth in the usage of indoor non-intrusive sensors and data interpretation algorithms has been reported in the last few years. 
 % Indoor positioning technologies have been a critical enabler for advancing the usefulness of the Internet of Things in biomedical and health care applications.
 Many positioning technologies have been explored for generating positioning information of people in indoor spaces, including Wi-Fi, BLE beacons, RFID tags, visible light wave, and ultra-wide band \cite{namiot2015indoor, jeon2018ble}. In particular, infra-red, optical (e.g., RGB videos or flat images), break beam, thermal, and ultrasonic sensors have been used for counting people in indoor spaces \cite{mautz2012indoor}. 
 
-The evaluation of DSAP clustering results consists of two phases, intrinsic validation, and clustering performance evaluation.
-Clustering performance evaluation uses execution time and memory usage of the DSAP algorithm, which are important efficiency factors for streaming algorithms.
+The DSAP algorithm is used to find patterns in two distinct indoor localization datasets. 
+The experimental results on the localization datasets validate the algorithm's effectiveness in handling dynamically evolving data streams. The evaluation of DSAP clustering results consists of two phases, intrinsic validation, and clustering performance evaluation. Clustering performance evaluation uses execution time and memory usage of the DSAP algorithm, which are important efficiency factors for streaming algorithms. 
 
 % Moreover, data stream AP models usually suffer from a quadratic computational complexity in the number N of items. %The time complexity of AP is $O(n^2*T)$, where $n$ is the number of samples and $T$ is the number of iterations until convergence happens\cite{refianti2017time}. 
 % This computational performance might become an issue for computing macro-clusters using large volumes of people counting data. Strategies are important to be developed to improve the performance of AP models. 
@@ -87,15 +87,15 @@ Clustering performance evaluation uses execution time and memory usage of the DS
 
 \section{Research Objectives}
 
-The overall research goal is to evaluate data stream clustering platform capable of generating micro and macro clusters for indoor localization data. The objectives can be described as follows. 
+The overall research goal is to extend the current streaming AP models to generate micro and macro clusters from indoor localization data. The objectives can be described as follows. 
 
 \begin{itemize}
 
-    \item Develop the data stream AP model for uncovering evolutionary patterns with two-stage, online micro and offline macro phases.
-     \item Applying landmark time window model to find the latest data point in the stream with the expiration number to keeps the latest data in the model.
-    \item Evaluate the clustering results with intrinsic indexes and performance evaluation to find the accuracy of the proposed algorithm.  
-    \item Analyze the behavioral pattern in indoor localization experiments.
-    \item demonstrate the potential of analysing people counting data to understand staircase behavioural changes in indoor spaces before, during, and after a health motivated intervention.
+    \item Develop the data stream AP model for uncovering evolutionary patterns with two-stages, online micro and offline macro phases.
+     \item Applying landmark time window model to find the latest data points in the stream with an expiration number to keep the latest data in the model.
+    \item Evaluate the clustering results with intrinsic indices and performance evaluation to find the advantages and limitations of the proposed algorithm.  
+    %\item Analyze the behavioral pattern in indoor localization experiments.
+    \item Demonstrate the potential of DSAP for analyzing localization data streams to understand staircase usage patterns as well as occupant patterns in indoor spaces.
 \end{itemize}  
     % \item Apply the online-offline phases of such a model to analysing indoor positioning stream data.  
     % \item Applying two data related to indoor localization positioning 
@@ -126,12 +126,12 @@ The overall research goal is to evaluate data stream clustering platform capable
 The main scientific contribution of this research work summarized as follow:
 
 \begin{itemize}
-    \item  providing a partitional clustering technique that can adapt to appearing or disappearing concepts in underlying data, thus achieving similar or better quality and performance of clustering than less-flexible techniques without requiring a specific level of clustering to use
+    %\item  extend a partitional clustering technique that can adapt to appearing or disappearing concepts in underlying data, thus achieving similar or better quality and performance of clustering than less-flexible techniques without requiring a specific level of clustering to use. NOT CLEAR WHAT YOU MEANT HERE
     
-    \item A new data stream clustering for covering evolutionary patterns using landmark time window model is proposed. 
-    \item AP streaming clustering algorithms have certainly not been applied to analysing people counting data before.
+    \item A new data stream clustering algorithm for covering evolutionary patterns using landmark time window model is proposed. 
+    \item  The new streaming AP clustering algorithms is used for clustering indoor localization data streams for the first time.
     
-    \item We demonstrate the potential of analysing people counting data to understand staircase behavioural changes in indoor spaces before, during, and after a health motivated intervention.
+    \item We demonstrate the potential of DSAP in improving our understanding of stair usage and occupant behaviour in indoor spaces datasets.
 \end{itemize}
 
 
@@ -142,11 +142,11 @@ The main scientific contribution of this research work summarized as follow:
 \section{Organization of this Thesis}
 This thesis is organized in five chapters as described as follows:
 
-Chapter 2 provides a background of clustering and stream clustering method. 
+Chapter 2 provides a background of cluster analysis.
 
-Chapter 3 summarizes the related literature and impacts for the decisions in terms of algorithms.
+Chapter 3 summarizes the related work in streaming AP algorithms.
 
-Chapter 4 describes the methodology including our stream clustering process and the proposed DSAP algorithm for data stream clustering.
+Chapter 4 describes the proposed DSAP algorithm for data stream clustering.
 
 Chapter 5 includes a summary of implementation and the data sets applied for this research work.
 

@@ -983,7 +983,7 @@ Finally, the feature selection task was performed to provide a target data set r
 % This experiment covers three buildings of Universitat Jaume I. It was created in 2013 by means of more than 20 different users and 25 Android devices.
 % Samples were taken from random position
 
-This case study was carried out to find occupant  behavior patterns  in  indoor  spaces  to provide  relevant  information  for  future planning  building  automation, evaluating energy efficiency scenarios, and simulating   emergency   protocols. The experiment was conducted over four months at the Universitat Jaume I campus, in Valencia, Spain. During this time, users carried mobile devices that used \textit{CaptureLoc} and \textit{ValidateLoc} to record eight types of attributes including user position and WiFi signal strength across a total of thirteen levels spanning three buildings of the campus. To protect the identity of the participants during the course of the experiment, the unique MAC identifiers of the phones were hashed (anonymized) on reception.
+This case study was carried out to find occupant  behavior patterns  in  indoor  spaces  to provide  relevant  information  for  future planning  building  automation, evaluating energy efficiency scenarios, and simulating   emergency   protocols. The experiment was conducted over four months at the Universitat Jaume I campus, in Valencia, Spain. During this time, users carried mobile devices that used \textit{CaptureLoc} to record eight types of attributes including user position and WiFi signal strength across a total of thirteen levels spanning three buildings of the campus. To protect the identity of the participants during the course of the experiment, the unique MAC identifiers of the phones were hashed (anonymized) on reception.
 %\begin{itemize}
 
 %\item\textbf{Data Collection:}
@@ -1003,7 +1003,7 @@ The UJIIndoorLoc data set generated includes three buildings with four or more f
 \label{dspp2}
 \end{figure*}
 
-
+%***** remove 
 \begin{table}[!h]{}
 \centering
 \caption{ List of attributes of the UJIIndoorLoc data set.}
@@ -1014,13 +1014,13 @@ The UJIIndoorLoc data set generated includes three buildings with four or more f
     \midrule
     RSSI Level             &    -100dBM: weak signal, 0dBM: good, 100dBM: not detected    & RSSI levels where the WAP identifiers are linked to the vector positions           
     \\\hline
-    Longitude              &    in meters with UTM from WGS84     &  real-world coordinates           \\\hline
-    Latitude               &    in meters with UTM from WGS84     &  real-world coordinates          \\\hline
+    Longitude              &    UTM from WGS84     &  Y coordinates           \\\hline
+    Latitude               &    UTM from WGS84     &  X coordinates          \\\hline
     Floor                  &    0,1,2,3,4     &  Floors of each building           
     \\\hline
     Building ID            &    0,1,2     &  Each of the three buildings TI,TD, and TC          
     \\\hline
-    Space ID               &    integer   & Identification of a coverage area of a particular WiFi antenna            
+    Space ID               &    integer   & Identification of an indoor space (e.g. room or corridor)            
     \\\hline
     Relative Position      &    1= inside 2=outside       & Outside means in front of the door of the space \\\hline
     User ID                &    0,1,2,...,18    &  Unique code for users who participated in the experiment           \\\hline
@@ -1032,8 +1032,6 @@ The UJIIndoorLoc data set generated includes three buildings with four or more f
 \end{tabular}
 \end{table}
 
-
-A total of nineteen users with twenty-five different phones participated in the study as listed in Table \ref{phone}. This table show the phone ID related to each android device, the version of the operating system and finally, which user uses the phone.
 
 % \\
 % \textcolor{blue}{001-520: } RSSI levels\\
@@ -1056,51 +1054,51 @@ A total of nineteen users with twenty-five different phones participated in the 
 
 
 
-\begin{table}[!h]
-    \centering
-    \caption{ Sample information related to  PhoneID and real device. }
-    \label{phone}
-    \begin{tabular}{c c c c}
-    \hline
-     PhoneID & Android Device  & Android Version & UserID \\
-     \hline
-      0 &  Celkon A27  & 4.04 & 0\\
-     \hline
-      1 & GT-I8160   & 2.3.6 &8\\
-     \hline
-      2  &  GT-I8160 & 4.1.2 &0\\
-     \hline
-      3 & GT-I9100   & 4.0.4 &5\\
-     \hline
-      4  & GT-I9300  & 4.1.2 &0\\
-     \hline
-      5  & GT-I9505  & 4.2.2 & 0\\
-     \hline
-      6 & GT-S5360  &2.3.6  & 7\\
-     \hline
-      7 & GT-S6500  &2.3.6  &14\\
-     \hline
-      8 &  Galaxy Nexus  & 4.2.2  &10\\
-      \hline
-      9 &   Galaxy Nexus & 4.3 &0\\
-     \hline
-      10  & HTC Desire HD  &2.3.5 &0,11\\
-     \hline
-      11  & HTC One  & 4.1.2  & 0,1,9,16\\
-     \hline
-      12 &  HTC One & 4.2.2  & 3\\
-     \hline
-      13 &  HTC Wildfire S &2.3.5  &3\\
-     \hline
-      14 &  LT22i  & 4.0.4  &13\\
-      \hline
-      ... & ...   & ...  &...\\
-      \hline
-      24 & bq Curie   &  4.1.1 & 12\\
-      \hline
-    \end{tabular}
+% \begin{table}[!h]
+%     \centering
+%     \caption{ Sample information related to  PhoneID and real device. }
+%     \label{phone}
+%     \begin{tabular}{c c c c}
+%     \hline
+%      PhoneID & Android Device  & Android Version & UserID \\
+%      \hline
+%       0 &  Celkon A27  & 4.04 & 0\\
+%      \hline
+%       1 & GT-I8160   & 2.3.6 &8\\
+%      \hline
+%       2  &  GT-I8160 & 4.1.2 &0\\
+%      \hline
+%       3 & GT-I9100   & 4.0.4 &5\\
+%      \hline
+%       4  & GT-I9300  & 4.1.2 &0\\
+%      \hline
+%       5  & GT-I9505  & 4.2.2 & 0\\
+%      \hline
+%       6 & GT-S5360  &2.3.6  & 7\\
+%      \hline
+%       7 & GT-S6500  &2.3.6  &14\\
+%      \hline
+%       8 &  Galaxy Nexus  & 4.2.2  &10\\
+%       \hline
+%       9 &   Galaxy Nexus & 4.3 &0\\
+%      \hline
+%       10  & HTC Desire HD  &2.3.5 &0,11\\
+%      \hline
+%       11  & HTC One  & 4.1.2  & 0,1,9,16\\
+%      \hline
+%       12 &  HTC One & 4.2.2  & 3\\
+%      \hline
+%       13 &  HTC Wildfire S &2.3.5  &3\\
+%      \hline
+%       14 &  LT22i  & 4.0.4  &13\\
+%       \hline
+%       ... & ...   & ...  &...\\
+%       \hline
+%       24 & bq Curie   &  4.1.1 & 12\\
+%       \hline
+%     \end{tabular}
     
-\end{table}
+% \end{table}
 
 
 The data was collected From May to October 2013 as shown in Table \ref{udate}. The data collection duration was divided in two phases: training and validation. As shown with blue color in the table \ref{udate}, the training data was collected from 30th of May till 20th of June and the rest of the validation data were measured three months later. The number of data points show the distribution of measurements during each day. The data collection happened on 15 discrete days. The day when the most amount of data was collected was the 20th of June. This single day accounts for more than half the points in the entire data set. Only the training data set was used in this study as in the validation data set the spaceid feature is not captured since this was originally meant to test the accuracy of localization from just the RSSI and WAP values.
@@ -1151,26 +1149,7 @@ The data was collected From May to October 2013 as shown in Table \ref{udate}. T
 \end{table}
 
 
-% \begin{table}[!h]
-% \centering
-% \caption{List of attributes for the e-counter dataset during the experiment.}
-% \begin{tabular}{lll}
-% \toprule
-% \textbf{Attribute} & \textbf{Measurement} & \textbf{Definition}     \\
-% \midrule
-% WAP001-WAP520            &  integer(between -100 to 100)  &   RSSI Levels  \\
-% Time             &  hh:mm:ss 24H    &   Time of measurement      \\
-% Count            &  integer         &   Number of people counted by the sensor             \\
-% Status           &  integer         &      \\
-% Sensor           &  Up, Down, In, Out, IN/Out-reserved &Direction of the sensor \\
-% Type             &  Counter A/B  \\
-% Position         &                  &   Sensor location in the building         \\
-% Location         &                                                              \\
-% Location Code    &                                                               \\
-% \bottomrule
-% \end{tabular}
-% \end{table}
- 
+
 % \begin{enumerate}
 %     \item\textbf{RSSI Levels:} These values show the RSSI levels by  WAP identifiers (MAC addresses) are linked to the vector positions. The RSSI levels represent negative integer values measured in dBm. In this measure, −100dBm is equivalent to the weak signal, and 0dBM indicates that the detected WAP is a very good signal. The value +100dBm in WAPs records shows that the signal has not been detected by the device.
 %     \item\textbf{Real world coordinates:} It means three value, the longitude and latitude coordinates and the floor of the building. 
@@ -1186,13 +1165,68 @@ The data was collected From May to October 2013 as shown in Table \ref{udate}. T
 % \item\textbf{Data Pre-processing:}
 A set of pre-processing tasks were performed to improve the quality of the data set and make the measurements suitable for cluster analysis.
 %with the project scope and removed from the dataset.
-The timestamp was recorded in a linux-based time format, such as 1371714467 which corresponds to 06/20/2013 at 7:47am. All the time values were converted to the standard date-time format (dd/mm/yy hh:mm:ss) in Python and added as a new feature called Datetime in column 530 of the data set.
+The timestamp was recorded in a linux-based time format, such as 1371714467 which corresponds to \texttt{06/20/2013 at 7:47am}. All the time values were converted to the standard date-time format (dd/mm/yy hh:mm:ss) in Python and added as a new feature called Datetime into the data set.
 
-The feature SpaceID contains values starting from 1 to 250, but there were gaps between numbers 50-100 and 150-200. These gaps were removed and the updated SpaceID numbers range from 1 to 122 now. During the validation part of the experiment a subset of the phones (PhoneID = 0,2,4,5,9,12,15,20, and 21) were not used. The remaining Phoneids were renamed to make the records sequential just like the SpaceIDs. The space identifiers, the SpaceID, BuildingID, Floor, and relative position together provide a unique label for a location. A new feature is added to the data set in column 531 called SPACEID, that contains a unique spatial identifier for each location. The SPACEID was created by combining the space identifiers and then giving them a sequential numbers from 0-732.
+The feature SpaceID contains values starting from 1 to 250, but there were gaps between numbers 50-100 and 150-200. These gaps were removed and the updated SpaceID numbers range from 1 to 122 now. 
+
+During the validation part of the experiment a subset of the phones (PhoneID = 0,2,4,5,9,12,15,20, and 21) were not used. The remaining Phoneids were renamed to make the records sequential just like the SpaceIDs. Table \ref{phone} shows the phone ID related to each android device, the version of the operating system and finally, which user uses the phone. A total of 18 users with sixteen different phones are used for this research. The phone number 9 shared between three users with numbers 1, 9, and 16.
+
+The space identifiers, the SpaceID, BuildingID, Floor, and relative position together provide a unique label for a location. A new feature is added to the data set called SPACEID, that contains a unique spatial identifier for each location. The SPACEID was created by combining the space identifiers and then giving them a sequential numbers from 0-732.
+
+
+ 
+
+\begin{table}[!h]
+    \centering
+    \caption{ Correspondence between PhoneID, real device and userID. }
+    \label{phone}
+    \begin{tabular}{c c c c}
+    \hline
+     \textbf{PhoneID} & \textbf{Android Device}  & \textbf{Android Version} & \textbf{UserID} \\
+     \hline\midrule
+      1 & GT-I8160   & 2.3.6 &8\\
+     \hline
+      2 & GT-I9100   & 4.0.4 &5\\
+     \hline
+      3 & GT-S5360  &2.3.6  & 7\\
+     \hline
+      4 & GT-S6500  &2.3.6  &14\\
+     \hline
+      5 &  Galaxy Nexus  & 4.2.2  &10\\
+      \hline
+      6  & HTC Desire HD  &2.3.5 &18\\
+     \hline
+      7  & HTC One  & 4.1.2  & 15\\
+     \hline
+      8 &  HTC Wildfire S &2.3.5  &11 \\
+     \hline
+      9 &  LT22i  & 4.0.4  &1,9,16\\
+     \hline
+      10 &  LT26i  & 4.0.4  &3\\
+      \hline      
+      11 &  M1005D  & 4.0.4  &13\\
+      \hline
+      12 &  MT11i  & 2.3.4  &4\\
+      \hline      
+      13 &  Nexus 4 & 4.2.2  &6\\
+      \hline     
+      14 &  Orange Monte Carlo  & 2.3.5  &17\\
+      \hline      
+      15 &  Transformer TF101  & 4.0.3  &2\\
+      \hline
+      16 & bq Curie   &  4.1.1 & 12\\
+      \hline\midrule
+    \end{tabular}
+    
+\end{table}
+
+
+
+
 
 % Two numerical variables were selected: the SPACEID and the Phone ID for this study as these provide the necessary information regarding the people present at any location with time. Finally, in order to remove bias due to the difference in range of the two variables the data was normalized. The normalization process is applied one level before clustering with the minmaxscaler normalization process under the preprocessing library. All these preceding steps provide a target data set ready to be used by the stream simulation and the two-phase clustering algorithms. 
 
-The UJIIndoorLoc data was collected in 6 days and the days are non-uniformly distributed over 2 month as shown in table \ref{udate} earlier. The data collection during those six days was not continuous but collected at a much higher cadence. For these reasons a smaller landmark time window of 10 minutes was applied on this dataset. Moreover, The hyperparameters for the AP in the DSAP algorithm are consistent and fixed for the entire experiment. The damping value is equal to 0.9, maximum iteration is 100, and preference is equal to the median of the similarity matrix.
+For cluster analysis, The days are non-uniformly distributed over 2 month as shown in Table \ref{udate} earlier. For the training data, The data collection during those six days was not continuous but collected at a much higher cadence. For these reasons a smaller landmark time window of 10 minutes was applied on this dataset. Moreover, The hyperparameters for the AP in the DSAP algorithm are consistent and fixed for the entire experiment. The damping value is equal to 0.9, maximum iteration is 100, and preference is equal to the median of the similarity matrix.
 
 % \begin{itemize}
 %     \item A constant damping factor equal to 0.9 for AP algorithm.
@@ -1267,3 +1301,203 @@ Various tools and languages were used and they are listed below.
 % some lat lang 2 user capture the poin t the same time with diffrent phones
 
 % \end{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \section{Occupant Behaviour Experiment }\label{wifidat}
+
+
+% This case study was carried out to find occupant  behavior patterns  in  indoor  spaces  to provide  relevant  information  for  future planning  building  automation, evaluating energy efficiency scenarios, and simulating   emergency   protocols. The experiment was conducted over four months at the Universitat Jaume I campus, in Valencia, Spain. During this time, users carried mobile devices that used \textit{CaptureLoc} to record eight types of attributes including user position and WiFi signal strength across a total of thirteen levels spanning three buildings of the campus. To protect the identity of the participants during the course of the experiment, the unique MAC identifiers of the phones were hashed (anonymized) on reception.
+
+
+% The UJIIndoorLoc data set generated includes three buildings with four or more floors (one building has five floors) and almost 110.000 m$^{2}$of space. The total number of locations captured was 732. The shape and structure of the three buildings TI, TD, and TC, are quite different, as shown in Figure \ref{dspp2}. The raw data set consists of 19,937 data points containing 529 attributes as illustrated in Table \ref{featuj}. These attributes include the Received signal strength indicator (RSSI) for 520 wireless access points (WAPs). 
+
+% \begin{figure*}[!h]
+% \centering
+% \subfloat[Overview of the three buildings]{\label{fig:build}{\includegraphics[width=7 cm, height = 6 cm]{image/Chapters/Chapter5/uji.PNG}}}\hfill
+% \subfloat[Building Number 0 (TI)]{\label{fig:bl2}{\includegraphics[width=0.4\textwidth]{image/plan2.png}}}\hfill
+% \subfloat[Building Number 1 (TD)]{\label{fig:bl3}{\includegraphics[width=0.4\textwidth]{image/plan3.png}}}\hfill
+% \subfloat[Building Number 2 (TC)]{\label{fig:bl4}{\includegraphics[width=0.4\textwidth]{image/plan1.png}}}\hfill
+% \caption{(a) Map of the UJI Riu Sec Campus and the buildings used for WiFi fingerprint experiment. (b,c,d) The layout of the three buildings with spaceid numbers for a floor.}% is shown with purple color. A zoom of T1, TD, and TC building shows. Inside the plans we have information regarding spaceID.}
+% \label{dspp2}
+% \end{figure*}
+
+% %***** remove 
+% \begin{table}[!h]{}
+% \centering
+% \caption{ List of attributes of the UJIIndoorLoc data set.}
+% \small
+%     \begin{tabular}{ p{4cm} p{4.5cm} p{4.5cm} }
+%     \hline
+%     \textbf{Attributes} & \textbf{Measurement} & \textbf{Definition} \\ \hline
+%     \midrule
+%     RSSI Level             &    -100dBM: weak signal, 0dBM: good, 100dBM: not detected    & RSSI levels where the WAP identifiers are linked to the vector positions           
+%     \\\hline
+%     Longitude              &    UTM from WGS84     &  Y coordinates           \\\hline
+%     Latitude               &    UTM from WGS84     &  X coordinates          \\\hline
+%     Floor                  &    0,1,2,3,4     &  Floors of each building           
+%     \\\hline
+%     Building ID            &    0,1,2     &  Each of the three buildings TI,TD, and TC          
+%     \\\hline
+%     Space ID               &    integer   & Identification of an indoor space (e.g. room or corridor)            
+%     \\\hline
+%     Relative Position      &    1= inside 2=outside       & Outside means in front of the door of the space \\\hline
+%     User ID                &    1,2,...,18    &  Unique code for users who participated in the experiment           \\\hline
+%     Phone ID               &    1,2,...,16      &    Android device code used for this experiment        \\\hline
+%     Timestamp              &    Unix time format      &  Time of capture           
+%     \\
+%     \bottomrule
+% \label{featuj}
+% \end{tabular}
+% \end{table}
+
+
+% A total of 18 users with sixteen different phones participated in the study as listed in Table \ref{phone}. This table show the phone ID related to each android device, the version of the operating system and finally, which user uses the phone. The phone number 9 shared between three users with numbers 1, 9, and 16. 
+
+% \begin{table}[!h]
+%     \centering
+%     \caption{ Sample information related to  PhoneID and real device. }
+%     \label{phone}
+%     \begin{tabular}{c c c c}
+%     \hline
+%      \textbf{PhoneID} & \textbf{Android Device}  & \textbf{Android Version} & \textbf{UserID} \\
+%      \hline\midrule
+%       1 & GT-I8160   & 2.3.6 &8\\
+%      \hline
+%       2 & GT-I9100   & 4.0.4 &5\\
+%      \hline
+%       3 & GT-S5360  &2.3.6  & 7\\
+%      \hline
+%       4 & GT-S6500  &2.3.6  &14\\
+%      \hline
+%       5 &  Galaxy Nexus  & 4.2.2  &10\\
+%       \hline
+%       6  & HTC Desire HD  &2.3.5 &18\\
+%      \hline
+%       7  & HTC One  & 4.1.2  & 15\\
+%      \hline
+%       8 &  HTC Wildfire S &2.3.5  &11 \\
+%      \hline
+%       9 &  LT22i  & 4.0.4  &1,9,16\\
+%      \hline
+%       10 &  LT26i  & 4.0.4  &3\\
+%       \hline      
+%       11 &  M1005D  & 4.0.4  &13\\
+%       \hline
+%       12 &  MT11i  & 2.3.4  &4\\
+%       \hline      
+%       13 &  Nexus 4 & 4.2.2  &6\\
+%       \hline     
+%       14 &  Orange Monte Carlo  & 2.3.5  &17\\
+%       \hline      
+%       15 &  Transformer TF101  & 4.0.3  &2\\
+%       \hline
+%       16 & bq Curie   &  4.1.1 & 12\\
+%       \hline\midrule
+%     \end{tabular}
+    
+% \end{table}
+
+
+% % \begin{table}[!h]
+% %     \centering
+% %     \caption{ Sample information related to  PhoneID and real device. }
+% %     \label{phone}
+% %     \begin{tabular}{c c c c}
+% %     \hline
+% %      \textbf{PhoneID} & \textbf{Android Device}  & \textbf{Android Version} & \textbf{UserID} \\
+% %      \hline\midrule
+% %       1 & GT-I8160   & 2.3.6 &8\\
+% %      \hline
+% %       3 & GT-I9100   & 4.0.4 &5\\
+% %      \hline
+% %       6 & GT-S5360  &2.3.6  & 7\\
+% %      \hline
+% %       7 & GT-S6500  &2.3.6  &14\\
+% %      \hline
+% %       8 &  Galaxy Nexus  & 4.2.2  &10\\
+% %       \hline
+% %       10  & HTC Desire HD  &2.3.5 &18\\
+% %      \hline
+% %       11  & HTC One  & 4.1.2  & 15\\
+% %      \hline
+% %       13 &  HTC Wildfire S &2.3.5  &11 \\
+% %      \hline
+% %       15 &  LT22i  & 4.0.4  &1,9,16\\
+% %      \hline
+% %       16 &  LT26i  & 4.0.4  &3\\
+% %       \hline      
+% %      \hline
+% %       17 &  M1005D  & 4.0.4  &13\\
+% %       18 &  MT11i  & 2.3.4  &4\\
+% %       \hline      
+% %       19 &  Nexus 4 & 4.2.2  &6\\
+% %       \hline     
+% %       22 &  Orange Monte Carlo  & 2.3.5  &17\\
+% %       \hline      
+% %       23 &  Transformer TF101  & 4.0.3  &2\\
+% %       \hline
+% %       24 & bq Curie   &  4.1.1 & 12\\
+% %       \hline\midrule
+% %     \end{tabular}
+    
+% % \end{table}
+
+
+% The data was collected From May to June 2013 as shown in Table \ref{udate}. The number of data points show the distribution of measurements during each day. The data collection happened on 6 discrete days. The day when the most amount of data was collected was the 20th of June. This single day accounts for more than half the points in the entire data set. 
+% %Two Android applications have been used to create the database by applying reference map services that are published in the ArcGIS. These services include geographic information inside the building. By using these services, the applications created show the maps to improve the user localization.
+
+
+
+% \begin{table}[ht]
+% \centering
+% \caption{UJIIndoorLoc Experiment timeline.}
+% \begin{tabular}{lclc}
+% \toprule
+% \textbf{Date} &  \textbf{Number of data points}       \\
+% \midrule
+%      \rowcolor{cyan}
+% 5/30/2019                 &      1140                 \\
+%      \rowcolor{cyan}
+% 5/31/2019                 &      362                  \\
+%      \rowcolor{cyan}
+% 6/4/2019                  &      1010                 \\
+%      \rowcolor{cyan}
+% 6/10/2019                 &      270                 \\
+%      \rowcolor{cyan}
+% 6/12/2019                 &      2467                 \\
+%      \rowcolor{cyan}
+% 6/20/2019                 &      14688                \\
+%      \rowcolor{pink}
+% 9/19/2019                 &      51                   \\
+%      \rowcolor{pink}
+% 9/20/2019                 &      133                  \\
+%      \rowcolor{pink}
+% 9/24/2019                  &     56                   \\
+%      \rowcolor{pink}
+% 9/26/2019                  &     69                   \\
+%      \rowcolor{pink}
+% 10/1/2019                  &     8                    \\
+%      \rowcolor{pink}
+% 10/3/2019                  &     8                    \\
+%      \rowcolor{pink}
+% 10/4/2019                  &     702                  \\
+%      \rowcolor{pink}
+% 10/7/2019                  &     81                   \\
+%      \rowcolor{pink}
+% 10/8/2019                  &     3                    \\
+% \bottomrule
+% \label{udate}
+% \end{tabular}
+% \end{table}
+
+
+
+% A set of pre-processing tasks were performed to improve the quality of the data set and make the measurements suitable for cluster analysis.
+% %with the project scope and removed from the dataset.
+% The timestamp was recorded in a linux-based time format, such as 1371714467 which corresponds to 06/20/2013 at 7:47am. All the time values were converted to the standard date-time format (dd/mm/yy hh:mm:ss) in Python and added as a new feature called Datetime into the data set.
+
+% The feature SpaceID contains values starting from 1 to 250, but there were gaps between numbers 50-100 and 150-200. These gaps were removed and the updated SpaceID numbers range from 1 to 122 now. During the validation part of the experiment a subset of the phones (PhoneID = 0,2,4,5,9,12,15,20, and 21) were not used. The remaining Phoneids were renamed to make the records sequential just like the SpaceIDs. The space identifiers, the SpaceID, BuildingID, Floor, and relative position together provide a unique label for a location. A new feature is added to the data set called SPACEID, that contains a unique spatial identifier for each location. The SPACEID was created by combining the space identifiers and then giving them a sequential numbers from 0-732.
+
+% For cluster analysis, The days are non-uniformly distributed over 2 month as shown in Table \ref{udate} earlier. For the training data, The data collection during those six days was not continuous but collected at a much higher cadence. For these reasons a smaller landmark time window of 10 minutes was applied on this dataset. Moreover, The hyperparameters for the AP in the DSAP algorithm are consistent and fixed for the entire experiment. The damping value is equal to 0.9, maximum iteration is 100, and preference is equal to the median of the similarity matrix.
