@@ -6,7 +6,7 @@
 
 %As the number of connected devices and applications that generate huge amount of data at very high speed increases, the need for faster data mining techniques is enhanced. This research work proposes a data stream clustering algorithm that builds upon the Affinity Propagation clustering algorithm. The concept of time windows that partition the data into manageable chunks is introduced in order to apply these algorithms for data stream clustering.
 
-This Chapter presents an overview of clustering by reviewing the concepts, methods, and underlying steps, focusing on the affinity propagation (AP) method. Data stream clustering algorithms are also introduced with the existing time window models being used for computing stream clusters. 
+This Chapter presents an overview of clustering methods by reviewing the various concepts, methods, and underlying steps, with a particular focus on the affinity propagation (AP) method. Data stream clustering algorithms are also introduced with the time window models that are used for computing stream clusters. 
 
 %Finally, indoor localization systems are described due to the potential wide range of services they can provide by leveraging Internet of Things (IoT) and ubiquitous connectivity. 
 
@@ -101,7 +101,7 @@ Therefore, selecting a clustering method is an important step, as certain method
 
 \begin{itemize}
 
-    \item\textit{Partitioning methods:} Data points are split into $k$ number of clusters. Each data point can only belong to one cluster, and each cluster must contain at least one data point. The algorithms usually require a distance threshold %the distance of new data points to the existing micro-clusters, and maybe it comes(happen) 
+    \item\textit{Partitioning methods:} In these methods data points are split into $k$ number of clusters. Each data point can only belong to one cluster, and each cluster must contain at least one data point. The algorithms usually require a distance threshold %the distance of new data points to the existing micro-clusters, and maybe it comes(happen) 
     to generate new clusters, specially those with spherical shapes.   %. These types of algorithms are 
     %finding clusters with spherical shapes. %, and the noise can influence the results. A very famous algorithm in this group is K-means.
     K-means is the most recognized clustering algorithm in this category due to its robustness in finding clusters that have not been explicitly labeled in the data.
@@ -127,12 +127,12 @@ Therefore, selecting a clustering method is an important step, as certain method
     %try to fit a model to the data, assuming that data are generated from k probability distributions (typically Gaussian).
 \end{itemize}
 
-The main advantages and disadvantages of these different clustering methods are summarized in Table \ref{methoda}. 
+The main advantages and disadvantages of these different clustering methods are summarized in Table \ref{methoda1}. 
 
 \begin{table}[!h]\scriptsize
 % \centering
 \caption{ Comparison of clustering methods}% \protect\cite{mousavi2015data}
-\label{methoda}  
+\label{methoda1}  
 \small
 \begin{tabularx}{\linewidth}{p{3cm} p{5.5cm} p{5.5cm}}
 \hline
@@ -212,10 +212,32 @@ The main advantages and disadvantages of these different clustering methods are 
 
 
 
+% \begin{table}[!h]
+% \centering
+% \small
+% \caption{Comparison of clustering methods}
+% \label{methoda1}
+% \begin{tabular}{
+% >{\columncolor[HTML]{ECF4FF}}l ll}
+% \hline
+% \multicolumn{1}{c}{\cellcolor[HTML]{ECF4FF}\textbf{Categories}}           & \multicolumn{1}{c}{\cellcolor[HTML]{ECF4FF}\textbf{Advantages}}                                        & \multicolumn{1}{c}{\cellcolor[HTML]{ECF4FF}\textbf{Disadvantages}}                                                   \\ \hline
+% \textbf{\begin{tabular}[c]{@{}l@{}}Partitioning \\ Methods\end{tabular}}  & \begin{tabular}[c]{@{}l@{}}*Easy to implement\\ *Produce tighter clusters\end{tabular}                 & \begin{tabular}[c]{@{}l@{}}*Best suited for finding spherical \\ shaped clusters\end{tabular}                        \\ \hline
+% \textbf{\begin{tabular}[c]{@{}l@{}}Hierarchical \\ Methods\end{tabular}}  & \begin{tabular}[c]{@{}l@{}}*Easy to handle any type \\ of distance function\end{tabular}               & *High computational complexity                                                                                       \\ \hline
+% \textbf{\begin{tabular}[c]{@{}l@{}}Grid-based\\  Methods\end{tabular}}    & \begin{tabular}[c]{@{}l@{}}*Fast processing time\\ *Effective with handling \\ noisy data\end{tabular} & \begin{tabular}[c]{@{}l@{}}*Limited to the Euclidean \\ distance function\end{tabular}                               \\ \hline
+% \textbf{\begin{tabular}[c]{@{}l@{}}Density-Based\\  Methods\end{tabular}} & \begin{tabular}[c]{@{}l@{}}*Fast to compute\\ *Easy to interpret clusters\end{tabular}                 & \begin{tabular}[c]{@{}l@{}}*Higher value for convex \\ clusters compared with \\ density-based clusters\end{tabular} \\ \hline
+% \textbf{\begin{tabular}[c]{@{}l@{}}Model-Based\\  Methods\end{tabular}}   & \begin{tabular}[c]{@{}l@{}}*Offer more flexibility\\ *Effective in handling noisy\\  data\end{tabular} & \begin{tabular}[c]{@{}l@{}}*Highly dependent on the\\  hypothesized model\end{tabular}                               \\ \hline
+% \end{tabular}
+% \end{table}
+
+
+
+
+
+
 \subsection{Affinity Propagation Clustering}
 
 % $O(N^2logN)$ where N is the number of data points. It can be imagined that if the number of data points is very huge, then it is impossible to do clustering using AP
-Affinity propagation (AP) is a partitioning-based clustering algorithm that was first introduced by Frey and Dueck in 2006 \cite{frey2006mixture}. AP is based on the concept of "message passing" between data points that plays an important role in finding the best candidate data point to become a cluster centroid \cite{frey2007clustering, jiang2019exemplar}. 
+Affinity propagation (AP) is a partitioning-based clustering algorithm that was first introduced by Frey and Dueck in 2006 \cite{frey2006mixture}. AP is based on the concept of "message passing" between data points that plays an important role in finding the best candidate data point that becomes a cluster centroid \cite{frey2007clustering, jiang2019exemplar}. 
 
 
 
@@ -235,7 +257,7 @@ Unlike clustering algorithms such as k-means, affinity propagation does not requ
 % \end{figure}
 
 
-The AP algorithm supports similarities that are not symmetric, and it is not dependent on initialization found in other clustering algorithms \cite{refianti2017time}. However, it has a significant speed problem, particularly for clustering large volume of data. Affinity Propagation needs $O(N^2T)$ time to update a message where $N$ and $T$ represent the number of data points and the number of iterations \cite{frey2007clustering}. Finally, applying AP for any data set requires to meet two conditions: no missing or null data in the inputs and the feature space should contain only numeric, not categorical data.
+The AP algorithm supports similarities that are not symmetric, and it is not dependent on initialization found in other clustering algorithms \cite{refianti2017time}. In order to apply AP for any data set two conditions should be met: no missing or null data in the inputs and the feature space should contain only numeric, not categorical data. However, it has a significant speed problem, particularly for clustering large volume of data. Affinity Propagation needs $O(N^2T)$ time to update a message where $N$ and $T$ represent the number of data points and the number of iterations \cite{frey2007clustering}. 
 
 
 The AP algorithm is based on the computation of four matrices: similarity matrix, responsibility matrix, availability matrix, and criterion matrix. They can are described as follows:
@@ -246,7 +268,7 @@ The AP algorithm is based on the computation of four matrices: similarity matrix
   Every cell value in the similarity matrix $s(i,j)$ corresponds to an element \textit{k} representing how similar/dissimilar two data points are in a feature space. This element \textit{k} is defined as the negative of the Euclidean distance between the two data points. The greater the distance between any two data points, smaller is the \textit{k} between them. The \textit{k} values of the off-diagonal cells will dictate the number of clusters formed, in such a way that the smaller the index value (value	$\leq$0), fewer number of clusters is obtained.
   %gives information about any inputs. It shows data points with is how appropriate to be the cluster-head for data point \textit{i}. 
   %Every cell has values that correspond to how similar two objects are. It is a diffident method to calculate the values for diagonal values and non-diagonal values.  The diagonal values,  Cells are filled with the lowest number among all the cells. The non-diagonal values are the negation of the sum of the squares of the differences between participants.
-  \item\textit{Responsibility Matrix:} The matrix $r(i , k)$ quantifies how well-suited element $k$ is, to be a cluster centroid for element $i$, taking into account the nearest contender $k’$ to be a cluster centroid for $i$.
+  \item\textit{Responsibility Matrix:} The matrix $r(i , k)$ quantifies how well-suited element $k$ is, to be a cluster centroid for element $i$, taking into account the nearest contender $k^{\prime}$ to be a cluster centroid for $i$.
   
   %Cells contain values that correspond to how responsible one data point is for another. It is better to say how responsible it is to be a part of another object or related to another object. 
   We initialize the matrix $R$ with zeros, and compute the next values using the equation:
@@ -255,7 +277,7 @@ The AP algorithm is based on the computation of four matrices: similarity matrix
         r(i, k) \leftarrow s(i, k) - \max\limits_{k' s.t. k' \neq k}\{ a(i, k') + s(i, k') \}
     \end{equation}
  
- The goal is to quantify how similar is $i$ to $k$, compared to some $k$’, taking into account the availability of $k’$.   
+ The goal is to quantify how similar is $i$ to $k$, compared to some $k^{\prime}$, taking into account the availability of $k^{\prime}$.   
     
   \item\textit{Availability matrix:} The matrix $a(i,k)$ quantifies how appropriate is it for $i$ to choose $k$ as its cluster centroid, taking into account the support from other elements that $k$ should a centroid. Availability is self-responsibility of $k$ plus the positive responsibilities of $k$ towards elements other than $i$ as shown in the following equation:
   
@@ -306,11 +328,11 @@ The element with the highest criterion value in each row would be designated to 
 
 \end{itemize}
 
-The AP clustering algorithm used in this thesis is described in Algorithm \ref{APo}. The Python code is available at https://scikit-learn.org/ open source repository. Four hyperparameters are used for tuning the clustering process. They are described as follows: 
+The AP clustering algorithm used in this thesis is described in Algorithm \ref{APo}. The Python code used in this work is available at https://scikit-learn.org/ open source repository. Four hyperparameters are used for tuning the clustering process using AP. They are described as follows: 
 
 \begin{itemize}
 
-\item Damping Factor is the extent to which the current value is maintained relative to incoming values (weighted 1 - damping). This in order to avoid numerical oscillations when updating messages.
+\item Damping Factor is the extent to which the current value is maintained relative to incoming values (weighted 1 - damping). This is used to avoid numerical oscillations when updating messages.
 
 \item Maximum number of iterations.
 
@@ -360,8 +382,6 @@ The AP clustering algorithm used in this thesis is described in Algorithm \ref{A
  \caption{Affinity Propagation Algorithm}
 \label{APo}
 \end{algorithm}
-%\todo[inline]{missing the  selection of the distance function a hyperparameter, also the input should be better explained in the text }
-
 
 
 
@@ -556,7 +576,7 @@ From a clustering perspective, a data stream $S$ is sequence of infinitive, orde
     \item Traditional clusters are found from accumulated data points, but streaming clusters evolve over time depending on the time window model being used to accumulate the data points.
 \end{itemize}
 
-Four main types of time window models have been proposed in the literature \cite{nguyen2015survey, mansalis2018evaluation}. They can be described as follows:
+It is important to select a time-interval for a time window model based on the trade-off between the data rate and latency, as that plays an important role in controlling which data points in the stream are going to be processed at the current time. Four main types of time window models have been proposed in the literature \cite{nguyen2015survey, mansalis2018evaluation}. They can be described as follows:
 
 \begin{itemize}
 
@@ -572,7 +592,7 @@ Four main types of time window models have been proposed in the literature \cite
     
 \end{itemize}    
 
-Figure   \ref{time1} illustrates how these time window models have been conceptualized. It is important to select a time-interval for a time window model based on the trade-off between the data rate and latency, playing an important role in controlling which stream data points are going to be processed over time. Time window models also handle concept-drift by changing the trends and data distribution in clustering, avoiding forming less accurate clusters as time passes. Finding patterns without storing all the stream data points is one of the main tasks of streaming cluster analysis.
+Figure   \ref{time1} illustrates how these time window models have been conceptualized. Time window models also handle concept-drift by changing the trends and data distribution in clustering, avoiding forming less accurate clusters as time passes. Finding patterns without storing all the stream data points is one of the main tasks of streaming cluster analysis.
 
 %or data distribution over the time. It means This method aims to ignore outdated and historical data because they can change the trends or the data distribution.
 

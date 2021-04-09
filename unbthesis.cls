@@ -50,7 +50,7 @@
 \def\examboard#1{\gdef\@examboard{#1}}
 %
 %external examiner including name, degree, department or field and Institution
-\def\externalexam#1{\gdef\@externalexam{#1}}
+% \def\externalexam#1{\gdef\@externalexam{#1}}
 %
 %copyright including name of candiate and year of graduation
 \def\copyrightyear#1{\gdef\@copyrightyear{#1}}
@@ -76,9 +76,9 @@
 \end{center}
 \begin{table}[!h]
 \begin{tabular}{l l}
-Supervisor(s): & \@supervisor \\
+Supervisor: & \@supervisor \\
 Examining Board: & \@examboard \\
-External Examiner: & \@externalexam
+% External Examiner: & \@externalexam
 %\@externalexam
 \end{tabular}
 \end{table}

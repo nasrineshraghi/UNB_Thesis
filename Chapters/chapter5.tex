@@ -990,7 +990,7 @@ This case study was carried out to find occupant  behavior patterns  in  indoor 
 
 % This experiment was conducted over four months at the UJI university campus and was divided in two sections: Training set and Validation set. 
 
-The UJIIndoorLoc data set generated includes three buildings with four or more floors (one building has five floors) and almost 110.000 m$^{2}$of space. The total number of locations captured was 933. The shape and structure of the three buildings TI, TD, and TC, are quite different, as shown in Figure \ref{dspp2}. The raw data set consists of 21,049 data points containing 529 attributes as illustrated in Table \ref{featuj}. These attributes include the Received signal strength indicator (RSSI) for 520 wireless access points (WAPs). The RSSI is an unitless number that provides an estimates of the  received signal strength.
+The UJIIndoorLoc data set generated includes three buildings with four or more floors (one building has five floors) and almost 110.000 m$^{2}$of space. The total number of locations captured was 933. The shape and structure of the three buildings TI, TD, and TC, are quite different, as shown in Figure \ref{dspp2}. The raw data set consists of 19,938 data points containing 529 attributes as illustrated in Table \ref{featuj}. %These attributes include the Received signal strength indicator (RSSI) for 520 wireless access points (WAPs). The RSSI is an unitless number that provides an estimates of the  received signal strength.
 
 
 \begin{figure*}[!h]
@@ -1101,7 +1101,7 @@ The UJIIndoorLoc data set generated includes three buildings with four or more f
 % \end{table}
 
 
-The data was collected From May to October 2013 as shown in Table \ref{udate}. The data collection duration was divided in two phases: training and validation. As shown with blue color in the table \ref{udate}, the training data was collected from 30th of May till 20th of June and the rest of the validation data were measured three months later. The number of data points show the distribution of measurements during each day. The data collection happened on 15 discrete days. The day when the most amount of data was collected was the 20th of June. This single day accounts for more than half the points in the entire data set. Only the training data set was used in this study as in the validation data set the spaceid feature is not captured since this was originally meant to test the accuracy of localization from just the RSSI and WAP values.
+The data was collected From May 30 to June 20, 2013 as shown in Table \ref{udate}. The number of data points show the distribution of measurements during each day. The data collection happened on these six discrete days. The day when the most amount of data was collected was the $20^{th}$ of June. This single day accounts for more than half the points in the entire data set.
 %Two Android applications have been used to create the database by applying reference map services that are published in the ArcGIS. These services include geographic information inside the building. By using these services, the applications created show the maps to improve the user localization.
 
 
@@ -1125,24 +1125,6 @@ The data was collected From May to October 2013 as shown in Table \ref{udate}. T
 6/12/2019                 &      2467                 \\
      \rowcolor{cyan}
 6/20/2019                 &      14688                \\
-     \rowcolor{pink}
-9/19/2019                 &      51                   \\
-     \rowcolor{pink}
-9/20/2019                 &      133                  \\
-     \rowcolor{pink}
-9/24/2019                  &     56                   \\
-     \rowcolor{pink}
-9/26/2019                  &     69                   \\
-     \rowcolor{pink}
-10/1/2019                  &     8                    \\
-     \rowcolor{pink}
-10/3/2019                  &     8                    \\
-     \rowcolor{pink}
-10/4/2019                  &     702                  \\
-     \rowcolor{pink}
-10/7/2019                  &     81                   \\
-     \rowcolor{pink}
-10/8/2019                  &     3                    \\
 \bottomrule
 \label{udate}
 \end{tabular}
@@ -1165,13 +1147,16 @@ The data was collected From May to October 2013 as shown in Table \ref{udate}. T
 % \item\textbf{Data Pre-processing:}
 A set of pre-processing tasks were performed to improve the quality of the data set and make the measurements suitable for cluster analysis.
 %with the project scope and removed from the dataset.
-The timestamp was recorded in a linux-based time format, such as 1371714467 which corresponds to \texttt{06/20/2013 at 7:47am}. All the time values were converted to the standard date-time format (dd/mm/yy hh:mm:ss) in Python and added as a new feature called Datetime into the data set.
+The timestamp was recorded in a Linux-based time format, such as 1371714467, which corresponds to \texttt{06/20/2013 at 7:47 am}. All the time values were converted to the standard date-time format (dd/mm/yy hh:mm:ss) in Python and added as a new feature called Datetime into the data set.
 
-The feature SpaceID contains values starting from 1 to 250, but there were gaps between numbers 50-100 and 150-200. These gaps were removed and the updated SpaceID numbers range from 1 to 122 now. 
+The feature Space ID contains values starting from 1 to 250, but there were gaps between numbers 50-100 and 150-200. These gaps were removed, and the updated Space ID numbers range from 1 to 122.
+These space ID values were not unique in terms of spaces such as offices, classrooms, and labs. 
+The Space ID, Building ID, Floor, and relative position together provide a unique label for a location. A new feature is added to the data set called SPACEID, that contains a unique spatial identifier for each location. The SPACEID was created by combining the space identifiers and then giving them a sequential numbers from 0-732.
 
-During the validation part of the experiment a subset of the phones (PhoneID = 0,2,4,5,9,12,15,20, and 21) were not used. The remaining Phoneids were renamed to make the records sequential just like the SpaceIDs. Table \ref{phone} shows the phone ID related to each android device, the version of the operating system and finally, which user uses the phone. A total of 18 users with sixteen different phones are used for this research. The phone number 9 shared between three users with numbers 1, 9, and 16.
+During the six days of collecting data, some phones (Phone ID = 0,2,4,5,9,12,15,20, and 21) were not used. To make it consecutive, gaps removed and a new feature called PHONEID added to the data with numbers between 1 to 16 for all presented phones.
+Table \ref{phone} shows the phone ID related to each android device, the version of the operating system and finally, which user uses the phone. A total of 18 users with sixteen different phones are used for this research. The phone number 9 shared between three users with numbers 1, 9, and 16.
 
-The space identifiers, the SpaceID, BuildingID, Floor, and relative position together provide a unique label for a location. A new feature is added to the data set called SPACEID, that contains a unique spatial identifier for each location. The SPACEID was created by combining the space identifiers and then giving them a sequential numbers from 0-732.
+
 
 
  
@@ -1226,7 +1211,24 @@ The space identifiers, the SpaceID, BuildingID, Floor, and relative position tog
 
 % Two numerical variables were selected: the SPACEID and the Phone ID for this study as these provide the necessary information regarding the people present at any location with time. Finally, in order to remove bias due to the difference in range of the two variables the data was normalized. The normalization process is applied one level before clustering with the minmaxscaler normalization process under the preprocessing library. All these preceding steps provide a target data set ready to be used by the stream simulation and the two-phase clustering algorithms. 
 
-For cluster analysis, The days are non-uniformly distributed over 2 month as shown in Table \ref{udate} earlier. For the training data, The data collection during those six days was not continuous but collected at a much higher cadence. For these reasons a smaller landmark time window of 10 minutes was applied on this dataset. Moreover, The hyperparameters for the AP in the DSAP algorithm are consistent and fixed for the entire experiment. The damping value is equal to 0.9, maximum iteration is 100, and preference is equal to the median of the similarity matrix.
+For cluster analysis, The days are non-uniformly distributed over 2 month as shown in Table \ref{udate} earlier. The data collection during those six days was not continuous but collected at a much higher cadence. A small landmark time window of 10 minutes was applied on this dataset. Moreover, The hyperparameters for the AP in the DSAP algorithm are consistent and fixed for the entire experiment. The damping value is equal to 0.9, maximum iteration is 100, and preference is equal to the median of the similarity matrix. 
+
+Finally, the variable selection task was performed to prepare a target data set ready to be used by the two phase clustering algorithm. For this research, two numerical variables as summarised in Table \ref{select2}.
+
+
+\begin{table}[]
+\centering
+\caption{Selected input variables for clustering the data points}
+\label{select2}
+\begin{tabular}{
+>{\columncolor[HTML]{FFFFFF}}c cc}
+\hline
+\textbf{Variable}              & \cellcolor[HTML]{FFFFFF}\textbf{Description}                                                          & \textbf{Values}     \\ \hline
+{\color[HTML]{000000} PHONEID} & {\color[HTML]{000000} \begin{tabular}[c]{@{}c@{}}Each phone represents a\\  participant\end{tabular}} & Range between 1 -16 \\ \hline
+{\color[HTML]{000000} SPACEID} & {\color[HTML]{000000} \begin{tabular}[c]{@{}c@{}}Each space represents a \\ location\end{tabular}}    & Range between 0-732 \\ \hline
+\end{tabular}
+\end{table}
+
 
 % \begin{itemize}
 %     \item A constant damping factor equal to 0.9 for AP algorithm.
@@ -1279,7 +1281,7 @@ For cluster analysis, The days are non-uniformly distributed over 2 month as sho
 
 %Processing time is calculated by subtract the end time from starting time with the  $time()$ method. Memory usage obtained from $psutil$ library in Python for processes and system utilization as same as $memory$ in R programming language. Outlier Detection, Processing Time, and Memory Consumption. 
 
-% \hspace{9 cm}
+% \hspace{1 cm}
 
 \section{System and Software}
 
