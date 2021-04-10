@@ -42,7 +42,7 @@
 
 \chapter{Implementation}
 
-In this Chapter, the design and implementation of the DSAP algorithm are described. Next, two case studies are presented that are related to applying the proposed DSAP model to find mobility patterns in an indoor environment. 
+In this Chapter, the design and implementation of the DSAP algorithm are described. Next, two experiments are presented that are related to applying the proposed DSAP model to find stair usage patterns and occupant behaviour in indoor spaces. 
 
 %The two studies are: an e-counter based Indoor staircase usage experiment and a WiFi fingerprint-based Indoor Localization dataset. 
 
@@ -84,7 +84,7 @@ In order to mimic a data stream, it was necessary to convert the collected data 
 
 The \texttt{skmultiflow.data} module includes two group of classes that either perform batch-to-stream conversions or generate standard data streams like waveform, Gaussian as shown in Figure \ref{sci}. The batch-to-stream conversion classes generates streams from a file source (.csv files) in the disk or from data in the memory.
 
-\begin{figure}
+\begin{figure}[!ht]
     \centering
     \includegraphics[width = 11 cm]{image/Chapters/Chapter5/multiflow.png}
     \caption{The scikit-multiflow data stream generator modules: load as a stream and stream generator}
@@ -296,7 +296,7 @@ mac_label = AP_mac.labels_
          $\epsilon_{W_j}$ = mean(d($W_j, Cm$))
                   }
          \KwResult{$\epsilon_{W_j}$} 
-         \Statex  \hfill              
+        %  \Statex  \hfill              
          \ContinuedFloat\hfill
         \textcolor{red}{\textbf{Online Phase}}\\
          j = 0\\
@@ -305,8 +305,8 @@ mac_label = AP_mac.labels_
       	\eIf{(j == 1) %\tcp{\color{green}First window}
        	} 
        	{\hfill \Comment{Initialization}\\
-       	$W_0$ = \texttt{S.getWindowSize($start\_time, L$)}\;\newline
-       	\SetKwFunction{FIROC}{AP}        \;  
+       	$W_0$ = \texttt{S.getWindowSize($start\_time, L$)}\newline
+       	\SetKwFunction{FIROC}{AP}          
              \SetKwProg{Fn}{Function}{}{}
              \Fn{\FIROC{ $W_0$}}{}
              \KwResult{Initial micro-clusters: $Cm = [Cm_1,Cm_2,...,Cmq]$, label data points: $X$, $[tq] = start\_time$}\\
@@ -314,7 +314,7 @@ mac_label = AP_mac.labels_
             
              }
              {
-      $W_j$ = \texttt{S.getWindowSize($start\_time + L*j, L$)}\;\\
+      $W_j$ = \texttt{S.getWindowSize($start\_time + L*j, L$)}\\
       $start\_time = start\_time + L$\\
        
               %  \If{getWindowSize == 0}
@@ -322,18 +322,18 @@ mac_label = AP_mac.labels_
         % \newline
         
          %\Statex \hfill     \textbf{{Online Phase:}}\\
-        \For{($x_i:i = 1:\Omega$)}{\hfill \Comment{Comparison}\;\\
+        \For{($x_i:i = 1:\Omega$)}{\hfill \Comment{Comparison}\\
         $[d]$ = d($[Cm], x_i$) \newline
         
         \eIf{min ($[d]) < \epsilon_{W_j}$}
         {   
         $Cm[X] \leftarrow{x_i}   $
-        (merge with micro\_clusters)\\%\tcp{kkkk}\\
+        (merge with micro\_clusters)\\
         $[tq] = start\_time$
         
         }
         {
-        \STATE $repository \leftarrow{x_i} $ 
+        $repository \leftarrow{x_i} $ 
         
         %\STATE $W_i \xrightarrow \mathrm{C_{m0}}$\;
         }
@@ -368,9 +368,8 @@ mac_label = AP_mac.labels_
         }
         \end{algorithm}
         \begin{algorithm}
-            
-
-         \If{end of S}{            \\            
+          \small
+         \If{end of S}{                        
           \ContinuedFloat\hfill
 \textcolor{red}{\textbf{Offline Phase}}\\
          
@@ -467,7 +466,7 @@ To validate the clustering results, three Intrinsic evaluation metrics: Silhouet
     
 
 \item\textit{Silhouette Coefficient}
-Silhouette Coefficient cluster evaluation metric was implemented as a function \texttt{silhouette\_score} and is available in the \texttt{sklearn.metrics} library in Python.  The input parameter of this function is an array of pairwise Euclidean distances between micro-cluster centroids and the final macro-cluster centroids, %cluster label for each data point, and metric to use for calculating a distance between data points in a feature array which is Euclidean for our work. 
+Silhouette Coefficient cluster evaluation metric was implemented as a function \texttt{silhouette\_score} and is available in the \texttt{sklearn. metrics} library in Python.  The input parameter of this function is an array of pairwise Euclidean distances between micro-cluster centroids and the final macro-cluster centroids, %cluster label for each data point, and metric to use for calculating a distance between data points in a feature array which is Euclidean for our work. 
 
 %The Silhoutte calculation in R is performed by the function \texttt{silhouette()} that is available in package \texttt{cluster}. This function \texttt{silhouette(distdata, idmedoid, idcluster)} just needs a vector of cluster members and a dissimilarity matrix.
 
@@ -668,7 +667,7 @@ Tonsley Building is a six-story building populated by students and staff with en
 
 E-counter sensors were deployed at all stairs. They are made by the International Road Dynamics company and consist of a pair of transmitter and receiver(transmitter: PTx20-1 and receiver: PRx20W1). The transmitter sends an infrared message to the receiver, when the infrared light is interrupted by someone passing through it, a count is registered. If no one passes, then these sensors log a count value of zero every 10 minutes. Each stair has two sensors, UP/DOWN that determine a person's direction of travel up and down the stairs. Signals from the sensors are sent to wireless hubs in real-time and then from the hubs to the server. The specification of all the sensors from this company are shown in Table \ref{sensor}. The maximum count value for each direction is about 1,000,000.
 
-\begin{table}[!h]{}
+\begin{table}[!ht]
  \small
 \centering
 \caption{E-counter sensors of International Road Dynamics company}%\cite{people}.}
@@ -778,7 +777,7 @@ Motivational and educational interventions were made during the next month perio
 The sensors captured movement for all 24 hours and all days continuously. The raw e-counter data set consists of approximately 668,000 data points, each containing nine attributes as listed in Table \ref{attr} out of which almost half the data points were included in our research work. 
 
 
-\begin{table}[!h]{}
+\begin{table}[!ht]
 \centering
 \caption{List of attributes for the e-counter data set}
 
@@ -993,7 +992,7 @@ This case study was carried out to find occupant  behavior patterns  in  indoor 
 The UJIIndoorLoc data set generated includes three buildings with four or more floors (one building has five floors) and almost 110.000 m$^{2}$of space. The total number of locations captured was 933. The shape and structure of the three buildings TI, TD, and TC, are quite different, as shown in Figure \ref{dspp2}. The raw data set consists of 19,938 data points containing 529 attributes as illustrated in Table \ref{featuj}. %These attributes include the Received signal strength indicator (RSSI) for 520 wireless access points (WAPs). The RSSI is an unitless number that provides an estimates of the  received signal strength.
 
 
-\begin{figure*}[!h]
+\begin{figure*}[!ht]
 \centering
 \subfloat[Overview of the three buildings]{\label{fig:build}{\includegraphics[width=7 cm, height = 6 cm]{image/Chapters/Chapter5/uji.PNG}}}\hfill
 \subfloat[Building Number 0 (TI)]{\label{fig:bl2}{\includegraphics[width=0.4\textwidth]{image/plan2.png}}}\hfill
@@ -1004,7 +1003,7 @@ The UJIIndoorLoc data set generated includes three buildings with four or more f
 \end{figure*}
 
 %***** remove 
-\begin{table}[!h]{}
+\begin{table}[!ht]
 \centering
 \caption{ List of attributes of the UJIIndoorLoc data set.}
 \small
@@ -1161,7 +1160,7 @@ Table \ref{phone} shows the phone ID related to each android device, the version
 
  
 
-\begin{table}[!h]
+\begin{table}[!ht]
     \centering
     \caption{ Correspondence between PhoneID, real device and userID. }
     \label{phone}
@@ -1216,7 +1215,7 @@ For cluster analysis, The days are non-uniformly distributed over 2 month as sho
 Finally, the variable selection task was performed to prepare a target data set ready to be used by the two phase clustering algorithm. For this research, two numerical variables as summarised in Table \ref{select2}.
 
 
-\begin{table}[]
+\begin{table}[!ht]
 \centering
 \caption{Selected input variables for clustering the data points}
 \label{select2}

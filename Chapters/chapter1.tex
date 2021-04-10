@@ -83,19 +83,19 @@ The experimental results on the localization datasets validate the algorithm's e
 %%-----------------------------------------------------------
 
 
-
+%summery of conclusion
 
 \section{Research Objectives}
 
-The overall research goal is to extend the current streaming AP models to generate micro and macro clusters from indoor localization data. The objectives can be described as follows. 
+The overall research goal is to improve current streaming AP models to generate micro and macro clusters from indoor localization data. The objectives can be described as follows. 
 
 \begin{itemize}
 
-    \item Develop the data stream AP model for uncovering evolutionary patterns with two-stages, online micro and offline macro phases.
-     \item Applying landmark time window model to find the latest data points in the stream with an expiration number to keep the latest data in the model.
-    \item Evaluate the clustering results with intrinsic indices and performance evaluation to find the advantages and limitations of the proposed algorithm.  
+    \item Develop a new data stream AP model (DSAP) for uncovering evolutionary patterns based on an online micro-cluster phase and offline macro-cluster phase.
+     \item Apply the landmark time window model to continuously accumulate sufficient data points for computing the micro-clusters, avoiding performance issues.
+    \item Evaluate the clustering results using performance and validation metrics that can be used to infer the advantages and limitations of the proposed DSAP model.  
     %\item Analyze the behavioral pattern in indoor localization experiments.
-    \item Demonstrate the potential of DSAP for analyzing localization data streams to understand staircase usage patterns as well as occupant patterns in indoor spaces.
+    \item Demonstrate the potential of DSAP for analyzing localization data streams in order to understand staircase usage patterns as well as occupant behavior in indoor spaces.
 \end{itemize}  
     % \item Apply the online-offline phases of such a model to analysing indoor positioning stream data.  
     % \item Applying two data related to indoor localization positioning 
@@ -123,15 +123,16 @@ The overall research goal is to extend the current streaming AP models to genera
 \section{Scientific Contributions}
 
 
-The main scientific contribution of this research work summarized as follow:
+The main scientific contributions of this research work are summarized as follow:
 
 \begin{itemize}
     %\item  extend a partitional clustering technique that can adapt to appearing or disappearing concepts in underlying data, thus achieving similar or better quality and performance of clustering than less-flexible techniques without requiring a specific level of clustering to use. NOT CLEAR WHAT YOU MEANT HERE
     
-    \item A new data stream clustering algorithm for covering evolutionary patterns using landmark time window model is proposed. 
-    \item  The new streaming AP clustering algorithms is used for clustering indoor localization data streams for the first time.
+    \item A new data stream AP clustering (DSAP) algorithm is proposed for uncovering evolutionary patterns using the landmark time window model. Previous research work was focused on using the sliding time window model.
     
-    \item We demonstrate the potential of DSAP in improving our understanding of stair usage and occupant behaviour in indoor spaces datasets.
+    \item  To the best of our knowledge, the streaming AP clustering algorithms have never been used for clustering indoor localization data streams before. 
+    
+    \item We demonstrate the potential of applying streaming cluster analysis to find new insights into stair usage and occupant behaviour in indoor spaces.
 \end{itemize}
 
 
@@ -142,15 +143,15 @@ The main scientific contribution of this research work summarized as follow:
 \section{Organization of this Thesis}
 This thesis is organized in five chapters as described as follows:
 
-Chapter 2 provides a background of cluster analysis.
+Chapter 2 provides an overview of clustering methods by reviewing the various concepts, methods, and underlying steps, with a particular focus on the affinity propagation (AP) method.  Data stream clustering algorithms are also introduced with the time window models that are used for computing stream clusters.
 
-Chapter 3 summarizes the related work in streaming AP algorithms.
+Chapter 3 summarizes the related work in streaming AP clustering.
 
-Chapter 4 describes the proposed DSAP algorithm for data stream clustering.
+Chapter 4 describes the research methodology adopted for developing, implementing, and evaluating the proposed Data Stream Affinity Propagation (DSAP)algorithm using the landmark time window model. 
 
-Chapter 5 includes a summary of implementation and the data sets applied for this research work.
+Chapter 5 describes the  design  and  implementation  of  the  DSAP  algorithm. Two  experiments  are  presented  that  are  related  to  applying  the proposed DSAP model to find stair usage patterns and occupant behaviour in indoor spaces.
 
-Chapter 6 provides an in-depth analysis of the data and a discussion of the clustering results.
+Chapter 6 provides an in-depth discussion of the main  clustering  results  from  applying DSAP using  the  data  streams  generated  from  both  experiments. 
 
 Finally, Chapter 7 concludes the work and outlines future research work.
 % \end{document}

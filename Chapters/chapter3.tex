@@ -27,7 +27,7 @@ Overall, there are a few robust streaming algorithms based on the AP method. The
 
 
 
-\begin{table}[!h]
+\begin{table}[!ht]
 \caption{Overview of streaming AP clustering algorithms }
 \label{APCLU}
 \begin{tabular}{lcccc}
@@ -37,7 +37,7 @@ StrAP               & 2008                              & AP                    
 IStrAP              & 2012                        & AP                                  & Single-pass                             & Sliding                                                                      \\ \hline
 ISTRAP               &   2018        &    AP             &   Single-pass           & Sliding \\ \hline
 
-APDenStream         & 2013                              & AP                                  & Online-offline                          & \begin{tabular}[c]{@{}c@{}}Sliding (online)\\ Pyramidal (offline)\end{tabular} \\ \hline
+APDenStream         & 2013                              & AP                                  & Online-offline                          & \begin{tabular}[c]{@{}c@{}}Sliding (online)\\ Pyramidal (offline)\end{tabular} \\ \hline\midrule
      %           &   2015        &    AP             &     Single-pass         &   Damped    \\
     %\hline
     %  SED-Stream-AP        &   2018        &    AP             &    Online-offline   & Damped(offline)\\
@@ -89,11 +89,11 @@ Overall, these streaming AP algorithms usually suffer from a quadratic computati
 
 \textbf{StrAP Algorithm}
 
-StrAP was the first algorithm proposed for extending affinity propagation for streaming data and was inspired by the DenStream algorithm \cite{zhang2008data}. It is a simple evolutionary workflow as illustrated in Figure \ref{stmodl} where a set of 4-tuples $(c_i,n_i,\sum{_i},t{_i})$ is represented, where  $c_i$ ranges over the clusters, $n_i$ is the number of data points associated to cluster $c_i$, $\sum{_i}$ is the distortion of $c_i$ $(\sum{d(x,c_i)^2})$, where $x$ ranges over all data points associated to $c_i$, and $t_i$ is the last timestamp when a data point was associated to $c_i$.
+StrAP was the first algorithm proposed to extend affinity propagation for streaming data and was inspired by the DenStream algorithm \cite{zhang2008data}. It has a simple evolutionary workflow as illustrated in Figure \ref{stmodl} where a set of 4-tuples $(c_i,n_i,\sum{_i},t{_i})$ is represented, where  $c_i$ ranges over the clusters, $n_i$ is the number of data points associated to cluster $c_i$, $\sum{_i}$ is the distortion of $c_i$ $(\sum{d(x,c_i)^2})$, where $x$ ranges over all data points associated to $c_i$, and $t_i$ is the last timestamp when a data point was associated to $c_i$.
 
 %\todo[inline]{ it is important to describe how the tupes look like as StrAP was described above}
 
-\begin{figure}
+\begin{figure}[!ht]
 \centering
 \includegraphics[width = 13 cm]{image/Chapters/Chapter3/strapmodel.PNG}
 \caption{The workflow developed for the StrAP algorithm }
@@ -101,7 +101,7 @@ StrAP was the first algorithm proposed for extending affinity propagation for st
 \end{figure}
 
 
-The number of clusters to be found is not fixed, and the clustering problem is defined in terms of energy minimization. An initial number of actual data points are selected as exemplar cluster-centroids, and the algorithm computes the cost of adding another new cluster-centroid. The penalty value parameter controls the cost of adding another exemplar. If the current data point does not fit the model according to its penalty value, it is automatically moved to a reservoir. A statistical test enables StrAP to catch drifting exemplars that significantly deviate away from the existing clusters. StrAP involves four main steps described as follows:  
+The number of clusters to be found is not pre-determined, and the clustering problem is defined in terms of energy minimization. An initial number of actual data points are selected as exemplar cluster-centroids, and the algorithm computes the cost of adding another new cluster-centroid. The penalty parameter value controls the cost of adding another exemplar. If the current data point does not fit the model according to its penalty value, it is automatically moved to a reservoir. A statistical test enables StrAP to catch drifting exemplars that significantly deviate away from the existing clusters. StrAP involves four main steps described as below:  
 
 % The StrAP algorithm, as an online version of AP, proceeds by incrementally updating the current model if the current data point fits the model, and putting it in a reservoir otherwise. 
  
@@ -115,18 +115,20 @@ The number of clusters to be found is not fixed, and the clustering problem is d
 
 
 \begin{itemize}
-    \item[$\bullet$] A first batch of data stream data points are selected as the first cluster-centroids to initialize the StrAP algorithm.
+    \item[$\bullet$] A first batch of data stream data points are selected and the first cluster-centroids are obtained using AP to initialize the StrAP algorithm.
     
     %AP is applied to the first set of selected data points to compute the first centroids and initialize the streaming AP model. THIS IS HOW YOUR MODEL WORKS!!!
-    \item[$\bullet$] As new stream data points arrive,  each stream data point $x_t$ is compared to the existing centroids $e_i$. This comparison is carried out by computing the Euclidean distance of $x_t$, $e_i$ with the threshold $\epsilon$, which is a heuristically set, and the value is equal to the average distance between stream data points and centroids in the initial step. If $x_t$ is far from the nearest centroid, it goes to the reservoir. If not, $x_t$ is assigned to the $i^{th}$ cluster, and the clusters will be updated accordingly. StrAP has a mechanism to forget old centroids which they have not been visited for sometime.
-    \item[$\bullet$]  Two restart procedures have been proposed in StrAP. First, if the number of outliers in the reservoir exceeds the reservoir's size, the restart criterion will be triggered. Second, the Page-Hinkley (PH) test is applied for detecting of an abrupt change of the average number of clusters. 
-    \item[$\bullet$] If the restart criterion is satisfied either due to the reservoir filling up or if the PH test results detected an abrupt change, the clusters are rebuilt by launching a weighted version of AP (WAP) using current centroids and the reservoir.
+    \item[$\bullet$] As new stream data points arrive,  each stream data point $x_t$ is compared to the existing centroids $e_i$. This comparison is carried out by computing the Euclidean distance of $x_t$, $e_i$ with the threshold $\epsilon$, which is a heuristically set, and the value is equal to the average distance between stream data points and centroids in the initial step. If $x_t$ is far from the nearest centroid, it goes to the reservoir. If not, $x_t$ is assigned to the $i^{th}$ cluster, and the clusters are updated accordingly. StrAP has a mechanism to forget old centroids which have not been visited for some time.
+    
+    \item[$\bullet$]  Two restart procedures have been proposed in StrAP. First, if the number of outliers in the reservoir exceeds the reservoir's size, the restart criterion is triggered. Second, the Page-Hinkley (PH) test is used for detecting an abrupt change in the average value of the data points in clusters. 
+    
+    \item[$\bullet$] If the restart criterion is satisfied either due to the reservoir filling up or if the PH test detects an abrupt change, the clusters are rebuilt by launching a weighted version of AP (WAP) using current centroids and the reservoir.
 \end{itemize}
 
-Previous research work has confirmed the trade-off between the computational cost and the performance of StrAP. The distortion and purity metrics have been applied to evaluate the quality of the clustering results, using data sets such as the Intrusion Detection benchmark data (KDD99), synthetic stream data, and the streams jobs submitted to a EGEE grid system \cite{zhang2008data}.  
+Previous research work has explored the trade-off between the computational cost and the performance of StrAP. The distortion and purity metrics have been applied to evaluate the quality of the clustering results, using data sets such as the Intrusion Detection benchmark data (KDD99), synthetic stream data, and the streaming data from the EGEE grid system \cite{zhang2008data}.  
 
 %\todo[inline]{Nasrin: check types of data used : labeled or not labeled}
-Artificially generated data streams have been used for testing the ability of StrAP to handling the dynamically changing data distribution.The second data set is the network connection data used in KDD Cup 1999 (KDD99) Intrusion Detection. The task was to evaluate the StrAP model for distinguishing between “bad” connections, called intrusions or attacks, and “good” normal connections. Each connection was labeled among 23 classes, the normal class and the specific kinds of attack. The next one is the data streams containing the EGEE jobs in the whole EGEE grid during 5 months. Besides the six attributes related to time-cost, each job was labeled by its final state, successfully finished (good job) or failed (bad job, including about 45 error types). The 5 million jobs include about 20 main error types (more than 1,500 occurrences). The job labels were used as an indicator of the clustering quality.
+Artificially generated data streams was used for testing the ability of StrAP in handling a dynamically changing data distribution \cite{zhang2008data}. The network connection data, KDD Cup 1999 (KDD99) Intrusion Detection was also used to evaluate the StrAP model for distinguishing between “bad” connections, called intrusions or attacks, and “good” normal connections. Each connection was labeled among 23 classes, the normal class and the specific kinds of attack. StrAP's clustering quality was tested with data streams containing EGEE jobs in the whole EGEE grid over 5 months. Besides the six attributes related to time-cost, each job was labeled by its final state, successfully finished (good job) or failed (bad job, including about 45 error types). The 5 million jobs include about 20 main error types (more than 1,500 occurrences). The job labels were used as an indicator of the clustering quality.
 
 While the accuracy of StrAP was found satisfactory, the computational time was high, hampering its further use with large volumes of stream data.
 
@@ -152,7 +154,7 @@ While the accuracy of StrAP was found satisfactory, the computational time was h
 
 \textbf{IStrAP and ISTRAP Algorithms}
 
-IStrAP was introduced for dealing with the issue of eliminating outliers to the existing algorithm StrAP \cite{li2012improved}. An outlier refers to an abnormal behavior deviating from the normal value. The reservoir in StrAP emulates the sliding time window model, making clustering ineffective for handling outliers in cache data. IStrAP relies on statistical analysis of the stream data points that are temporarily stored in the reservoir, removing outliers from the reservoir according to their statistical properties, and then clustering the remaining stream data points left in the reservoir. The process of removing outliers consists of four steps described as follows:
+IStrAP introduced a simpler method to eliminate outliers as compared with the existing technique used in StrAP \cite{li2012improved}. An outlier here refers to an abnormal cluster that represents a behavior deviating from the normal clusters. The reservoir in StrAP emulates the sliding time window model, making clustering ineffective for handling outliers in the cached data. IStrAP relies on statistical analysis of the stream data points that are temporarily stored in the reservoir, removing outliers from the reservoir according to their statistical properties, and then clustering the remaining stream data points left in the reservoir. The process of removing outliers consists of four steps described as follows:
 
 %This method is based on the statistical properties of the window data. The outlier refers to the abnormal behavior deviating from the normal value. Such data may be generated in emergency situations or generated when an error occurs. The process of removing outliers is consists of four steps. 
 
@@ -170,19 +172,17 @@ IStrAP was introduced for dealing with the issue of eliminating outliers to the 
 
 %\todo[inline]{what are the problems with IStrAP, and if it only used with labeled data??? What typle of quality and performance metrics have been used to evaluate the algorithm. Nasrin: please write a paragraph about this}
 
-The accuracy metric has been used to evaluate the quality of the clustering results and to compare the clustering results from IStrAP and StrAP. The Intrusion Detection benchmark data (KDD99), which distinguishes the attack from normal connections out of labels were used in the evaluation \cite{li2012improved}. The experimental results show that IStrAP can eliminate outliers, and it has shown a higher clustering accuracy than the existing StrAP algorithm. 
-
-This approach works well when the data has a normal distribution. Otherwise, it makes all data points as an outlier if they are out of the standard deviation range.
+The accuracy metric has been used to evaluate the quality of the clustering results and to compare the clustering results from IStrAP and StrAP. The Intrusion Detection benchmark data (KDD99), which distinguishes the attack from normal connections out of labels was used in the evaluation \cite{li2012improved}. The experimental results show that IStrAP can eliminate outliers, and it has shown a higher clustering accuracy than the StrAP algorithm. This approach works well when the data has a normal distribution. %Otherwise, it makes all data points as an outlier if they are out of the standard deviation range.
 
 %and lower time complexity
 
 %IStrAP used KDD Cup 99 dataset and used the Page-Hinkley standard test to update the clustering model. The results show that the IStrAP has higher accuracy, lower time complexity, and better adaptability for stream data over than STRAP. With this dataset, they just chose 120 data points to show the result, and the result is poorly demonstrated with the percent of accuracy and time. FROM WHERE THIS INFORMATION COME FROM???
 
-Another attempt on improving the StrAP algorithm is towards inheriting its advantages but providing a better performance using a dynamic clustering scheme, which ensures that not only new emerging clusters can be detected, but disappeared and recurrent clusters are also timely detected. In the ISTRAP algorithm \cite{sui2018dynamic}, cluster disappearance refers to an existing cluster that is not visited by any recently arrived data points. Cluster re-occurrence occurs when a previously disappeared cluster reoccurs at timestamp $t$. 
+Another attempt on improving the StrAP algorithm is towards inheriting its advantages but providing a better performance using a dynamic clustering scheme, which ensures that not only new emerging clusters can be detected, but disappeared and recurrent clusters are also timely detected. In the ISTRAP algorithm \cite{sui2018dynamic}, cluster disappearance refers to an existing cluster that is not visited by any recently arrived data points. Cluster re-occurrence occurs when a previously disappeared cluster reoccurs at a later timestamp. 
 
-Outdated clusters are removed and recurrent clusters are efficiently detected rather than being treated as novel clusters. To achieve that, ISTRAP defines the clusters as active and inactive. Active state means that a cluster is still valid at a current timestamp because at least one data point has been assigned to it during a time interval. Inactive state indicates the clusters that are expired because they have not gain any recent data point. Two reservoirs are proposed: an outlier reservoir for saving outliers and the remove reservoir for storing inactive clusters. The workflow of the ISTRAP algorithm is illustrated in Figure \ref{istrap}. The main steps are described as follows:
+Outdated clusters are removed and recurrent clusters are efficiently detected rather than being treated as novel clusters. To achieve this, ISTRAP defines the clusters as active and inactive. Active state means that a cluster is still valid at the current timestamp because at least one data point has been assigned to it during the current time interval. Inactive state indicates the clusters is expired since it did not gain any recent data point. Two reservoirs are proposed: an outlier reservoir for saving outliers and the remove reservoir for storing inactive clusters. The workflow of the ISTRAP algorithm is illustrated in Figure \ref{istrap}. The main steps are described as follows:
 
-\begin{figure}
+\begin{figure}[]
 \centering
 \includegraphics[width =10 cm]{image/Chapters/Chapter3/istrap1.PNG}
 \caption{The proposed ISTRAP clustering workflow}
@@ -191,20 +191,19 @@ Outdated clusters are removed and recurrent clusters are efficiently detected ra
 
 \begin{itemize}
     \item[$\bullet$] First, initial exemplars are obtained by applying the AP algorithm on the first batch of stream data points.
-    \item[$\bullet$] As the stream flows in, each data point will go through the outlier judgment, and the minimum distance of the data point from the exemplar is compared against a threshold. If the distance is less than the threshold, the data point will be assigned to the nearest cluster; otherwise, it is sent to the remove reservoir.
-    \item[$\bullet$] All clusters in remove reservoir are checked if they re-occur, then recurrent clusters will be moved back into the model.
-    \item[$\bullet$] The emergence criterion is triggered if new clusters need to be obtained. The model will be rebuilt by the WAP algorithm using the data points stored in the outlier reservoir.
-    \item[$\bullet$] The model will check all active clusters if they are still active or not. The inactive clusters will be removed and sent to the removed reservoir.
+    \item[$\bullet$] As the stream flows in, each data point goes through the outlier judgment, and the minimum distance of the data point from the exemplar is compared against a threshold. If the distance is less than the threshold, the data point is assigned to the nearest cluster; otherwise, it is sent to the remove reservoir.
+    \item[$\bullet$] All clusters in remove reservoir are checked if they re-occur, the recurrent clusters are moved back into the model.
+    \item[$\bullet$] The emergence criterion is triggered if new clusters need to be obtained. The model is rebuilt by the WAP algorithm using the data points stored in the outlier reservoir.
+    \item[$\bullet$] The model checks all current clusters if they are still active or not. The inactive clusters are removed and sent to the removed reservoir.
 \end{itemize}
 
-Four parameters $\delta$, $\alpha$, $\beta$, $\lambda$  are needed to monitor the clustering process. The number of outliers is controlled by $\delta$. The emergence threshold for detecting new clusters is defined by $\alpha$, and it affects the stability and processing time of the algorithm. The maximal duration tolerance $\beta$ means an active cluster is not visited by new data points. Larger $\beta$ values mean less possibility that clusters are inactive. The last parameter $\lambda$ represents the minimum number of data points assigned if recurrent clusters have to be sent to the model. If $\lambda$ values are small, it means more recurrent clusters are detected. 
+Four parameters $\delta$, $\alpha$, $\beta$, $\lambda$  are needed to monitor the clustering process in ISTRAP. The number of outliers is controlled by $\delta$. The emergence threshold for detecting new clusters is defined by $\alpha$, and it affects the stability and processing time of the algorithm. The maximal duration tolerance $\beta$ means an active cluster is not visited by new data points. Larger $\beta$ values mean less possibility that clusters are inactive. The last parameter $\lambda$ represents the minimum number of data points assigned if recurrent clusters have to be sent to the model. If $\lambda$ values are small, it means more recurrent clusters are detected. 
 
 %\todo[inline]{ Nasrin: a paragraph here how this algorithm was tested, labeled or not labeled data, what kind of quaity and performance metrics have used.}
 
-To test the effectiveness of the emergence, disappearance, and recurrent detection of ISTRAP, the AS synthetic and the MNIST real-world data sets were ued in the evaluation.
-The MNIST data set contains images of handwritten digits and their corresponding labels.The results show that ISTRAP and StrAP can detect emergence accuracy; however, the disappearance was not detected by StrAP.
+To test the effectiveness of the emergence, disappearance, and recurrent detection of ISTRAP, the AS synthetic and the MNIST real-world data sets were used in the evaluation. The MNIST data set contains images of handwritten digits and their corresponding labels.The results show that ISTRAP and StrAP can detect emergence accuracately; however, the disappearance was not detected by StrAP.
 
-However, ISTRAP has improved the current state of the StrAP model and quality of the clusters, but at the cost of introducing additional parameters that have increased the model's complexity and made it not fully automated, which is the goal of a streaming AP algorithm. Moreover, the time complexity have increased compared to the StrAP algorithm due to the computational costs for computing two reservoirs. 
+ISTRAP improves the current state of the StrAP model and also the quality of the clusters, but this comes at the cost of introducing additional parameters that have increased the model's complexity and made it not fully automated, which is one of the main goals of a streaming AP algorithm. Moreover, the time complexity have increased compared to the StrAP algorithm due to the computational costs for computing two reservoirs. 
 
 %There is no result available for the time efficiency of this algorithm and compares it with the StrAP model.
 
@@ -216,7 +215,7 @@ However, ISTRAP has improved the current state of the StrAP model and quality of
 \textbf{APDenStream Algorithm}
 %\todo[inline]{Monica: I need to revise this section}
 
-The APDenStream Algorithm is a data stream clustering based on AP and density methods to improve the StrAP model's accuracy and timeliness in a noisy environment \cite{zhang2013online}. This algorithm applies the two-phase clustering, online and offline approaches. The online phase detects data distribution changes of the new data points, updates the micro-cluster decay density, and generates real-time results. The offline phase, which is invoked by a user who has to choose a specific time frame by applying a pyramidal time window model, gives final query results. 
+The APDenStream Algorithm is a data stream clustering algorithm based on AP and density methods to improve the StrAP model's accuracy and timeliness in a noisy environment \cite{zhang2013online}. This algorithm employs a two-phase clustering approach, the online and offline phases. The online phase detects data distribution changes due to the new data points, updates the micro-cluster decay density, and generates real-time results. The offline phase, which is invoked by a user who has to choose a specific time frame by applying a pyramidal time window model, gives final query results. 
 
 The clustering process of APDenStream is depicted in Figure \ref{APden}, and it consists of the following steps: 
 
@@ -232,15 +231,15 @@ The clustering process of APDenStream is depicted in Figure \ref{APden}, and it 
 \begin{itemize}
     \item[$\bullet$] AP algorithm is applied to the first $InitN$ points $P$ to initialize the online process. The first group of micro-clusters $mc$ are obtained by scanning $P$. If the micro-cluster density of the micro-cluster $mc$ is greater than the threshold $D$, it is labeled as a dense micro-cluster, and the average radius of all dense micro-clusters is being chosen as an initial radius $\epsilon$.
     
-    \item[$\bullet$] The new data point comes into the model, and it is placed to its nearest dense or sparse micro-cluster. If it is not assigned to any existing micro-cluster, it goes to the reservoir. As time passes, the number of micro-clusters increases. To keep the number of clusters and avoid memory problems, a dynamic online maintenance strategy is used.  First, search for dense micro-clusters in order to determine whether to remove them. Second, search for sparse micro-clusters by checking the minimum weight limit of sparse micro-clusters. 
+    \item[$\bullet$] As a new data point comes into the model, and it is placed in its nearest dense or sparse micro-cluster. If it is not assigned to any existing micro-cluster, it goes to the reservoir. As time passes, the number of micro-clusters increases. To keep the number of clusters in check and to avoid memory problems, a dynamic online maintenance strategy is used.  First, search for dense micro-clusters in order to determine whether to remove them. Second, search for sparse micro-clusters by checking the minimum weight limit of sparse micro-clusters. 
 
-    \item[$\bullet$] Whenever the reservoir is full, the model will rebuild, and new clusters will add to the model by applying the WAP algorithm.     
+    \item[$\bullet$] Whenever the reservoir is full, the model is rebuilt, and new clusters are added to the model by applying the WAP algorithm.     
     
    \item[$\bullet$] The last step is offline processing which can master a depth-first traversal to find dense micro-clusters using a snapshot at time $t_c$ and time $t_ch$ can be found in the pyramidal time frames according to the current time $t_c$ and user-specific time range $h$. 
 \end{itemize}
 
 
-For the evaluation of this algorithm, different data sets were used such as the experimental data set used is KDDCUP'99, network intrusion detection with the 494020 TCP connection belonging to 23 networks. The results show that the APDenStream is more accurate than the StrAP algorithm due to the proposed summary data structure and its online elimination strategy, which maintains the potential micro-clusters in the stream in the time of removal of outlier noise point. Furthermore, APDenStream can remove outliers without having to upgrade potential noise points timely, while StrAP historical expired micro-cluster is taken into account.
+For the evaluation of this algorithm, two data sets were used the KDDCUP'99 dataset, and a synthetic Gaussian data. The results show that the APDenStream is more accurate than the StrAP algorithm due to the proposed summary data structure and its online elimination strategy, which maintains the potential micro-clusters in the stream in the time of removal of outlier noise point. Furthermore, APDenStream can remove outliers without having to upgrade potential noise points timely, while in StrAP historical expired micro-clusters are taken into account.
 
 
 % it is a good paper related to threshod, a metric for data distribution --> old DSAP with 2 threshold
@@ -324,7 +323,7 @@ Moreover, DSAP aims to handle the flow of stream data points by proposing the la
 
 The landmark time window model separates the stream data points based on a landmark time interval (e.g. every minute) or by a landmark event (e.g. people are not detected in an indoor space), when after a landmark is reached, new data points start to be captured in a separate window. This strategy is particular advantageous for defining temporal relationships among arriving data points since it creates a meaningful sequence of time orderly snapshots. Once a set of new data points has been gathered for one active time window, the evolution of cluster relationships over time can be generated. 
 
-Furthermore, the DSAP algorithm allows the user to decide to keep a number of landmark time window models active in order to avoid removing historical clusters, and ensuring that historical discovered clusters are equally important in the clustering process. Basically the number of active time windows dictates how much data will be continuously being used for detecting new clusters. To the best of our knowledge, this type of strategy has not been previously proposed in the literature.
+Furthermore, the DSAP algorithm allows the user to decide to keep a number of landmark time window models active in order to avoid removing historical clusters, and ensuring that historical discovered clusters are equally important in the clustering process. Basically the number of active time windows dictates how much data will be continuously used for detecting new clusters. To the best of our knowledge, this type of strategy has not been previously proposed in the literature.
 
 % \todo[inline]{repository story here do we have repository  "time-window based repository" so we do not need the reoccurence, emergence, etc.. write the advanatges of this approach
 
