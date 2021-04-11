@@ -182,7 +182,7 @@ Another attempt on improving the StrAP algorithm is towards inheriting its advan
 
 Outdated clusters are removed and recurrent clusters are efficiently detected rather than being treated as novel clusters. To achieve this, ISTRAP defines the clusters as active and inactive. Active state means that a cluster is still valid at the current timestamp because at least one data point has been assigned to it during the current time interval. Inactive state indicates the clusters is expired since it did not gain any recent data point. Two reservoirs are proposed: an outlier reservoir for saving outliers and the remove reservoir for storing inactive clusters. The workflow of the ISTRAP algorithm is illustrated in Figure \ref{istrap}. The main steps are described as follows:
 
-\begin{figure}[]
+\begin{figure}[t]
 \centering
 \includegraphics[width =10 cm]{image/Chapters/Chapter3/istrap1.PNG}
 \caption{The proposed ISTRAP clustering workflow}
@@ -220,7 +220,7 @@ The APDenStream Algorithm is a data stream clustering algorithm based on AP and 
 The clustering process of APDenStream is depicted in Figure \ref{APden}, and it consists of the following steps: 
 
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \includegraphics[width = 10 cm]{image/Chapters/Chapter3/APDenstream.PNG}
 \caption{The APDenStream clustering process}

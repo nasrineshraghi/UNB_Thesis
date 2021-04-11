@@ -211,10 +211,8 @@ The main advantages and disadvantages of these different clustering methods are 
 \end{table}
 
 
-% % Please add the following required packages to your document preamble:
-% % \usepackage[table,xcdraw]{xcolor}
-% % If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
-% \begin{table}[]
+
+% \begin{table}[htbp]
 % \caption{Comparison of clustering methods}
 % \label{methoda1}
 % \begin{tabular}{
@@ -349,7 +347,7 @@ The AP clustering algorithm used in this thesis is described in Algorithm \ref{A
     % \item\textit{Convergence iteration:}  is the number of iterations with no change in the number of estimated clusters that stop the convergence.
 \end{itemize}
 
-\begin{algorithm}[]
+\begin{algorithm}[htbp]
  \caption{Affinity Propagation Algorithm}
 \label{APo}
     \SetKwInOut{Input}{Input}
@@ -599,7 +597,7 @@ Figure   \ref{time1} illustrates how these time window models have been conceptu
 \begin{figure}[!ht]
 \centering
 \includegraphics[width = 9cm,height = 7cm]{image/timeW.PNG}
-\caption{Current time window models used with stream data points \protect\cite{carnein2019optimizing}.}
+\caption{Current time window models used with stream data points \protect\cite{carnein2019optimizing}}
 \label{time1}
 \end{figure}
 
@@ -706,7 +704,7 @@ Data stream clustering methods can be categorized into five leading groups accor
 \begin{figure}[t]
 \centering
 \includegraphics[width = 12 cm]{image/Chapters/Chapter2/streammethod.png}
-\caption{Data stream clustering methods and algorithms.}
+\caption{Data stream clustering methods and algorithms}
 \label{method}
 \end{figure}
 

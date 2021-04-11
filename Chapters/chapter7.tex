@@ -33,37 +33,38 @@
 % future research work
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Summary}
-This research work was developed a data stream affinity propagation clustering algorithm called DSAP with the implementation of the landmark time window model with the two-stage, online-micro and offline-macro clustering. The landmark time window model is capable of handling concept drift and changing the data distribution over time. Also, by introducing an expiration value for the latest landmark windows, the DSAP is able to keep updated centroids and control the number of them not to grow beyond the control. This value is user define and can change based on the needs of the user.
+This research work was developed a data stream affinity propagation clustering algorithm called DSAP. with the implementation of the landmark time window model with the two-stage, online-micro and offline-macro clustering. The landmark time window model is capable of handling concept drift and changing the data distribution over time. Also, by introducing an expiration value for the latest landmark windows, the DSAP is able to keep updated centroids and control the number of them not to grow beyond the control. This value is user define and can change based on the needs of the user.
 
 The online phase evaluates arriving data points in real-time and captures
 relevant summary statistics. A result is a number of micro-clusters that represent a large number of
 preliminary clusters in the stream. In the offline phase, micro-clusters are re-clustered to derive a final set of macro-clusters. The number of macro-clusters is much smaller than the number of micro-clusters.
 
-The proposed DSAP clustering outputs is validated by applying intrinsic indices such as silhouette index, Caliński-Harabasz index, and Davies-Bouldin index when ground true label of data is not available. These metrics were calculated for both micro and macro-clusters with knowing the centroids for each phase and data points related to each of centroids.
+The proposed DSAP clustering outputs are validated by applying intrinsic indices such as silhouette index, Caliński-Harabasz index, and Davies-Bouldin index when ground true label of data is not available. These metrics were calculated for both micro and macro-clusters by knowing the centroids for each phase and data points related to each of the centroids.
 In addition, the performance of the algorithm is evaluated by using the time and space complexity metric. 
 
 
 The DSAP model is capable of handling any form of streaming data. It is especially useful for extracting summary information from a large number of indoor localization and internet of things sensors that have not been applied on AP stream clustering models.
 
-Our preliminary results demonstrate the impact they have on finding meaningful patterns and provide insight into indoor localization data based on number of people and their locations. The first data, e-counter, is an experiment performed in Flinders university to capture the impact of motivational intervention on the physical activity of people. The key parameters used to determine the clusters were number of people and the position of each sensor were able to provide meaningful context on what the clusters represent based on hourly interval. The clustering results shows the patter of people movement during three month, before, during and after intervention. This experiment was not successful to motivate people using stairs, but we were able to observed some changes in behavioural patterns. 
+Our preliminary results demonstrate the impact they have on finding meaningful patterns and provide insight into indoor localization data based on the number of people and their locations. The first data, e-counter, is an experiment performed at Flinders University to capture the impact of a motivational intervention on the physical activity of people. The key parameters used to determine the clusters were the number of people and the position of each sensor was able to provide meaningful context on what the clusters represent based on an hourly interval. The clustering results show the pattern of people's movement during three months, before, during and after the intervention. This experiment was not successful in motivating people using stairs, but we were able to observe some changes in behavioural patterns. 
 
-The second implementation of DSAP was on the WiFi indoor localization data to find out the occupancy behaviour by moving participant from one building to another for the three building at the Universitat Jaume I campus. The ten minutes time interval for the data it gave us 
+The second implementation of DSAP was on the WiFi indoor localization data to find out the occupancy behaviour by moving participants from one building to another for the three buildings at the Universitat Jaume I campus. The ten minutes time interval for the data gave us 
 
-Both data sets results were evaluated and compared with AP standard clustering algorithm in terms of cluster quality and performance. The DSAP clustering results has slightly improved for micro-cluster phase. The memory and processing time show that DSAP can easily handle very large data sets. 
+Both data set's results were evaluated and compared with the AP standard clustering algorithm in terms of cluster quality and performance. The DSAP clustering results have slightly improved for the micro-cluster phase. The memory and processing time show that DSAP can easily handle extensive data sets. 
 
 % The micro and macro-clusters of these two data sets generated by the DSAP algorithm are compared with the standard affinity propagation algorithm and both results show that the performance of proposed algorithm is higher than the AP algorithm.
 
+The proposed DSAP algorithm is a simplified model of the StrAP algorithm with the improvement in threshold and expiration value. DSAP has some limitation that needs to be improved such as how well it can detect outliers. Also, it tested in a small environment and if the space increase, the small clusters will not be detected anymore by applying an adaptive threshold.   
 
 
 \section{Future Work}
 
 Future research will explore other time window models such as sliding, damped and pyramidal models for the DSAP algorithm.  
 
-The very important part which is remained is experiment the algorithm on another real data stream. We evaluated the model on two real data but with the simulation of stream to find the flaws and weaknesses better.
+The very important part which remained is experimenting the algorithm on another real data stream. We evaluated the model on two real data but with the simulation of the stream to find the flaws and weaknesses better.
 
 One specific feature of the presented work is to deal with application domains where a cluster of items cannot easily be represented by an average/artifact item, although the distance or similarity between any two items can be computed. 
 
-Another interesting research direction would be handling high dimension data. Euclidean distance-based algorithm, cannot handle well with high-dimensional data streams. Potential future work would be to expand DSAP to overcome these difficulties.
+Another interesting research direction would be handling high dimension data. Euclidean distance-based algorithm cannot handle well with high-dimensional data streams. Potential future work would be to expand DSAP to overcome these difficulties.
 
 % Last but not least, building an architecture on the cloud would be interesting.
 % advantage
@@ -101,4 +102,4 @@ Another interesting research direction would be handling high dimension data. Eu
 % good examples for stream clustering and clustering
 
 
-how is it new?based on strap -simplified . with no issue of outlier - epsilon to reduce the complexity of (contribution) 
+% how is it new?based on strap -simplified . with no issue of outlier - epsilon to reduce the complexity of (contribution) 
