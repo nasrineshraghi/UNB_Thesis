@@ -124,13 +124,18 @@ This online micro-cluster phase consists of three major steps: initialization, c
 % }
 % \end{emph}
 
-\begin{itemize}[leftmargin=*]
-  
 
-\item[]\textbf{Initialization}
 
+
+\vspace{7mm}
+\hspace{-1 cm}
+\textbf{Initialization}
 
 The data stream is ingested in a windowed manner using the landmark time window model $W_0, W_1, ..W_j, ..,W_N $, where each window $W_j$ contains $\Omega$ data points and $L$ is defined as the time interval of window $W_j = [x_1,x_2...,x_i,..x_{\Omega}]$.
+
+
+
+
 
 The clustering process is initiated by assigning the first sequence of data points from a data stream to the initial landmark time window $W_0$ as illustrated in Figure \ref{land}. The landmark time interval is a-priori determined based on user requirements, data rate, and expected latency of the expected data streams. For example, if high latency is expected in harvesting the data points, a long duration for the time intervals is advised. In contrast, in processing data from high rate streams, short time intervals will improve the clustering process. 
 
@@ -149,7 +154,7 @@ The micro-cluster centroids produced by the DSAP algorithm are represented as se
 
 All data points within the initial landmark time window are considered as a potential exemplar until a robust set of centroids and their respective micro-clusters are found by computing the four AP matrices, i.e. similarity matrix, responsibility matrix, availability matrix and criterion matrix. The hyperparameters such as the preference parameter, the damping factor, the maximum number of iterations, and the convergence iteration are also set up during this phase. Their values will be constant throughout all the landmark time windows in the online micro-cluster phase.
 
-A new hyperparameter $\epsilon_{W_j}$ is introduced in the DSAP algorithm for incrementally computing the clusters as time passes by, and as a result, allowing the analysis to take into account the changes of recurrently occurring clusters. For the initial time window $W_0$, an intra-cluster distance matrix is calculated between all data points and their respective centroids of each cluster using the Euclidean distance function. The mean of all these intra-cluster distances gives the initial value of the $\epsilon_{W_0}$ threshold that will be used in the next step.
+A new dynamic threshold $\epsilon_{W_j}$ is introduced in the DSAP algorithm for incrementally computing the clusters as time passes by, and as a result, allowing the analysis to take into account the changes of recurrently occurring clusters. For the initial time window $W_0$, an intra-cluster distance matrix is calculated between all data points and their respective centroids of each cluster using the Euclidean distance function. The mean of all these intra-cluster distances gives the initial value of the $\epsilon_{W_0}$ threshold that will be used in the next step.
 
 The outputs of the initialization step are a set of micro-clusters centroids ($C_m$) and an initial $\epsilon_{W_0}$.
 
@@ -166,7 +171,10 @@ The outputs of the initialization step are a set of micro-clusters centroids ($C
     % As time passes, the window removes the tuples with the high time decay $D$. Then the recent data points are available to be clustered with the last time interval.
     
     
-\item[]\textbf{Comparison}
+\vspace{7mm}
+% \setlength{\baselineskip}{value}   
+\hspace{-1 cm}  
+\textbf{Comparison}
 
 As new data points arrive, the DSAP algorithm allocates them into their respective new time windows $W_j = [x_1,x_2...,x_i,..x_{\Omega}]$ using the same landmark time interval $L$ as defined in the previous step. For each new data point, a set of tasks are devised as follows:
 
@@ -193,23 +201,24 @@ As new data points arrive, the DSAP algorithm allocates them into their respecti
     \item[$\bullet$] Compare the computed Euclidean distances against the current $\epsilon_{W_j}$. If one of the computed distance values is less than the current $\epsilon_{W_j}$ threshold (i.e. $min(d([C_{m}],x_i)) < \epsilon_{W_j}$), this new data point will be straightforward placed within a current existing cluster. The DSAP algorithm merges the new data point $x_i$ with the closest existing cluster by updating  the time $t_q$ and adding to the number of data points $N_q$ values in the cluster centroid tuple $C_{m_q}$. However, if all computed distance values are higher than the current $\epsilon_{W_j}$ threshold, the new points will be saved in the time-window repository temporarily until the landmark time window ends, and later be used in the next Activate AP and Update step.    
 \end{itemize}
 
-Figure \ref{thr} illustrates the previously described tasks by showing a sparse and a dense micro-cluster with their respective centroids $C_{m_i}$ and $C_{m_j}$. With a new data point $x_i$ arrival, the intra-cluster distances $T$ and $T'$ are computed in a time window $W_1$. In this case, the $T$ distance is less than the current $\epsilon_{W_1}$, and the new data point is merged to the existing cluster $C_{m_i}$ (Figure \ref{thr}a). In contrast, the computed distance $T'$ is greater than the current the current $\epsilon_{W_1}$ threshold, and this new data point will be saved in the time-window repository until the end of the streaming for the time window $W_1$ (Figure \ref{thr}b). These tasks take place every time a new landmark time window is created and new data points arrive.
+Figure \ref{thr} illustrates the previously described tasks by showing a sparse and a dense micro-cluster with their respective centroids $C_{m_i}$ and $C_{m_j}$. With a new data points $x_i$ and $x_j$ arrival, the intra-cluster distances $T$ and $T'$ are computed in a time window $W_1$. In this case, the $T$ distance is less than the current $\epsilon_{W_1}$, and the new data point is merged to the existing cluster $C_{m_i}$ (Figure \ref{thr}a). In contrast, the computed distance $T'$ is greater than the current the current $\epsilon_{W_1}$ threshold, and this new data point will be saved in the time-window repository until the end of the streaming for the time window $W_1$ (Figure \ref{thr}b). These tasks take place every time a new landmark time window is created and new data points arrive.
 %T' is chosen as the threshold for both clusters, it cannot assign all the data points which should belong to cluster with centroid $C_{mi}$. A threshold is computed dynamically according to the cluster evolution. In the data stream, the data is continuously changing, which necessitates an adaptive threshold $\epsilon_T$. In order to calculate this, first, the Euclidean distance between cluster centroids and all the data points in the same cluster are obtained. Then, the mean of all the distances gives the threshold value $\epsilon_T$. This adaptive threshold value uses for comparison in the next update step.
      
     \begin{figure}[!ht]
     \centering
-    \includegraphics[width = 11 cm]{image/threshold.png}
+    \includegraphics[width = 11 cm]{image/Chapters/Chapter4/threshold.png}
     \caption{The impact of spread (a) and dense (b) cluster structures on comparing the closeness of new data points to existing micro-cluster centroids $C_m$ } 
     \label{thr}
     \end{figure}
 
-The outputs of this step are the set of micro-clusters from the previous window, but now with new data points associated with some of the centroids, and an updated timestamp corresponding to the chosen centroids. Additionally, $n$ number of data points whose euclidean distance from the centroids was greater than $\epsilon_{W_j}$ are temporarily kept in the time-window repository.
+The outputs of the comparison step are the set of micro-clusters from the previous window, but now with new data points associated with some of the centroids, and an updated timestamp corresponding to the chosen centroids. Additionally, $n$ number of data points whose euclidean distance from the centroids was greater than $\epsilon_{W_j}$ are temporarily kept in the time-window repository.
 
 %\todo[inline]{write down what the the outcomes are of this step}
     
     
-    
-\item[]\textbf{ActivateAP and Update  $\epsilon_{W_j}$}
+\vspace{7mm}
+\hspace{-1 cm} 
+\textbf{ActivateAP and Update  $\epsilon_{W_j}$}
 
 
     %The memory can fill up quickly if the data distribution changes. It is difficult to model a data stream with changing data distributions. This problem is referred to as concept-drift, that can lead to less accurate models as time passes. To handle concept-drift, the model needs to be consistently updated by moving the prime centroids of the clusters as the data evolves with time. Every once in a while when the number of data points in the repository exceeds a pre- defined value or at the end of the expiration time interval, the data points in the repository are clustered using AP. The expiration time ($T_{ex}$) is defined as time duration within which a data point stays relevant. It is set to a duration of $N_w$ times the window size ($T_{ex} = N_w*length(W_i)$) and is a user-defined parameter. After the AP is applied to the data points from the repository, new cluster centroids referred to as potential centroids ($[PC]$) are obtained. The potential centroids are compared with the prime centroids ($[C_{m0}]$). If the distance of any potential centroids from the prime centroids, $d(PC_i,Cm0_i)$ is less than the repository threshold $\gamma$ they will be grouped with the prime centroids for one final round of AP. This additional step of clustering centroids both prime and potential leads to the creation of new prime clusters as shown in Figure. \ref{frame}. Otherwise, if the distance is greater than the threshold, they will be added as a new prime centroid to the pool of prime centroids. After the AP is applied to the data points from the memory, new micro-clusters referred to as ($[PC]$) are obtained. This step of clustering leads to the creation of new micro-clusters. The outcome from this phase are a number of updated micro clusters ($C_{m0}$) that will be used to find macro clusters in the next phase.
@@ -257,14 +266,14 @@ The outputs of this step are the set of micro-clusters from the previous window,
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\end{itemize}
+
 
 
 %need a table for notations and definitions! variables in the code
 % which is illustrated in Figure \ref{frame} by the green box,
 \subsection{Offline Macro-Cluster Phase}
 
-The offline macro-cluster phase in DSAP, starts after $N$ time windows have passed. In this phase, all the micro-clusters $C_m$ generated during the online micro-cluster phase are re-clustered using the AP algorithm to generate $k$ number of macro-clusters $C_M = (C_{M_1}, C_{M_2}, ..., C_{M_k})$. This process is usually not considered time-critical and the number of macro-clusters are expected to be less than the number of micro-clusters. The hyperparameters related to the AP algorithm such as the the maximum number of iterations, and the convergence iteration are default values. The preference parameter is set to the median of the similarity matrix of all the micro-clusters obtained from the online phase, and the damping factor is fixed for all windows.
+The offline macro-cluster phase in DSAP starts after $N$ time windows have passed. In this phase, all the micro-clusters $C_m$ generated during the online micro-cluster phase are re-clustered using the AP algorithm to generate $k$ number of macro-clusters $C_M = (C_{M_1}, C_{M_2}, ..., C_{M_k})$. This process is usually not considered time-critical, and the number of macro-clusters is expected to be less than the number of micro-clusters. The hyperparameters related to the AP algorithm, such as the maximum number of iterations and the convergence iteration, are default values. The preference parameter is set to median the similarity matrix of all the micro-clusters obtained from the online phase, and the damping factor is a fixed number for this phase.
 
 
 %\todo[inline]{Have you used the same hyperparameters??? Or they are changed??? e.g. number of interactions was the same for micro and macro clustering???} %Nasrin: No I don't change them. Just preference has been changed , which is the median of similarity matrix and I did not give it a number.
@@ -388,7 +397,7 @@ Intrinsic clustering validation uses the internal information of the clustering 
 
 The first parameter $a$ is the average distance between the sample and all the others in the same class, and the second parameter $b$ is the mean distance between the sample and all the other points in the next closest cluster. Negative $S_i$ scores for a point $i$ means that the data point is in the incorrect cluster. Positive scores show a robust and dense clustering. Moreover, values around zero indicate overlapping clusters. If the $S_i$ has a higher value, it means a greater ratio between $b_i$ as compared with $a_i$, causing the data point $i$ to be more similar to the other data points in the same cluster.  
 
-The primary advantage of the silhouette index is its straightforward interpretation. The score is bounded between -1 for incorrect clustering and +1 for highly dense clustering. Scores around zero indicate overlapping clusters. The score is higher when clusters are dense and well separated, which relates to a standard concept of a cluster. However, it has a high computational complexity of $O(n^2)$. Additionally, it is well known that the coefficient values tend to be higher for convex clusters as compared to other uniquely shaped density based clusters.
+% The primary advantage of the silhouette index is its straightforward interpretation. The score is bounded between -1 for incorrect clustering and +1 for highly dense clustering. Scores around zero indicate overlapping clusters. The score is higher when clusters are dense and well separated, which relates to a standard concept of a cluster. However, it has a high computational complexity of $O(n^2)$. Additionally, it is well known that the coefficient values tend to be higher for convex clusters as compared to other uniquely shaped density based clusters.
 
 
 %\begin{figure}
@@ -525,7 +534,7 @@ Then the Davies-Bouldin index is defined as:
 
 \section{Clustering Performance Evaluation Phase}
 
-Data stream clustering brings about a few unique challenges as compared to traditional data clustering. The data streams are a continuous flow of data points that arrive at rapid rate. Random access to these data points is not possible and the volatility of the data streams sometimes limits to having a single look at the data points upon their arrival. 
+Data stream clustering brings about a few unique challenges as compared to traditional data clustering. The data streams are a continuous flow of data points that arrive at a rapid rate. Random access to these data points is not possible and the volatility of the data streams sometimes limits to having a single look at the data points upon their arrival. 
 
 %As a result there is a need for fast processing of each data point that arrives from the stream and maintain summaries of the data instead of the raw data to save memory. 
 
@@ -537,7 +546,7 @@ The efficiency of any algorithm can be estimated using the time complexity, whic
 
 The most frequently performed action within the algorithm whose execution time does not change with the size of the input array is called the elementary operation. The most common metric used for estimating time complexity is the Big O notation. The big O notation is typically used to illustrate the worst-case growth of an algorithm (or how the run time/space requirements of an algorithm increase with input size), which excludes coefficients and lower order terms.
 
-In real-world applications, in addition to the time complexity, several other factors can affect the execution speed. Many concurrent tasks like receiving network traffic, checking the hard disk, and writing log files, are performed by a typical computer while it performs the clustering tasks. The data-dependent rate of convergence of the algorithms also affects the total execution time. Therefore, it is recommended to run a task multiple times to get average values after discarding the initial few results as they could be affected by the time-window repositoryd results. %Plot the spread over multiple runs to choose a cutoff.
+In real-world applications, in addition to the time complexity, several other factors can affect the execution speed. Many concurrent tasks like receiving network traffic, checking the hard disk, and writing log files, are performed by a typical computer while it performs the clustering tasks. The data-dependent rate of convergence of the algorithms also affects the total execution time. Therefore, it is recommended to run a task multiple times to get average values after discarding the initial few results as they could be affected by the time-window repository results. %Plot the spread over multiple runs to choose a cutoff.
 %Rough estimates of the start and end times of the algorithms can be noted by native functions available under each programming language.
 
 
@@ -566,6 +575,7 @@ To compare different algorithms, we have to make sure that they have been suitab
 
 % Affinity propagation has been shown to perform well in pattern recognition applications in the fields of computer vision and computational biology. The main advantage of AP is the robustness of its optimization. While K-means follows a greedy optimization method to find the optimum of the optimization problem, AP tackles a continues optimization problem, in which all data points are potential candidate at the beginning and clusters are gradually identified. AP does not suffer from the initialization can guarantee global optimization consistently.
 
+\newpage
 \section{Summary}
 
 Figure \ref{frame} summarizes the entire research methodology discussed in this chapter. The four phases of the DSAP approach are depicted with their main steps and respective tasks. 
@@ -581,7 +591,7 @@ Figure \ref{frame} summarizes the entire research methodology discussed in this 
 \label{frame}
 \end{figure}
 
-The online micro-cluster and offline macro-cluster phases are are depicted within the grey box in blue and green colors respectively in the flow chart shown in Figure \ref{frame}. The online phase initializes the computation of micro-clusters and computes the updated micro-clusters from the new data points harvested using the landmark time window. The offline phase generates macro-clusters, a summary of all data points from the stream by re-clustering the micro-clusters. 
+The online micro-cluster and offline macro-cluster phases are depicted within the grey box in blue and green colors respectively in the flow chart shown in Figure \ref{frame}. The online phase initializes the computation of micro-clusters and computes the updated micro-clusters from the new data points harvested using the landmark time window. The offline phase generates macro-clusters, a summary of all data points from the stream by re-clustering the micro-clusters. 
 
 The silhouette index, Caliński-Harabasz index, and Davies-Bould in index are proposed to assess the goodness of  the clustering structures of the discovered micro and macro clusters since the ground truth labels were unknown. This phase is illustrated in Figure \ref{frame} with bright red color. The efficacy of any stream clustering algorithm is tied to its memory consumption and speed of execution. In order to evaluate this, in the Clustering Performance Evaluation phase shown in Figure \ref{frame} with purple color, the time and space complexity of the DSAP algorithm are estimated. 
 

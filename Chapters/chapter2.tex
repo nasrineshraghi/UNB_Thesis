@@ -257,12 +257,18 @@ Unlike clustering algorithms such as k-means, affinity propagation does not requ
 The AP algorithm supports similarities that are not symmetric, and it is not dependent on initialization found in other clustering algorithms \cite{refianti2017time}. In order to apply AP for any data set two conditions should be met: no missing or null data in the inputs and the feature space should contain only numeric, not categorical data. However, it has a significant speed problem, particularly for clustering large volume of data. Affinity Propagation needs $O(N^2T)$ time to update a message where $N$ and $T$ represent the number of data points and the number of iterations \cite{frey2007clustering}. 
 
 
-The AP algorithm is based on the computation of four matrices: similarity matrix, responsibility matrix, availability matrix, and criterion matrix. They can are described as follows:
+The AP algorithm is based on the computation of four matrices: similarity matrix, responsibility matrix, availability matrix, and criterion matrix. They are described as follows:
 
 \begin{itemize}
 
   \item\textit{Similarity Matrix:}
-  Every cell value in the similarity matrix $s(i,j)$ corresponds to an element \textit{k} representing how similar/dissimilar two data points are in a feature space. This element \textit{k} is defined as the negative of the Euclidean distance between the two data points. The greater the distance between any two data points, smaller is the \textit{k} between them. The \textit{k} values of the off-diagonal cells will dictate the number of clusters formed, in such a way that the smaller the index value (value	$\leq$0), fewer number of clusters is obtained.
+  Every cell value in the similarity matrix $s(i,j)$ corresponds to an element \textit{k} representing how similar/dissimilar two data points are in a feature space. This element \textit{k} is defined as the negative of the Euclidean distance between the two data points. 
+  
+  \begin{equation}
+      s (i,j) = - \norm{x_i - x_j}^ 2
+  \end{equation}
+  
+  The greater the distance between any two data points, smaller is the \textit{k} between them. The \textit{k} values of the off-diagonal cells will dictate the number of clusters formed, in such a way that the smaller the index value (value	$\leq$0), fewer number of clusters is obtained.
   %gives information about any inputs. It shows data points with is how appropriate to be the cluster-head for data point \textit{i}. 
   %Every cell has values that correspond to how similar two objects are. It is a diffident method to calculate the values for diagonal values and non-diagonal values.  The diagonal values,  Cells are filled with the lowest number among all the cells. The non-diagonal values are the negation of the sum of the squares of the differences between participants.
   \item\textit{Responsibility Matrix:} The matrix $r(i , k)$ quantifies how well-suited element $k$ is, to be a cluster centroid for element $i$, taking into account the nearest contender $k^{\prime}$ to be a cluster centroid for $i$.
@@ -329,15 +335,15 @@ The AP clustering algorithm used in this thesis is described in Algorithm \ref{A
 
 \begin{itemize}
 
-\item Damping Factor is the extent to which the current value is maintained relative to incoming values (weighted 1 - damping). This is used to avoid numerical oscillations when updating messages.
+\item Damping Factor is the extent to which the current value is maintained relative to incoming values (weighted 1 - damping). This is used to avoid numerical oscillations when updating messages. The range of this hyperparameter is between 0.5 to 1.
 
 \item Maximum number of iterations.
 
 \item Convergence is the number of iterations with no change in the number of estimated clusters that stops the convergence.
 
-\item Preference is the number of centroids is influenced by the input preferences value. If the preferences are not passed as arguments, they will be set to the median of the input similarities.
-
-\item Affinity is the selection of which distance function to use.
+\item Preference values indicates how likely a point is to be an exemplar. If the preferences are not passed as arguments, they will be set to the median of the input similarities.
+%Preference is the number of centroids influenced by the input preferences value.
+% \item Affinity is the selection of which distance function to use.
 
 
     % \item\textit{Preference Parameter:} determines a p how likely is a data point $i$ to be chosen as a centroid. This value is in the diagonal of similarity matrix. The number of identified clusters can be increased or decreased by changing this parameter correspondingly, and a good choice is to set the preference to be the median of all the similarities between data points \cite{li2012improved}.
@@ -578,7 +584,7 @@ It is important to select a time-interval for a time window model based on the t
 
 \begin{itemize}
 
-    \item\textit{Damped Time window:} It is also referred to as time-fading model. Each data point has a different weight based on its arrival time so new data points have a higher weight than the old ones. This time window model reduces the impact of old data. It is mostly applied using density-based clustering methods. The function $f(\delta t)$ = $\mu_{\delta t}$ (0 < $\mu$ < 1) is usually used for this model where $\delta t$ is the age of a data point which is equal to time differentiation between current time and arrival time. A fading parameter $\mu$ is in the range between 0 to 1. 
+    \item\textit{Damped Time Window:} It is also referred to as time-fading model. Each data point has a different weight based on its arrival time so new data points have a higher weight than the old ones. This time window model reduces the impact of old data. It is mostly applied using density-based clustering methods. The function $f(\delta t)$ = $\mu_{\delta t}$ $(0 < \mu < 1)$ is usually used for this model where $\delta t$ is the age of a data point which is equal to time differentiation between current time and arrival time. A fading parameter $\mu$ is in the range between 0 to 1. 
     
     
     \item\textit{Landmark Time Window:} It is also known as the hopping model, is used when clustering starts from a starting point call landmark to the current time. When a new window comes, all data points from the previous landmark time window are removed. All data points are equally important.
@@ -667,7 +673,7 @@ Processing of data points using time window models can take two opposites views 
 
 An alternative view is to generate final clusters without the need of an offline phase. A single-pass model is maintained over a stream, and clusters are updated as new data points arrive from the stream. One of the main disadvantages of this strategy is that the evolution of the clusters can not be analyzed at different time intervals, only a final snapshot is produced.     
 
-In this thesis, the online/offline strategy was adopted, and final clusters have been named as macro-clusters, meanwhile the the centroids of micro-clusters were used as summary data. The online component requires a process for saving the summary data in a fast manner, and is not requested to support real-time processing, but rather a very low response delay.The offline phase uses the aggregated summary data to compute the macro-clusters. It is not time-related and can happen any time by user request.
+In this thesis, the online/offline strategy was adopted, and final clusters have been named as macro-clusters, meanwhile the the centroids of micro-clusters were used as summary data. The online component requires a process for saving the summary data in a fast manner, and is not requested to support real-time processing, but rather a very low response delay. The offline phase uses the aggregated summary data to compute the macro-clusters. It is not time-related and can happen any time by user request.
 
 
 
