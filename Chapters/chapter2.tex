@@ -569,12 +569,12 @@ The AP clustering algorithm used in this thesis is described in Algorithm \ref{A
 
 In almost all clustering methods described in the previous section, the number of data points is considered fixed, and each data point is used multiple times for computing proximity measures and matrices in order to be assigned to a particular cluster. These methods are computationally high and require large data storage.
 
-However, with the advent of Internet of Things, and in particular indoor localization systems, a wide range of sensor technologies (e.g., e-counters, environmental, and motion sensors) and networking communication technologies (e.g., infrared, RFID, sensors, WiFi, and Bluetooth) are being used for sensing and transporting large volume of data. The data is harvested as data streams that are a sequence of digitally encoded coherent signals (packets of data or data packets). These data packets arrive according to different data rates (i.e. bandwidth), which are often expressed in bytes per second (B/s).
+However, with the advent of Internet of Things, and in particular indoor localization systems, a wide range of sensor technologies (e.g., e-counters, environmental, and motion sensors) and networking communication technologies (e.g., infrared, RFID, sensors, WiFi, and Bluetooth) are being used for sensing and transporting large volumes of data. The data are harvested as data streams that are a sequence of digitally encoded coherent signals (packets of data or data packets). These data packets arrive according to different data rates (i.e. bandwidth), which are often expressed in bytes per second (B/s).
 
 From a clustering perspective, a data stream $S$ is sequence of infinitive, ordered, and fast-changing stream data points $d_1, d_2, ..., d_3 $ $\xrightarrow S = {d_i}$ \cite{han2011data}. Therefore, clustering methods need to form clusters from a continuous flow of stream data points. The traditional set-up where an entire static data set is available for clustering can not be applied to data streams which continuously arrive at a rapid rate. The main issues can be summarized as follows \cite{toshniwal2013clustering}:
 
 \begin{itemize}
-    \item Previous data used in clustering analysis is static, but data streams are unbounded and non-stationary data.
+    \item Previous data used in clustering analysis are static, but data streams are unbounded and non-stationary data.
     \item Streaming cluster analysis requires a process capable of partitioning the data streams continuously while taking into account restrictions of memory and time. Traditional clustering methods partition an entire data set at once, and memory requirements do not change over time. 
     %T \item Traditional clustering datasets can be accumulated in memory, but because of the enormous size of streaming data, it is impossible to store them in memory.. NOT SURE ABOUT THIS STATEMENT, BECAUSE WE HAVE MEMORY CONSTRAINTS WITH TRADITIONAL AS WELL AS STREAMING...
     \item Traditional clusters are found from accumulated data points, but streaming clusters evolve over time depending on the time window model being used to accumulate the data points.
@@ -584,12 +584,12 @@ It is important to select a time-interval for a time window model based on the t
 
 \begin{itemize}
 
-    \item\textit{Damped Time Window:} It is also referred to as time-fading model. Each data point has a different weight based on its arrival time so new data points have a higher weight than the old ones. This time window model reduces the impact of old data. It is mostly applied using density-based clustering methods. The function $f(\delta t)$ = $\mu_{\delta t}$ $(0 < \mu < 1)$ is usually used for this model where $\delta t$ is the age of a data point which is equal to time differentiation between current time and arrival time. A fading parameter $\mu$ is in the range between 0 to 1. 
+    \item\textit{Damped Time Window:} It is also referred to as time-fading model. Each data point has a different weight based on its arrival time so new data points have a higher weight than the old ones. This time window model reduces the impact of old data. It is mostly applied using density-based clustering methods. The function $f(\delta t)$ = $\mu_{\delta t}$ $(0 < \mu < 1)$ is usually used for this model, where $\delta t$ is the age of a data point which is equal to time differentiation between current time and arrival time. A fading parameter $\mu$ is in the range between 0 to 1. 
     
     
-    \item\textit{Landmark Time Window:} It is also known as the hopping model, is used when clustering starts from a starting point call landmark to the current time. When a new window comes, all data points from the previous landmark time window are removed. All data points are equally important.
+    \item\textit{Landmark Time Window:} It is also known as the hopping model, and is used when clustering starts from a starting point call landmark to the current time. When a new window comes, all data points from the previous landmark time window are removed. All data points are equally important.
 
-    \item\textit{Sliding Time Window: } The most important data points are the most recent ones and old data points will be removed. The structure of the sliding time window is based on the FIFO (First-In-First-Out) principle, which a data point from the current time is used for clustering until a specific time is passed. The window has a size of $w$ in the current time $t$, will slide (s, sliding(w)) where s[t-w+1, t].
+    \item\textit{Sliding Time Window: } The most important data points are the most recent ones and old data points will be removed. The structure of the sliding time window is based on the FIFO (First-In-First-Out) principle, in which a data point from the current time is used for clustering until a specific time is passed. The window has a size of $w$ in the current time $t$, will slide (s, sliding(w)) where s[t-w+1, t].
     The window size can be set based on resources, and computational process \cite{silva2013data}. This model is efficient when most recent data points are relevant for the cluster analysis.  
     
     \item\textit{Pyramidal Time Window: } It is also known as tilted time window and focuses on recent data points without discarding old data points. It applies various time granularity levels based on how recent a data point is \cite{aggarwal2003framework, nguyen2015survey}. It stores almost all data points belonging to a specific time window, and after computes a balance between storage requirements and accuracy. The old data tuples are aggregated. %, and a generic representation is enough.
@@ -661,7 +661,7 @@ Figure   \ref{time1} illustrates how these time window models have been conceptu
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %\subsection{Data Stream Processing}
-Processing of data points using time window models can take two opposites views of the streaming problem as pointed out by Mansalis et al. (2018). The first view is to use a two-phase scheme which consists of an online component that processes stream data points and produces summary data  (e.g., micro-clusters, core-micro-clusters, temporal CF, grids, and coreset tree); and an offline component that uses the aggregated summary data to form the final clusters. In the literature of data stream clustering methods, a large number of algorithms use a two-phase scheme as shown in Figure \ref{2phase} . 
+Processing of data points using time window models can take two opposite views of the streaming problem as pointed out by Mansalis et al. (2018). The first view is to use a two-phase scheme which consists of an online component that processes stream data points and produces summary data  (e.g., micro-clusters, core-micro-clusters, temporal CF, grids, and coreset tree); and an offline component that uses the aggregated summary data to form the final clusters. In the literature of data stream clustering methods, a large number of algorithms use a two-phase scheme as shown in Figure \ref{2phase} . 
 
 \begin{figure}[t]
 \centering
@@ -671,9 +671,9 @@ Processing of data points using time window models can take two opposites views 
 \label{2phase}
 \end{figure}
 
-An alternative view is to generate final clusters without the need of an offline phase. A single-pass model is maintained over a stream, and clusters are updated as new data points arrive from the stream. One of the main disadvantages of this strategy is that the evolution of the clusters can not be analyzed at different time intervals, only a final snapshot is produced.     
+An alternative view is to generate final clusters without the need of an offline phase. A single-pass model is maintained over a stream, and clusters are updated as new data points arrive from the stream. One of the main disadvantages of this strategy is that the evolution of the clusters can not be analyzed at different time intervals; only a final snapshot is produced.     
 
-In this thesis, the online/offline strategy was adopted, and final clusters have been named as macro-clusters, meanwhile the the centroids of micro-clusters were used as summary data. The online component requires a process for saving the summary data in a fast manner, and is not requested to support real-time processing, but rather a very low response delay. The offline phase uses the aggregated summary data to compute the macro-clusters. It is not time-related and can happen any time by user request.
+In this thesis, the online/offline strategy was adopted, and final clusters are referred to as macro-clusters; meanwhile the the centroids of micro-clusters were used as summary data. The online component requires a process for saving the summary data in a fast manner, and is not requested to support real-time processing, but rather a very low response delay. The offline phase uses the aggregated summary data to compute the macro-clusters. It is not time-related and can happen any time by user request.
 
 
 
@@ -879,7 +879,7 @@ SNCStream+          & 2016          & Network           & Online              & 
 %     \end{tabular}
 % \end{table}
 
-In this research work, the DSAP algorithm is proposed as a simplification of the previous streaming AP algorithms. This is further discussed in the next Chapter.
+In this research work, the DSAP algorithm is proposed as a simplification of the previous streaming AP algorithms. This is further discussed in the next chapter.
 
 
 % In particular, the online-offline processing for streaming K-means clustering has been applied to many algorithms such as CluStream, Olindda, SWClustering, and BICO. The open-source available DSC\_TwoStage in R version of streaming K-means using the 2-phase processing was used in this thesis, and is further discussed in Chapter 5.  

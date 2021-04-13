@@ -198,7 +198,7 @@ for i in range(windowSize):
 
 %At the end, the AP will apply again to find new micro-clusters out of these data. If there is no data point is in the cache, the next window will come in the model.
 
-In the next ActivateAP step, AP is applied on all the remaining data points in the time-window repository whose distance from the centroids are more than the adaptive threshold $\epsilon_{W_j}$ for the current time window. In the end, clusters obtained from this step are added to the updated micro-clusters.  
+In the next ActivateAP and update $\epsilon_{Wj}$ step, AP is applied on all the remaining data points in the time-window repository whose distance from the centroids are more than the adaptive threshold $\epsilon_{W_j}$ for the current time window. In the end, clusters obtained from this step are added to the updated micro-clusters.  
 
 
 \begin{lstlisting}
@@ -227,7 +227,7 @@ if epsilon < epsilonC`m:
     epsilon = (epsilonC`m + epsilon)/2  
 \end{lstlisting}
 
-In order to keep the number of micro-clusters under control and avoid obsolete clusters, cluster centroids that are older than the expiration number $e_x$ times the time period (older than a specific number of landmark) are removed periodically. The oldest relevant time is calculated by subtracting the $e_x$ number of time periods from the current timestamp (\texttt{start\_time}). The centroids with timestamps greater than this value are retained in the updated centroids along with their updated associated timestamps. Based on the duration of interest this expiration value is set by the user at the start of the stream clustering process. 
+In order to keep the number of micro-clusters under control and avoid obsolete clusters, cluster centroids that are older than the expiration number $e_x$ (older than a specific number of landmark) are removed periodically. The oldest relevant time is calculated by subtracting the $e_x$ number of time periods from the current timestamp (\texttt{start\_time}). The centroids with timestamps greater than this value are retained in the updated centroids along with their updated associated timestamps. Based on the duration of interest this expiration value is set by the user at the start of the stream clustering process. 
 
 
 
@@ -454,7 +454,6 @@ mac_label = AP_mac.labels_
 % \end{figure}
 
 
-
 \section{Intrinsic Clustering Validation Phase}
 To validate the clustering results, three Intrinsic evaluation metrics: Silhouette Coefficient, Caliński-Harabasz Index, and Davies-Bouldin Index, are used as discussed earlier in section \ref{intrinval}. All the three metrics were implemented in Python.  
 
@@ -464,22 +463,22 @@ To validate the clustering results, three Intrinsic evaluation metrics: Silhouet
 \begin{itemize}
     
 
-\item\textit{Silhouette Coefficient}
-Silhouette Coefficient cluster evaluation metric was implemented as a function \texttt{silhouette\_score} and is available in the \texttt{sklearn. metrics} library in Python.  The input parameter of this function is an array of pairwise Euclidean distances between micro-cluster centroids and the final macro-cluster centroids, %cluster label for each data point, and metric to use for calculating a distance between data points in a feature array which is Euclidean for our work. 
+\item\textit{Silhouette Index:}
+This cluster evaluation metric was implemented as a function \texttt{silhouette\_score} and is available in the \texttt{sklearn.metrics} library in Python.  The input parameter of this function is an array of pairwise Euclidean distances between micro-cluster centroids and the final macro-cluster centroids, %cluster label for each data point, and metric to use for calculating a distance between data points in a feature array which is Euclidean for our work. 
 
 %The Silhoutte calculation in R is performed by the function \texttt{silhouette()} that is available in package \texttt{cluster}. This function \texttt{silhouette(distdata, idmedoid, idcluster)} just needs a vector of cluster members and a dissimilarity matrix.
 
 
 
 
-\item\textit{Caliński-Harabasz Index}
+\item\textit{Caliński-Harabasz Index:}
 It is available in the \texttt{sklearn.metrics} library of Python as the \texttt{calinski\_harabasz\_score} function. The input parameter of this metric is a list of $n\_$features-dimensional data points in which each row corresponds to a single data point and labels related to each data. The output of this function is a float number with no cut-off value. The higher the value, the "better" is the solution.
 
 %The implementation of this metric in R is part of the \texttt{cluster.stats} library and is used for cluster validation. The function is called: \texttt{calinhara(x, clustering, cn= max(clustering))}, where $x$ is the data frame, clustering is a method of implementation, and $cn$ is the number of clusters.
 
 
 
-\item\textit{Davies-Bouldin Index}
+\item\textit{Davies-Bouldin Index:}
 The last metric is the Davies-Bouldin Index that was implemented in Python as part of the same library \texttt{sklearn.metrics} as CHI. The function which is called \texttt{davies\_bouldin\_score} has two input parameters: list of $n\_$features-dimensional data points and labels. This result is a float number whose lower values indicate tighter clusters that are better separated.
 
 
@@ -492,7 +491,7 @@ The last metric is the Davies-Bouldin Index that was implemented in Python as pa
 \section{Clustering Performance Evaluation Phase}
 Analogous to the intrinsic cluster validation phase where the quality of the clusters was assessed, in this phase the DSAP algorithm is evaluated in terms of computational time efficiency and memory consumption. Straightforward functions are available in both Python to compute these two metrics. 
 \begin{itemize}
-    \item \textit{Processing Time:} To find the running time in Python, the time function within the \texttt{time()} module is used to get the execution time of the algorithm. This module calculates the running time of a program by first storing the starting time and ending time, before the first and after the last line. At the end, the difference between these two times would be the total running time of the program. The time() function returns the number of seconds elapsed since the epoch.
+    \item \textit{Processing Time:} To find the running time in Python, the time function within the \texttt{time()} module is used to get the execution time of the algorithm. This module calculates the running time of a program by first storing the starting time and ending time, before the first and after the last line. At the end, the difference between these two times would be the total running time of the program. The \texttt{time()} function returns the number of seconds elapsed since the epoch.
 
     \item \textit{Memory Consumption:} To monitor memory usage, the \texttt{os} and \texttt{psutil} libraries in Python are used. Psutil (Python system and process utilities) is a cross-platform library for retrieving information on running processes and system utilization (CPU, memory, disks, network, sensors). \texttt{psutil.virtual\_memory()} function returns statistics about system memory usage. Also, Python provides a C module called cProfile, which provides deterministic profiling of Python programs. A profile is a set of statistics that describes how often and for how long various parts of the program are executed. This module is mainly used when we wanted to calculate the window length and threshold. 
     %The \texttt{memory.size()} function displays the amount of memory consumed by the R program. The \texttt{mem\_change()} captures the net change in memory when running a code. These functions can be used to estimate how much memory is consumed by  
@@ -649,7 +648,7 @@ Our first case study consists of an experiment performed in the Tonsley building
 % \item\textbf{Data Collection: }
 %This experiment was conducted in the Tonsley Building over three months, that included a month of undisturbed baseline measurements, a month of motivational intervention to increase stair use, and finally a month to observe the long term effect if any due to the intervention period. 
 
-Tonsley Building is a six-story building populated by students and staff with entrances facing North and South directions. The building floor layouts are illustrated in Figure \ref{laay}. The north-side entrance faces a small barricaded entrance as seen in panel \ref{laay:tpleft1}, but the main entrance is on the south side adjacent to the covered Tonsley garden. The building is fitted with lifts that reach all the levels, but also have stairs on the north and south sides that connect all the levels. Additionally, the building has an open space called the void and has central stairs that connect all the levels. Thus each level stairs are labeled as level $L_{x+1}-L_x$ North/South/Central, where $L_x = 1,2,.5$. 
+Tonsley Building is a six-story building populated by students and staff with entrances facing north and south directions. The building floor layouts are illustrated in Figure \ref{laay}. The north-side entrance faces a small barricaded entrance as seen in panel \ref{laay:tpleft1}, but the main entrance is on the south side adjacent to the covered Tonsley garden. The building is fitted with lifts that reach all the levels and have stairs on the north and south sides that connect all the levels. Additionally, the building has an open space called the void and has central stairs that connect all the levels. Thus each level stairs are labeled as level $L_{x+1}-L_x$ North/South/Central, where $L_x = 1,2,.5$. 
 
 
 \begin{figure*}[ht]
@@ -685,8 +684,8 @@ Wireless/Bidirectional             &  PTx20-1 & PRx20W1  & Entrance and daily co
  \end{table}
 
 
+% Each level has two types of location: level entrance and stairs. These entrances have two types of sensors: OUT/IN and two types of sensors for stairs as UP/DOWN. These are coded for all levels except level0-1, which is both a stair and an entrance, so it has the label UP/IN and DOWN/OUT, instead of either UP or DOWN (stairs) or IN or OUT (entrances).
 
-Each level has two types of location: level entrance and stairs. These entrances have two types of sensors: OUT/IN and two types of sensors for stairs as UP/DOWN. These are coded for all levels except level0-1, which is both a stair and an entrance, so it has the label UP/IN and DOWN/OUT, instead of either UP or DOWN (stairs) or IN or OUT (entrances).
 
 %Data collection is the process of gathering and measuring information. The data collection method consists of two categories, quantitative and qualitative.Experimental research is a quantitative method. Interviews are qualitative methods.Surveys, observations, archival research and secondary data collection can be quantitative or qualitative methods.Hence, collecting streaming data needs time and facilities, we used two ready to use dataset and apply a stream simulation phase to use as data stream for our model.
 
@@ -776,6 +775,19 @@ Motivational and educational interventions were made during the next month perio
 The sensors captured movement for all 24 hours and all days continuously. The raw e-counter data set consists of approximately 668,000 data points, each containing nine attributes as listed in Table \ref{attr} out of which almost half the data points were included in our research work. 
 
 
+
+
+
+
+%The total number of people using the stairs over the entire experiment duration is shown in figure 2. It is apparent that people prefer taking the stairs to go down. An expected periodic lower occupancy is also observed on the weekends. The mid-semester break from April 15-28 was excluded from the study.
+
+
+%\item\textbf{Data Pre-processing:}
+During pre-processing, some observation were detected during the experiment period that affected the quality of our model. For instance, hubs were temporarily switched off or sensors fell off. Also, some special events took place during the experiment, such as public holidays, term breaks, and fire drills which affected the number of people using the stairs. For example, on May 1$^{st}$ at 11:15 a.m, the fire alarm went on, and everyone had to evacuate the building using the stairs. Also, between baseline duration and initiation of intervention, there was a two-week Easter break or semester break and that is why the intervention started after two weeks of the first stage.
+%The data collected during the interrupted days mentioned above have not been included in the cluster analysis.
+
+
+
 \begin{table}[!ht]
 \centering
 \caption{List of attributes for the e-counter data set}
@@ -787,7 +799,7 @@ The sensors captured movement for all 24 hours and all days continuously. The ra
 Date             &  mm/dd/yyyy      &   Date of measurement                                 \\\hline
 Time             &  hh:mm:ss 24H    &   Time of measurement                                 \\\hline
 Count            &  integer         &   Number of people counted by the sensor              \\ \hline
-Sensor           &  Up, Down, In, Out, IN/Out-reserved & Direction of the sensor             \\ \hline
+Sensor           &  Up, Down, In, Out & Direction of the sensor             \\ \hline
 Position         &    string         &   Sensor location in the building                                                                                                      \\ \hline
 Location Code    &     H2-L3             & Code for each location                                                                                                                                       \\ \hline
     \bottomrule
@@ -796,14 +808,6 @@ Location Code    &     H2-L3             & Code for each location               
 \end{table}
 
 
-
-
-
-%The total number of people using the stairs over the entire experiment duration is shown in figure 2. It is apparent that people prefer taking the stairs to go down. An expected periodic lower occupancy is also observed on the weekends. The mid-semester break from April 15-28 was excluded from the study.
-
-
-%\item\textbf{Data Pre-processing:}
-During pre-processing, some issues were detected during the experiment period that affected the quality of our model. For instance, hubs were temporarily switched off or sensors fell off. Also, some special events took place during the experiment, such as public holidays, term breaks, and fire drills which affected the number of people using the stairs. For example, on May 1$^{st}$ at 11:15 a.m, the fire alarm went on, and everyone had to evacuate the building using the stairs. Also, between baseline duration and initiation of intervention, there was a two-week Easter break or semester break and that is why the intervention started after two weeks of the first stage. The data collected during the interrupted days mentioned above have not been included in the cluster analysis.
 
 Furthermore, if no one passes through the beam of sensors, the sensors indicate zero during that specific interval. A huge number of zeros were logged during the experiment especially after working hours, weekends, and holidays, which could bias the clustering results. These zero values were removed from the data set. 
 
@@ -1021,8 +1025,8 @@ The UJIIndoorLoc data set generated includes three buildings with four or more f
     Space ID               &    integer   & Identification of an indoor space (e.g. room or corridor)            
     \\\hline
     Relative Position      &    1= inside 2=outside       & Outside means in front of the door of the space \\\hline
-    User ID                &    0,1,2,...,18    &  Unique code for users who participated in the experiment           \\\hline
-    Phone ID               &    0,1,2,...,24      &    Android device code used for this experiment        \\\hline
+    User ID                &    integer    &  Unique code for users who participated in the experiment           \\\hline
+    Phone ID               &    integer      &    Android device code used for this experiment        \\\hline
     Timestamp              &    Unix time format      &  Time of capture           
     \\
     \bottomrule
@@ -1099,34 +1103,35 @@ The UJIIndoorLoc data set generated includes three buildings with four or more f
 % \end{table}
 
 
-The data was collected From May 30 to June 20, 2013 as shown in Table \ref{udate}. The number of data points show the distribution of measurements during each day. The data collection happened on these six discrete days. The day when the most amount of data was collected was the $20^{th}$ of June. This single day accounts for more than half the points in the entire data set.
+% The data was collected From May 30 to June 20, 2013 as shown in Table \ref{udate}. The number of data points show the distribution of measurements during each day. The data collection happened on these six discrete days. The day when the most amount of data was collected was the $20^{th}$ of June. This single day accounts for more than half the points in the entire data set.
 %Two Android applications have been used to create the database by applying reference map services that are published in the ArcGIS. These services include geographic information inside the building. By using these services, the applications created show the maps to improve the user localization.
 
+The data was collected From May 30 to June 20, 2013. The data collection happened on these six discrete days. The day when the most amount of data was collected was the $20^{th}$ of June. This single day accounts for more than half the points in the entire data set.
 
 % all dataset capture in 6 days 30,31,may 4,10,12,20June, 19 , 20, 24,26 sep, 1,3,4,7,8 oct
-\begin{table}[ht]
-\centering
-\caption{UJIIndoorLoc Experiment timeline}
-\begin{tabular}{lclc}
-\toprule
-\textbf{Date} &  \textbf{Number of data points}       \\
-\midrule
-     \rowcolor{cyan}
-5/30/2019                 &      1140                 \\
-     \rowcolor{cyan}
-5/31/2019                 &      362                  \\
-     \rowcolor{cyan}
-6/4/2019                  &      1010                 \\
-     \rowcolor{cyan}
-6/10/2019                 &      270                 \\
-     \rowcolor{cyan}
-6/12/2019                 &      2467                 \\
-     \rowcolor{cyan}
-6/20/2019                 &      14688                \\
-\bottomrule
-\label{udate}
-\end{tabular}
-\end{table}
+% \begin{table}[ht]
+% \centering
+% \caption{UJIIndoorLoc Experiment timeline}
+% \begin{tabular}{lclc}
+% \toprule
+% \textbf{Date} &  \textbf{Number of data points}       \\
+% \midrule
+%      \rowcolor{cyan}
+% 5/30/2019                 &      1140                 \\
+%      \rowcolor{cyan}
+% 5/31/2019                 &      362                  \\
+%      \rowcolor{cyan}
+% 6/4/2019                  &      1010                 \\
+%      \rowcolor{cyan}
+% 6/10/2019                 &      270                 \\
+%      \rowcolor{cyan}
+% 6/12/2019                 &      2467                 \\
+%      \rowcolor{cyan}
+% 6/20/2019                 &      14688                \\
+% \bottomrule
+% \label{udate}
+% \end{tabular}
+% \end{table}
 
 
 
@@ -1209,9 +1214,9 @@ Table \ref{phone} shows the phone ID related to each android device, the version
 
 % Two numerical variables were selected: the SPACEID and the Phone ID for this study as these provide the necessary information regarding the people present at any location with time. Finally, in order to remove bias due to the difference in range of the two variables the data was normalized. The normalization process is applied one level before clustering with the minmaxscaler normalization process under the preprocessing library. All these preceding steps provide a target data set ready to be used by the stream simulation and the two-phase clustering algorithms. 
 
-For cluster analysis, The days are non-uniformly distributed over 2 month as shown in Table \ref{udate} earlier. The data collection during those six days was not continuous but collected at a much higher cadence. A small landmark time window of 10 minutes was applied on this dataset. Moreover, The hyperparameters for the AP in the DSAP algorithm are consistent and fixed for the entire experiment. The damping value is equal to 0.9, maximum iteration is 100, and preference is equal to the median of the similarity matrix. 
+For cluster analysis the data collected during six days was not continuous but collected at a much higher cadence, are considered. A small landmark time window of 10 minutes was applied on this dataset. Moreover, The hyperparameters for the AP in the DSAP algorithm are consistent and fixed for the entire experiment. The damping value is equal to 0.9, maximum iteration is 100, and preference is equal to the median of the similarity matrix. 
 
-Finally, the variable selection task was performed to prepare a target data set ready to be used by the two phase clustering algorithm. For this research, two numerical variables as summarised in Table \ref{select2}.
+Finally, the variable selection task was performed to prepare a target data set ready to be used by the two phase clustering algorithm. For this research, two numerical variables are selected as summarised in Table \ref{select2}.
 
 
 \begin{table}[!ht]
@@ -1287,7 +1292,7 @@ Various tools and languages were used and they are listed below.
 
 \begin{itemize}
     \item\textit{Platform:} This research work was performed on a personal computer running on a 64-bit operating system, window 10 Enterprise, 2019. The specification of this machine are: Intel Core i7 2.60GHz CPU, 32GB internal memory RAM, and 3TB external memory. 
-    \item\textit{Language selection:} DSAP is developed in Python. The version of Python used is 3.7. Spyder 3.3.6 IDE which is part of Anaconda 2019 was used for project development. Main libraries applied in Python are sklearn, pandas, numpy, matplotlib, datetime, scipy, psutil and itertools.
+    \item\textit{Language selection:} DSAP is developed in Python. The version of Python used is 3.7. Spyder 3.3.6 IDE which is part of Anaconda 2019 was used for project development. Main libraries applied in Python are sklearn, pandas, numpy, matplotlib, datetime, scipy, psutil, itertools and skmultiflow.
     
     %Other programming language used for development and visualization are R and matlab. The versions used are RStudio 1.2.5033, 2019 and matlab 2019. 
     
