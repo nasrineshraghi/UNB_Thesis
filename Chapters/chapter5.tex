@@ -42,7 +42,7 @@
 
 \chapter{Implementation}
 
-In this Chapter, the design and implementation of the DSAP algorithm are described. Next, two experiments are presented that are related to applying the proposed DSAP model to find stair usage patterns and occupant behaviour in indoor spaces. 
+In this chapter, the design and implementation of the DSAP algorithm are described. Next, two experiments are presented that are related to applying the proposed DSAP model to find stair usage patterns and occupant behaviour in indoor spaces. 
 
 %The two studies are: an e-counter based Indoor staircase usage experiment and a WiFi fingerprint-based Indoor Localization dataset. 
 
@@ -163,7 +163,7 @@ def getAdaptiveThreshold(Wj,Cm):
     return epsilon 
 \end{lstlisting}
 
-In addition, the timestamp associated to each cluster centroids should be kept in an array with the size of initial centroids. The time for all centroids in the first window are equal.
+In addition, the timestamp associated with each cluster centroid should be kept in an array with the size of initial centroids. The times for all centroids in the first window are equal.
 
 \begin{lstlisting}
 #time associated to initial centroids
@@ -174,7 +174,7 @@ tq = tq.astype(int)
 
 The output of the initialization step are a set of micro-clusters with centroids ($C_m$) and an initial threshold value ($\epsilon_{W_0}$).
 
-The next step of the online micro-cluster phase is comparison. For the following windows from $W_1$ to $W_N$, all data points in each window are compared with the existing micro-clusters. The Euclidean distance of each new point $x_i$ in the window to its closest micro-cluster centroid is calculated. If the distance is less than the threshold $\epsilon_{W_j}$, $x_i$ is added to the micro-clusters and the timestamp associated to those specific centroids needs to be updated. Otherwise, it is kept temporarily in the time-window repository until all data points in the window are being evaluated. 
+The next step of the online micro-cluster phase is comparison. For the following windows from $W_1$ to $W_N$, all data points in each window are compared with the existing micro-clusters. The Euclidean distance of each new point $x_i$ in the window to its closest micro-cluster centroid is calculated. If the distance is less than the threshold $\epsilon_{W_j}$, $x_i$ is added to the micro-clusters and the timestamp associated with those specific centroids needs to be updated. Otherwise, it is kept temporarily in the time-window repository until all data points in the window are evaluated. 
 
 \begin{lstlisting}
 #(2) Comparison step.
@@ -198,7 +198,7 @@ for i in range(windowSize):
 
 %At the end, the AP will apply again to find new micro-clusters out of these data. If there is no data point is in the cache, the next window will come in the model.
 
-In the next ActivateAP and update $\epsilon_{Wj}$ step, AP is applied on all the remaining data points in the time-window repository whose distance from the centroids are more than the adaptive threshold $\epsilon_{W_j}$ for the current time window. In the end, clusters obtained from this step are added to the updated micro-clusters.  
+In the next ActivateAP and update $\epsilon_{Wj}$ step, AP is applied on all the remaining data points in the time-window repository whose distances from the centroids are more than the adaptive threshold $\epsilon_{W_j}$ for the current time window. In the end, clusters obtained from this step are added to the updated micro-clusters.  
 
 
 \begin{lstlisting}
@@ -219,7 +219,7 @@ tq = np.concatenate((tq, repository_tq), axis=0)
 \end{lstlisting}
 
 
-As new micro-clusters are generated at the end of the ActivateAP step, the threshold value needs to be recalculated based on the updated micro-clusters. Once again the adaptive threshold function is called upon to estimate new threshold values. This value is compared with the threshold $\epsilon_{W_j}$. If the value is greater than $\epsilon_{W_j}$ then a average of the two thresholds is selected as the new threshold otherwise the threshold remains unchanged. The decision to choose the average of the two numbers was taken to ensure that the threshold does not blow up in size due to a sparse cluster or noise.
+As new micro-clusters are generated at the end of the ActivateAP step, the threshold value needs to be recalculated based on the updated micro-clusters. Once again the adaptive threshold function is called upon to estimate new threshold values. This value is compared with the threshold $\epsilon_{W_j}$. If the value is greater than $\epsilon_{W_j}$ then the average of the two thresholds is selected as the new threshold; otherwise the threshold remains unchanged. The decision to choose the average of the two numbers was taken to ensure that the threshold does not blow up in size due to a sparse cluster or noise.
 \begin{lstlisting}
 # Update the threshold value.
 epsilonC`m = getAdaptiveThreshold(C`m, repositorydata)
@@ -227,7 +227,7 @@ if epsilon < epsilonC`m:
     epsilon = (epsilonC`m + epsilon)/2  
 \end{lstlisting}
 
-In order to keep the number of micro-clusters under control and avoid obsolete clusters, cluster centroids that are older than the expiration number $e_x$ (older than a specific number of landmark) are removed periodically. The oldest relevant time is calculated by subtracting the $e_x$ number of time periods from the current timestamp (\texttt{start\_time}). The centroids with timestamps greater than this value are retained in the updated centroids along with their updated associated timestamps. Based on the duration of interest this expiration value is set by the user at the start of the stream clustering process. 
+In order to keep the number of micro-clusters under control and avoid obsolete clusters, cluster centroids that are older than the expiration number $e_x$ (older than a specific number of landmark) are removed periodically. The oldest relevant time is calculated by subtracting the $e_x$ number of time periods from the current timestamp (\texttt{start\_time}). The centroids with timestamps greater than this value are retained in the updated centroids along with their updated associated timestamps. Based on the duration of interest, this expiration value is set by the user at the start of the stream clustering process. 
 
 
 
@@ -252,7 +252,7 @@ for j in range(len(a)):
 \end{lstlisting}
 
 
-The next phase of the DSAP algorithm is the offline macro-cluster phase which generates final clusters by applying the AP algorithm one more time to all the micro-cluster centroids accumulated during the online phase (\texttt{AffinityPropagation().fit ($Cm$)}). In the offline phase only the summary statistics represented by the micro-clusters centroids stored during the online phase is used and not the actual data set itself. The number of micro-clusters is a lot smaller than the total number of points in the data set that it represents. The number of macro-clusters obtained in this phase are less than the number of micro-clusters as they summarize the whole period of observation and not individual windows. The pseudo-code presented in Algorithm \ref{algSDAPi} shows the outline of the entire DSAP algorithm. 
+The next phase of the DSAP algorithm is the offline macro-cluster phase which generates final clusters by applying the AP algorithm one more time to all the micro-cluster centroids accumulated during the online phase (\texttt{AffinityPropagation().fit ($Cm$)}). In the offline phase only the summary statistics represented by the micro-clusters centroids stored during the online phase are used and not the actual data set itself. The number of micro-clusters is a lot smaller than the total number of points in the data set that it represents. The number of macro-clusters obtained in this phase is less than the number of micro-clusters as they summarize the whole period of observation and not individual windows. The pseudo-code presented in Algorithm \ref{algSDAPi} shows the outline of the entire DSAP algorithm. 
 
 \begin{lstlisting}
 # Offline Macro-clustering Phase
@@ -455,7 +455,7 @@ mac_label = AP_mac.labels_
 
 
 \section{Intrinsic Clustering Validation Phase}
-To validate the clustering results, three Intrinsic evaluation metrics: Silhouette Coefficient, Caliński-Harabasz Index, and Davies-Bouldin Index, are used as discussed earlier in section \ref{intrinval}. All the three metrics were implemented in Python.  
+To validate the clustering results, three Intrinsic evaluation metrics: Silhouette Coefficient, Caliński-Harabasz Index, and Davies-Bouldin Index, are used as discussed earlier in section \ref{intrinval}. All three metrics were implemented in Python.  
 
 %for both the DSAP and the streaming K-means algorithms that were implemented in Python and R programming language  respectively. Standard functions are available for each of the metrics in both the programming languages. These metrics are one way to evaluate the quality of clustering and compare our work with the existing streaming K-means.
 
@@ -472,14 +472,14 @@ This cluster evaluation metric was implemented as a function \texttt{silhouette\
 
 
 \item\textit{Caliński-Harabasz Index:}
-It is available in the \texttt{sklearn.metrics} library of Python as the \texttt{calinski\_harabasz\_score} function. The input parameter of this metric is a list of $n\_$features-dimensional data points in which each row corresponds to a single data point and labels related to each data. The output of this function is a float number with no cut-off value. The higher the value, the "better" is the solution.
+It is available in the \texttt{sklearn.metrics} library of Python as the \texttt{calinski\_harabasz\_score} function. The input parameter of this metric is a list of $n\_$features-dimensional data points in which each row corresponds to a single data point and labels related to each data. The output of this function is a float number with no cut-off value. The higher the value, the better is the solution.
 
 %The implementation of this metric in R is part of the \texttt{cluster.stats} library and is used for cluster validation. The function is called: \texttt{calinhara(x, clustering, cn= max(clustering))}, where $x$ is the data frame, clustering is a method of implementation, and $cn$ is the number of clusters.
 
 
 
 \item\textit{Davies-Bouldin Index:}
-The last metric is the Davies-Bouldin Index that was implemented in Python as part of the same library \texttt{sklearn.metrics} as CHI. The function which is called \texttt{davies\_bouldin\_score} has two input parameters: list of $n\_$features-dimensional data points and labels. This result is a float number whose lower values indicate tighter clusters that are better separated.
+The last metric is the Davies-Bouldin Index that was implemented in Python as part of the same library \texttt{sklearn.metrics} as CHI. The function, which is called \texttt{davies\_bouldin\_score}, has two input parameters: list of $n\_$features-dimensional data points and labels. This result is a float number whose lower values indicate tighter clusters that are better separated.
 
 
 %This metric is a part of \texttt{clusterSim} library in R. The function is called: \texttt{index.DB(x, cl, d=NULL, centrotypes="centroids", p=2) }, where $x$ is a data frame, $cl$ is vector of integer numbers showing the cluster to which each data point is allocated, $d$ is an optional distance matrix, and $p$ is the power of the Minkowski distance between centroids of clusters: p=1 - Manhattan distance; p=2 - Euclidean distance.
@@ -489,7 +489,7 @@ The last metric is the Davies-Bouldin Index that was implemented in Python as pa
 
 
 \section{Clustering Performance Evaluation Phase}
-Analogous to the intrinsic cluster validation phase where the quality of the clusters was assessed, in this phase the DSAP algorithm is evaluated in terms of computational time efficiency and memory consumption. Straightforward functions are available in both Python to compute these two metrics. 
+Analogous to the intrinsic cluster validation phase where the quality of the clusters was assessed, in this phase the DSAP algorithm is evaluated in terms of computational time efficiency and memory consumption. Straightforward functions are available in Python to compute these two metrics. 
 \begin{itemize}
     \item \textit{Processing Time:} To find the running time in Python, the time function within the \texttt{time()} module is used to get the execution time of the algorithm. This module calculates the running time of a program by first storing the starting time and ending time, before the first and after the last line. At the end, the difference between these two times would be the total running time of the program. The \texttt{time()} function returns the number of seconds elapsed since the epoch.
 
@@ -648,7 +648,7 @@ Our first case study consists of an experiment performed in the Tonsley building
 % \item\textbf{Data Collection: }
 %This experiment was conducted in the Tonsley Building over three months, that included a month of undisturbed baseline measurements, a month of motivational intervention to increase stair use, and finally a month to observe the long term effect if any due to the intervention period. 
 
-Tonsley Building is a six-story building populated by students and staff with entrances facing north and south directions. The building floor layouts are illustrated in Figure \ref{laay}. The north-side entrance faces a small barricaded entrance as seen in panel \ref{laay:tpleft1}, but the main entrance is on the south side adjacent to the covered Tonsley garden. The building is fitted with lifts that reach all the levels and have stairs on the north and south sides that connect all the levels. Additionally, the building has an open space called the void and has central stairs that connect all the levels. Thus each level stairs are labeled as level $L_{x+1}-L_x$ North/South/Central, where $L_x = 1,2,.5$. 
+Tonsley Building is a six-story building populated by students and staff with entrances facing north and south directions. The building floor layouts are illustrated in Figure \ref{laay}. The north-side entrance faces a small barricaded entrance as seen in panel \ref{laay:tpleft1}, but the main entrance is on the south side adjacent to the covered Tonsley garden. The building is fitted with lifts that reach all the levels and have stairs on the north and south sides that connect all the levels. Additionally, the building has an open space called the void and has central stairs that connect all the levels. Thus, each level, stairs are labeled as level $L_{x+1}-L_x$ North/South/Central, where $L_x = 1,2,.5$. 
 
 
 \begin{figure*}[ht]
@@ -663,7 +663,7 @@ Tonsley Building is a six-story building populated by students and staff with en
 \label{laay}
 \end{figure*}
 
-E-counter sensors were deployed at all stairs. They are made by the International Road Dynamics company and consist of a pair of transmitter and receiver(transmitter: PTx20-1 and receiver: PRx20W1). The transmitter sends an infrared message to the receiver, when the infrared light is interrupted by someone passing through it, a count is registered. If no one passes, then these sensors log a count value of zero every 10 minutes. Each stair has two sensors, UP/DOWN that determine a person's direction of travel up and down the stairs. Signals from the sensors are sent to wireless hubs in real-time and then from the hubs to the server. The specification of all the sensors from this company are shown in Table \ref{sensor}. The maximum count value for each direction is about 1,000,000.
+E-counter sensors were deployed at all stairs. They are made by the International Road Dynamics company and consist of a pair of transmitter and receiver(transmitter: PTx20-1 and receiver: PRx20W1). The transmitter sends an infrared message to the receiver; when the infrared light is interrupted by someone passing through it, a count is registered. If no one passes, then these sensors log a count value of zero every 10 minutes. Each stair has two sensors, UP/DOWN that determine a person's direction of travel up and down the stairs. Signals from the sensors are sent to wireless hubs in real-time and then from the hubs to the server. The specification of all the sensors from this company are shown in Table \ref{sensor}. The maximum count value for each direction is about 1,000,000.
 
 \begin{table}[!ht]
  \small
@@ -692,9 +692,9 @@ Wireless/Bidirectional             &  PTx20-1 & PRx20W1  & Entrance and daily co
 %\subsection{E-counters Geographical Location}
 %\subsubsection{People Counting Localization Indoor Dataset}
 
-The data was collected from February 21, 2019, until July 16, 2019, but only three months of this data set was monitored for the experiment. The experiment was conducted for a period of three months from March 18 to June 23, 2019, as shown in Table \ref{tons}. During the first month period starting on March 18, 2019, data was collected to establish a baseline for staircase usage by making measurements as unobtrusively as possible. The mid-semester break from April 15-28 was excluded from the study. 
+The data were collected from February 21, 2019, until July 16, 2019, but only three months of this data set were monitored for the experiment. The experiment was conducted for a period of three months from March 18 to June 23, 2019, as shown in Table \ref{tons}. During the first month period starting on March 18, 2019, data were collected to establish a baseline for staircase usage by making measurements as unobtrusively as possible. The mid-semester break from April 15-28 was excluded from the study. 
 
-Motivational and educational interventions were made during the next month period starting from April 29, 2019 to increase stair usage. The interventions included digital screens that displayed health information and provided live feedback throughout the building, especially near the lifts. An additional month period starting on May 27, 2019 was observed in order to assess any long term changes in the stair use pattern after the end of the intervention period. To keep the stair usage experiment duration separate from the rest of the data, it is saved in a different .CSV file to be used for pre-processing. 
+Motivational and educational interventions were made during the next month starting from April 29, 2019 to increase stair usage. The interventions included digital screens that displayed health information and provided live feedback throughout the building, especially near the lifts. During an additional one-month period starting on May 27, 2019, activity was observed in order to assess any long term changes in the stair use pattern after the end of the intervention period. To keep the stair usage experiment duration separate from the rest of the data, it is saved in a different .CSV file to be used for pre-processing. 
 %which provides us with a valuable 3-month dataset to model stair usage in a campus environment.
 
 
@@ -783,7 +783,7 @@ The sensors captured movement for all 24 hours and all days continuously. The ra
 
 
 %\item\textbf{Data Pre-processing:}
-During pre-processing, some observation were detected during the experiment period that affected the quality of our model. For instance, hubs were temporarily switched off or sensors fell off. Also, some special events took place during the experiment, such as public holidays, term breaks, and fire drills which affected the number of people using the stairs. For example, on May 1$^{st}$ at 11:15 a.m, the fire alarm went on, and everyone had to evacuate the building using the stairs. Also, between baseline duration and initiation of intervention, there was a two-week Easter break or semester break and that is why the intervention started after two weeks of the first stage.
+During pre-processing, some observation were detected during the experiment that affected the quality of our model. For instance, hubs were temporarily switched off or sensors fell off. Also, some special events took place during the experiment, such as public holidays, term breaks, and fire drills which affected the number of people using the stairs. For example, on May 1, at 11:15 a.m, the fire alarm went on, and everyone had to evacuate the building using the stairs. Also, between baseline duration and initiation of intervention, there was a two-week Easter break or semester break and that is why the intervention started after two weeks of the first stage.
 %The data collected during the interrupted days mentioned above have not been included in the cluster analysis.
 
 
@@ -1106,7 +1106,7 @@ The UJIIndoorLoc data set generated includes three buildings with four or more f
 % The data was collected From May 30 to June 20, 2013 as shown in Table \ref{udate}. The number of data points show the distribution of measurements during each day. The data collection happened on these six discrete days. The day when the most amount of data was collected was the $20^{th}$ of June. This single day accounts for more than half the points in the entire data set.
 %Two Android applications have been used to create the database by applying reference map services that are published in the ArcGIS. These services include geographic information inside the building. By using these services, the applications created show the maps to improve the user localization.
 
-The data was collected From May 30 to June 20, 2013. The data collection happened on these six discrete days. The day when the most amount of data was collected was the $20^{th}$ of June. This single day accounts for more than half the points in the entire data set.
+The data were collected From May 30 to June 20, 2013. The data collection happened on these six discrete days. The day when the greatest amount of data was collected was the $20^{th}$ of June. This single day accounts for more than half the points in the entire data set.
 
 % all dataset capture in 6 days 30,31,may 4,10,12,20June, 19 , 20, 24,26 sep, 1,3,4,7,8 oct
 % \begin{table}[ht]
@@ -1154,7 +1154,7 @@ The timestamp was recorded in a Linux-based time format, such as 1371714467, whi
 
 The feature Space ID contains values starting from 1 to 250, but there were gaps between numbers 50-100 and 150-200. These gaps were removed, and the updated Space ID numbers range from 1 to 122.
 These space ID values were not unique in terms of spaces such as offices, classrooms, and labs. 
-The Space ID, Building ID, Floor, and relative position together provide a unique label for a location. A new feature is added to the data set called SPACEID, that contains a unique spatial identifier for each location. The SPACEID was created by combining the space identifiers and then giving them a sequential numbers from 0-732.
+The Space ID, Building ID, Floor, and relative position together provide a unique label for a location. A new feature is added to the data set called SPACEID, that contains a unique spatial identifier for each location. The SPACEID was created by combining the space identifiers and then giving them sequential numbers from 0-732.
 
 During the six days of collecting data, some phones (Phone ID = 0,2,4,5,9,12,15,20, and 21) were not used. To make it consecutive, gaps removed and a new feature called PHONEID added to the data with numbers between 1 to 16 for all presented phones.
 Table \ref{phone} shows the phone ID related to each android device, the version of the operating system and finally, which user uses the phone. A total of 18 users with sixteen different phones are used for this research. The phone number 9 shared between three users with numbers 1, 9, and 16.
@@ -1291,12 +1291,12 @@ Finally, the variable selection task was performed to prepare a target data set 
 Various tools and languages were used and they are listed below.
 
 \begin{itemize}
-    \item\textit{Platform:} This research work was performed on a personal computer running on a 64-bit operating system, window 10 Enterprise, 2019. The specification of this machine are: Intel Core i7 2.60GHz CPU, 32GB internal memory RAM, and 3TB external memory. 
+    \item\textit{Platform:} This research work was performed on a personal computer running on a 64-bit operating system, window 10 Enterprise, 2019. The specifications of this machine are: Intel Core i7 2.60GHz CPU, 32GB internal memory RAM, and 3TB external memory. 
     \item\textit{Language selection:} DSAP is developed in Python. The version of Python used is 3.7. Spyder 3.3.6 IDE which is part of Anaconda 2019 was used for project development. Main libraries applied in Python are sklearn, pandas, numpy, matplotlib, datetime, scipy, psutil, itertools and skmultiflow.
     
     %Other programming language used for development and visualization are R and matlab. The versions used are RStudio 1.2.5033, 2019 and matlab 2019. 
     
-    \item\textit{Software:} Microsoft Excel 2020 was used for preliminary visualization of the .CSV file format. It has a neat feature to quickly filter the data and visualize.
+    \item\textit{Software:} Microsoft Excel 2020 was used for preliminary visualization of the .CSV file format. It has a neat feature to quickly filter the data and visualize it.
     
     Lucidchart web-based platform is another software that was used for drawing, revising and sharing charts and diagrams.
     
