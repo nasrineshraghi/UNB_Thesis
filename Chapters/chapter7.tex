@@ -68,9 +68,9 @@ Due to stream data availability, the DSAP model was not implemented using live s
 
 The DSAP model opens up exciting new avenues for future work not only on real-time data analytics across various sectors but also in model development and implementation. The code is freely available, and its modular framework enables the easy addition of new features. For example, another distance function such as Manhattan distance can be easily used to compute the threshold $\epsilon_{W_j}$ without changing the DSAP source code. The shape of the clusters is influenced by choice of the distance function. Multiple distance functions can be used to find the optimal function depending on the data distribution and shape of the clusters. However, changing the landmark time window model to another time window model needs further research to understand the impact in finding macro-clusters. It is crucial to carefully select the time window model taking into account the type of data streams of an application.
 
- 
+The performance of the DSAP model needs to be tested using real-world data streams. Future research work will focus on improving the DSAP model for handling missing or out of order data packets. We will also explore the effects of scalability and noise on the performance and robustness of the DSAP algorithm.
 
-The performance of the DSAP model needs to be tested using real-world data streams. Future research work will focus on improving the DSAP model for handling missing or out of order data packets. We will also explore the effects of scalability and noise on the performance and robustness of the DSAP algorithm. Finally, a benchmark test would be interesting to evaluate the DSAP model against the existing streaming AP models using standardized data sets. The main challenge is that the source code of most of these previous models is not available. 
+Finally, a benchmark test would be interesting to evaluate the DSAP model against the existing streaming AP models using standardized data sets. The main challenge is that the source code of most of these previous models is not available. 
 
 % Another interesting study would be to benchmark the performance of DSAP algorithm with other stream clustering algorithms using standardized data sets. Additionally, the effect of the shape and kind of the data distribution on the algorithm needs to be quantified.
 

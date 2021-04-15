@@ -134,7 +134,7 @@ from skmultiflow.data.file_stream import FileStream
 
 It should be noted that if the landmark window is a count-based window instead of time, \texttt{windowSize} needs to be defined as the number of data point in each window instead of getting the value from the \texttt{getWindowSize} function above. For instance \texttt{windowSize = 100} means that each time the latest 100 data point from the stream are accessed. In this case number of data points in the window $\Omega$ is equal to $L$.
 
-The DSAP online micro-cluster phase is implemented in three steps as described before in Chapter 4: initialization, comparison, and ActivateAP with update $\epsilon_{W_j}$.
+The DSAP online micro-cluster phase is implemented in three steps as described before in chapter 4: initialization, comparison, and ActivateAP with update $\epsilon_{W_j}$.
 
 In the Initialization step, the AP algorithm is applied on all data points present in the first window $W_0$ from the data stream. % (\texttt{AffinityPropagation().fit($W_0$)})
 
@@ -799,8 +799,8 @@ During pre-processing, some observation were detected during the experiment that
 Date             &  mm/dd/yyyy      &   Date of measurement                                 \\\hline
 Time             &  hh:mm:ss 24H    &   Time of measurement                                 \\\hline
 Count            &  integer         &   Number of people counted by the sensor              \\ \hline
-Sensor           &  Up, Down, In, Out & Direction of the sensor             \\ \hline
-Position         &    string         &   Sensor location in the building                                                                                                      \\ \hline
+Sensor           &  Up, Down        & Direction of the sensor             \\ \hline
+Position         &  string        &   Sensor location in the building                                                                                                      \\ \hline
 Location Code    &     H2-L3             & Code for each location                                                                                                                                       \\ \hline
     \bottomrule
     \label{attr}
@@ -813,7 +813,8 @@ Furthermore, if no one passes through the beam of sensors, the sensors indicate 
 
 The e-counters save the position values as a string character combination of numbers and strings. Hence, it was also necessary to convert the string format of the position values into the integer format in order to allow us to use them as an input for the DSAP algorithm. 
 %or fire alarm went to alarm for evacuation. This leads to having missing data points during data stream.%In addition, on May 7, printer level 5 broken and people had to use the stairs to get printer level 4.
-Finally, the feature selection task was performed to provide a target data set ready to be used by the simulation and clustering. The Position and Count features were selected for computing the clusters. The hyperparameters for the AP in the DSAP algorithm are consistent and fixed for the entire experiment. The damping value is equal to 0.96, maximum iteration is 100, and preference is equal to the median of the similarity matrix.
+
+Finally, the feature selection task was performed to provide a target data set ready to be used by the simulation and clustering. The position and count features were selected for computing the clusters. The hyperparameters for the AP in the DSAP algorithm are consistent and fixed for the entire experiment. The damping value is equal to 0.96, maximum iteration is 100, and preference is equal to the median of the similarity matrix.
 
 
 
@@ -1014,7 +1015,7 @@ The UJIIndoorLoc data set generated includes three buildings with four or more f
     \hline
     \textbf{Attributes} & \textbf{Measurement} & \textbf{Definition} \\ \hline
     \midrule
-    RSSI Level             &    -100dBM: weak signal, 0dBM: good, 100dBM: not detected    & RSSI levels where the WAP identifiers are linked to the vector positions           
+    RSSI Level             &    -100dBM - 100dBM    & WAP identifiers are linked to the vector positions           
     \\\hline
     Longitude              &    UTM from WGS84     &  Y coordinates           \\\hline
     Latitude               &    UTM from WGS84     &  X coordinates          \\\hline
@@ -1214,21 +1215,22 @@ Table \ref{phone} shows the phone ID related to each android device, the version
 
 % Two numerical variables were selected: the SPACEID and the Phone ID for this study as these provide the necessary information regarding the people present at any location with time. Finally, in order to remove bias due to the difference in range of the two variables the data was normalized. The normalization process is applied one level before clustering with the minmaxscaler normalization process under the preprocessing library. All these preceding steps provide a target data set ready to be used by the stream simulation and the two-phase clustering algorithms. 
 
-For cluster analysis the data collected during six days was not continuous but collected at a much higher cadence, are considered. A small landmark time window of 10 minutes was applied on this dataset. Moreover, The hyperparameters for the AP in the DSAP algorithm are consistent and fixed for the entire experiment. The damping value is equal to 0.9, maximum iteration is 100, and preference is equal to the median of the similarity matrix. 
+For cluster analysis the data collected during six days are considered. The hyperparameters for the AP in the DSAP algorithm are consistent and fixed for the entire experiment. The damping value is equal to 0.96, maximum iteration is 100, and preference is equal to the median of the similarity matrix. 
 
 Finally, the variable selection task was performed to prepare a target data set ready to be used by the two phase clustering algorithm. For this research, two numerical variables are selected as summarised in Table \ref{select2}.
 
 
 \begin{table}[!ht]
 \centering
+\small
 \caption{Selected input variables for clustering the data points}
 \label{select2}
 \begin{tabular}{
 >{\columncolor[HTML]{FFFFFF}}c cc}
 \hline
 \textbf{Variable}              & \cellcolor[HTML]{FFFFFF}\textbf{Description}                                                          & \textbf{Values}     \\ \hline
-{\color[HTML]{000000} PHONEID} & {\color[HTML]{000000} \begin{tabular}[c]{@{}c@{}}Each phone represents a\\  participant\end{tabular}} & Range between 1 -16 \\ \hline
-{\color[HTML]{000000} SPACEID} & {\color[HTML]{000000} \begin{tabular}[c]{@{}c@{}}Each space represents a \\ location\end{tabular}}    & Range between 0-732 \\ \hline
+{\color[HTML]{000000} PHONEID} & {\color[HTML]{000000} \begin{tabular}[c]{@{}c@{}}Each phone represents a\\  participant\end{tabular}} & Range between 1 - 16 \\ \hline
+{\color[HTML]{000000} SPACEID} & {\color[HTML]{000000} \begin{tabular}[c]{@{}c@{}}Each space represents a \\ location\end{tabular}}    & Range between 0 - 732 \\ \hline
 \end{tabular}
 \end{table}
 
