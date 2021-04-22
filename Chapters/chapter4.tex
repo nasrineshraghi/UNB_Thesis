@@ -84,7 +84,7 @@ Data points in the same landmark window are treated as equally important. In pra
     \label{land}
     \end{figure}
  
-This online micro-cluster phase consists of three major steps: initialization, comparison, and activateAP and update $\epsilon_{W_j}$. %The tasks performed during these three steps are implemented in Algorithm 5.1 described in the next Chapter.
+This online micro-cluster phase consists of three major steps: initialization, comparison, and activateAP with update $\epsilon_{W_j}$. %The tasks performed during these three steps are implemented in Algorithm 5.1 described in the next Chapter.
 
 %If the next starting time is not available, we calculate the first time after the last time of the data in the window  [0][0].    
     % \[    \left [  s_{1} =\left ( E{1},N_{1},\sigma_{1},t{1} \right )  \right ], \left [ s_{2} = \left ( E_{2},N_{2},\sigma 2,t{1} \right ) \right ],\]
@@ -293,7 +293,7 @@ The offline macro-cluster phase in DSAP starts after $N$ time windows have passe
 
 \section{Intrinsic Clustering Validation Phase} \label{intrinval}
 
-Intrinsic clustering validation uses the internal information of the clustering process to evaluate the goodness of a clustering structure when the ground truth labels are unknown. The well-known metrics silhouette index (S),  Caliński-Harabasz index (CH), and Davies-Bouldin index (DBI) were selected to validate the goodness of macro clusters found by the DSAP algorithm. Table \ref{comp} provides an overview of these metrics. They are further described in detail in the following sections.
+Intrinsic clustering validation uses the internal information of the clustering process to evaluate the goodness of a clustering structure when the ground truth labels are unknown. The well-known metrics silhouette index (S),  Caliński-Harabasz index (CH), and Davies-Bouldin index (DBI) were selected to validate the goodness of macro and macro clusters found by the DSAP algorithm. Table \ref{comp} provides an overview of these metrics. They are further described in detail in the following sections.
 
 %\todo[inline]{have you computed the metrics for micro and macro clusters??? or just macro clusters??} %Nasrin: Just Macro clusters
 
